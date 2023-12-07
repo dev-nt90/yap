@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://csvaxf3y1hgxm"]
+
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="1_kw14g"]
+[ext_resource type="Script" path="res://scripts/levels/Level3.gd" id="1_vuvr2"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="2_wjx7n"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="3_7tu2d"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="4_hmgyc"]
+[ext_resource type="TileSet" uid="uid://b8fc72ki0ddpb" path="res://assets/ice-world-tileset.tres" id="6_oohsl"]
+[ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="7_8dpo8"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="8_upopo"]
+
+[sub_resource type="Gradient" id="Gradient_ch5by"]
+offsets = PackedFloat32Array(0, 0.529536, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.145098, 0.596078, 0.713726, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_twvh8"]
+gradient = SubResource("Gradient_ch5by")
+width = 800
+height = 640
+fill_from = Vector2(0.482051, 1)
+fill_to = Vector2(0.482906, 0)
+
+[node name="SceneRoot" type="Node2D"]
+script = ExtResource("1_vuvr2")
+
+[node name="Player" parent="." instance=ExtResource("1_kw14g")]
+debug = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_left = -10000
+limit_top = -10000
+limit_right = 10000
+limit_bottom = 10000
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="HUD" parent="." instance=ExtResource("2_wjx7n")]
+
+[node name="BackgroundMusic" parent="." instance=ExtResource("3_7tu2d")]
+
+[node name="sfx" parent="." instance=ExtResource("4_hmgyc")]
+
+[node name="LevelTimer" type="Timer" parent="."]
+
+[node name="DebugStartPosition" type="Marker2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="BackgroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 600)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BackgroundLayer"]
+texture = SubResource("GradientTexture2D_twvh8")
+centered = false
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("6_oohsl")
+format = 2
+layer_0/tile_data = PackedInt32Array(65539, 7, 0, 65540, 6, 0, 65541, 7, 0, 65542, 7, 0, 65543, 7, 0, 65544, 6, 0, 65545, 6, 0, 65546, 6, 0, 65547, 6, 0, 65548, 6, 0, 65549, 7, 0, 65550, 7, 0, 65551, 7, 0, 65552, 6, 0, 65553, 7, 0, 65554, 7, 0, 65555, 7, 0, 65556, 7, 0, 65557, 7, 0, 65558, 7, 0, 65559, 6, 0, 65560, 7, 0, 65561, 6, 0, 65562, 7, 0, 65563, 7, 0, 65564, 6, 0, 65565, 6, 0, 65566, 6, 0, 65567, 6, 0, 65568, 7, 0, 65569, 7, 0, 65570, 7, 0, 65571, 6, 0, 65572, 6, 0, 65573, 6, 0, 65574, 6, 0, 65575, 6, 0, 65576, 6, 0, 65538, 6, 0, 65537, 6, 0, 65536, 7, 0, 131071, 7, 0, 131070, 6, 0, 131069, 6, 0, 131068, 7, 0, 131067, 6, 0, 131066, 7, 0, 131065, 6, 0, 131064, 7, 0, 131063, 6, 0, 131062, 7, 0, -131068, 5, 0, -131069, 8, 0, 131061, 8, 0, 65577, 5, 0)
+
+[node name="Pause" parent="." instance=ExtResource("7_8dpo8")]
+
+[node name="Emeralds" type="Node" parent="."]
+
+[node name="EmeraldBody" parent="Emeralds" instance=ExtResource("8_upopo")]
+position = Vector2(256, -200)
+
+[node name="EmeraldBody2" parent="Emeralds" instance=ExtResource("8_upopo")]
+position = Vector2(-328, -56)
+
+[node name="EmeraldBody3" parent="Emeralds" instance=ExtResource("8_upopo")]
+position = Vector2(768, -56)
+
+[node name="EmeraldBody4" parent="Emeralds" instance=ExtResource("8_upopo")]
+position = Vector2(128, -80)
+
+[node name="EmeraldBody5" parent="Emeralds" instance=ExtResource("8_upopo")]
+position = Vector2(392, -88)
+
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody2" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody3" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody4" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody5" to="Player" method="_on_emerald_body_emerald_collected"]

@@ -1,0 +1,94 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7uli15yp1d5b"]
+
+[ext_resource type="Script" path="res://scripts/Level2.gd" id="1_wp5rn"]
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="2_u65lr"]
+[ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="3_jdopy"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="4_uopvd"]
+[ext_resource type="PackedScene" uid="uid://dvytp401bv32h" path="res://assets/Backgrounds/night-sky.aseprite" id="5_sga06"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="6_bjili"]
+[ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="7_mhdv0"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="8_7mw1v"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="9_51hl1"]
+[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/ruby.tscn" id="10_ljlj5"]
+
+[node name="SceneRoot" type="Node2D"]
+script = ExtResource("1_wp5rn")
+
+[node name="Player" parent="." instance=ExtResource("2_u65lr")]
+position = Vector2(-8, 16)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_left = -10000
+limit_top = -10000
+limit_right = 10000
+limit_bottom = 10000
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("3_jdopy")
+format = 2
+layer_0/tile_data = PackedInt32Array(131071, 5, 0, 65536, 8, 0, 131073, 8, 0, 196610, 8, 0, 262147, 4, 0, 262148, 4, 0, 262149, 4, 0, 262150, 4, 0, 262151, 8, 0, 327688, 8, 0, 393225, 4, 0, 393226, 4, 0, 393227, 4, 0, 393228, 8, 0, 458765, 4, 0, 458766, 4, 0, 458767, 8, 0, 524304, 4, 0, 524305, 4, 0, 524306, 4, 0, 524307, 4, 0, 524308, 4, 0, 524309, 4, 0, 524310, 4, 0, 524311, 4, 0, 524312, 4, 0, 524313, 4, 0, 524314, 4, 0, 524315, 4, 0, 524316, 4, 0, 524317, 4, 0, 524318, 4, 0, 524319, 4, 0, 524320, 4, 0, 524321, 4, 0, 524322, 4, 0, 524323, 4, 0, 524324, 4, 0, 524325, 4, 0, 524326, 4, 0, 524327, 4, 0, 524328, 4, 0, 524329, 4, 0, 524330, 4, 0, 524331, 4, 0, 524332, 4, 0, 524333, 4, 0, 524334, 4, 0, 524335, 4, 0, 196607, 3, 0, 262143, 3, 0, 327679, 3, 0, 393215, 3, 0, 458751, 3, 0, 524287, 3, 0, 589823, 3, 0, 655359, 3, 0, 720895, 3, 0, 786431, 3, 0, 851967, 3, 0, 917503, 3, 0, 131072, 3, 0, 196608, 3, 0, 262144, 3, 0, 327680, 3, 0, 393216, 3, 0, 458752, 3, 0, 524288, 3, 0, 589824, 3, 0, 655360, 3, 0, 720896, 3, 0, 786432, 3, 0, 851968, 3, 0, 196609, 3, 0, 262145, 3, 0, 327681, 3, 0, 393217, 3, 0, 458753, 3, 0, 524289, 3, 0, 589825, 3, 0, 655361, 3, 0, 720897, 3, 0, 786433, 3, 0, 851969, 3, 0, 262146, 3, 0, 327682, 3, 0, 393218, 3, 0, 458754, 3, 0, 524290, 3, 0, 589826, 3, 0, 655362, 3, 0, 720898, 3, 0, 786434, 3, 0, 851970, 3, 0, 327683, 3, 0, 393219, 3, 0, 458755, 3, 0, 524291, 3, 0, 589827, 3, 0, 655363, 3, 0, 720899, 3, 0, 327684, 3, 0, 393220, 3, 0, 458756, 3, 0, 524292, 3, 0, 589828, 3, 0, 655364, 3, 0, 720900, 3, 0, 327685, 3, 0, 393221, 3, 0, 458757, 3, 0, 524293, 3, 0, 589829, 3, 0, 655365, 3, 0, 720901, 3, 0, 327686, 3, 0, 393222, 3, 0, 458758, 3, 0, 524294, 3, 0, 589830, 3, 0, 655366, 3, 0, 720902, 3, 0, 327687, 3, 0, 393223, 3, 0, 458759, 3, 0, 524295, 3, 0, 589831, 3, 0, 655367, 3, 0, 720903, 3, 0, 786435, 3, 0, 851971, 3, 0, 786436, 3, 0, 851972, 3, 0, 786437, 3, 0, 851973, 3, 0, 786438, 3, 0, 851974, 3, 0, 786439, 3, 0, 851975, 3, 0, 393224, 3, 0, 458760, 3, 0, 524296, 3, 0, 589832, 3, 0, 655368, 3, 0, 720904, 3, 0, 786440, 3, 0, 851976, 3, 0, 458761, 3, 0, 524297, 3, 0, 589833, 3, 0, 655369, 3, 0, 720905, 3, 0, 786441, 3, 0, 851977, 3, 0, 458762, 3, 0, 524298, 3, 0, 589834, 3, 0, 655370, 3, 0, 720906, 3, 0, 786442, 3, 0, 851978, 3, 0, 458763, 3, 0, 524299, 3, 0, 589835, 3, 0, 655371, 3, 0, 720907, 3, 0, 786443, 3, 0, 851979, 3, 0, 458764, 3, 0, 524300, 3, 0, 589836, 3, 0, 655372, 3, 0, 720908, 3, 0, 786444, 3, 0, 851980, 3, 0, 524301, 3, 0, 589837, 3, 0, 655373, 3, 0, 720909, 3, 0, 786445, 3, 0, 851981, 3, 0, 524302, 3, 0, 589838, 3, 0, 655374, 3, 0, 720910, 3, 0, 786446, 3, 0, 851982, 3, 0, 524303, 3, 0, 589839, 3, 0, 655375, 3, 0, 720911, 3, 0, 786447, 3, 0, 851983, 3, 0, 589840, 3, 0, 655376, 3, 0, 720912, 3, 0, 786448, 3, 0, 851984, 3, 0, 589841, 3, 0, 655377, 3, 0, 720913, 3, 0, 786449, 3, 0, 851985, 3, 0, 589842, 3, 0, 655378, 3, 0, 720914, 3, 0, 786450, 3, 0, 851986, 3, 0, 589843, 3, 0, 655379, 3, 0, 720915, 3, 0, 786451, 3, 0, 851987, 3, 0, 589844, 3, 0, 655380, 3, 0, 720916, 3, 0, 786452, 3, 0, 851988, 3, 0, 589845, 3, 0, 655381, 3, 0, 720917, 3, 0, 786453, 3, 0, 851989, 3, 0, 589846, 3, 0, 655382, 3, 0, 720918, 3, 0, 786454, 3, 0, 851990, 3, 0, 589847, 3, 0, 655383, 3, 0, 720919, 3, 0, 786455, 3, 0, 851991, 3, 0, 589848, 3, 0, 655384, 3, 0, 720920, 3, 0, 786456, 3, 0, 851992, 3, 0, 589849, 3, 0, 655385, 3, 0, 720921, 3, 0, 786457, 3, 0, 851993, 3, 0, 589850, 3, 0, 655386, 3, 0, 720922, 3, 0, 786458, 3, 0, 851994, 3, 0, 589851, 3, 0, 655387, 3, 0, 720923, 3, 0, 786459, 3, 0, 851995, 3, 0, 589852, 3, 0, 655388, 3, 0, 720924, 3, 0, 786460, 3, 0, 851996, 3, 0, 589853, 3, 0, 655389, 3, 0, 720925, 3, 0, 786461, 3, 0, 851997, 3, 0, 589854, 3, 0, 655390, 3, 0, 720926, 3, 0, 786462, 3, 0, 851998, 3, 0, 589855, 3, 0, 655391, 3, 0, 720927, 3, 0, 786463, 3, 0, 851999, 3, 0, 589856, 3, 0, 655392, 3, 0, 720928, 3, 0, 786464, 3, 0, 852000, 3, 0, 589857, 3, 0, 655393, 3, 0, 720929, 3, 0, 786465, 3, 0, 852001, 3, 0, 589858, 3, 0, 655394, 3, 0, 720930, 3, 0, 786466, 3, 0, 852002, 3, 0, 589859, 3, 0, 655395, 3, 0, 720931, 3, 0, 786467, 3, 0, 852003, 3, 0, 589860, 3, 0, 655396, 3, 0, 720932, 3, 0, 786468, 3, 0, 852004, 3, 0, 589861, 3, 0, 655397, 3, 0, 720933, 3, 0, 786469, 3, 0, 852005, 3, 0, 589862, 3, 0, 655398, 3, 0, 720934, 3, 0, 786470, 3, 0, 852006, 3, 0, 589863, 3, 0, 655399, 3, 0, 720935, 3, 0, 786471, 3, 0, 852007, 3, 0, 589864, 3, 0, 655400, 3, 0, 720936, 3, 0, 786472, 3, 0, 852008, 3, 0, 589865, 3, 0, 655401, 3, 0, 720937, 3, 0, 786473, 3, 0, 852009, 3, 0, 589866, 3, 0, 655402, 3, 0, 720938, 3, 0, 786474, 3, 0, 852010, 3, 0, 589867, 3, 0, 655403, 3, 0, 720939, 3, 0, 786475, 3, 0, 852011, 3, 0, 589868, 3, 0, 655404, 3, 0, 720940, 3, 0, 786476, 3, 0, 852012, 3, 0, 589869, 3, 0, 655405, 3, 0, 720941, 3, 0, 786477, 3, 0, 852013, 3, 0, 589870, 3, 0, 655406, 3, 0, 720942, 3, 0, 786478, 3, 0, 852014, 3, 0, 589871, 3, 0, 655407, 3, 0, 720943, 3, 0, 786479, 3, 0, 852015, 3, 0, 327719, 4, 0, 327720, 4, 0, 327721, 4, 0)
+
+[node name="HUD" parent="." instance=ExtResource("4_uopvd")]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
+
+[node name="SkyLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(799, 639)
+
+[node name="night-sky" parent="ParallaxBackground/SkyLayer" instance=ExtResource("5_sga06")]
+autoplay = "default"
+centered = false
+
+[node name="BackgroundMusic" parent="." instance=ExtResource("6_bjili")]
+
+[node name="Pause" parent="." instance=ExtResource("7_mhdv0")]
+
+[node name="Emeralds" type="Node" parent="."]
+
+[node name="EmeraldBody" parent="Emeralds" instance=ExtResource("8_7mw1v")]
+position = Vector2(1152, 320)
+
+[node name="EmeraldBody2" parent="Emeralds" instance=ExtResource("8_7mw1v")]
+position = Vector2(1280, 320)
+
+[node name="EmeraldBody3" parent="Emeralds" instance=ExtResource("8_7mw1v")]
+position = Vector2(1408, 320)
+
+[node name="sfx" parent="." instance=ExtResource("9_51hl1")]
+
+[node name="Rubies" type="Node" parent="."]
+
+[node name="RubyArea" parent="Rubies" instance=ExtResource("10_ljlj5")]
+position = Vector2(1896, 392)
+
+[node name="RubyArea2" parent="Rubies" instance=ExtResource("10_ljlj5")]
+position = Vector2(1840, 392)
+
+[node name="RubyArea3" parent="Rubies" instance=ExtResource("10_ljlj5")]
+position = Vector2(1776, 392)
+
+[node name="RubyArea4" parent="Rubies" instance=ExtResource("10_ljlj5")]
+position = Vector2(1712, 392)
+
+[node name="RubyArea5" parent="Rubies" instance=ExtResource("10_ljlj5")]
+position = Vector2(1656, 392)
+
+[node name="LevelTimer" type="Timer" parent="."]
+
+[node name="DebugStartPosition" type="Marker2D" parent="."]
+position = Vector2(-208, 40)
+
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody2" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emeralds/EmeraldBody3" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="ruby_collected" from="Rubies/RubyArea" to="Player" method="_on_ruby_area_ruby_collected"]
+[connection signal="ruby_collected" from="Rubies/RubyArea2" to="Player" method="_on_ruby_area_ruby_collected"]
+[connection signal="ruby_collected" from="Rubies/RubyArea3" to="Player" method="_on_ruby_area_ruby_collected"]
+[connection signal="ruby_collected" from="Rubies/RubyArea4" to="Player" method="_on_ruby_area_ruby_collected"]
+[connection signal="ruby_collected" from="Rubies/RubyArea5" to="Player" method="_on_ruby_area_ruby_collected"]

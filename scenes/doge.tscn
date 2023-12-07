@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0y861cwaornh"]
+
+[ext_resource type="Script" path="res://scripts/doge.gd" id="1_mf1ra"]
+[ext_resource type="PackedScene" uid="uid://cm0gxnvlssvkx" path="res://assets/characters/companion/doge.aseprite" id="2_q0a6f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6qsce"]
+
+[node name="doge" type="CharacterBody2D"]
+script = ExtResource("1_mf1ra")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6qsce")
+
+[node name="doge" parent="." instance=ExtResource("2_q0a6f")]

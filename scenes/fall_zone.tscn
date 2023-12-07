@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://17yam4n7xpb6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j8omb"]
+
+[node name="FallZone" type="Area2D"]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j8omb")

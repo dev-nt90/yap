@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7ospmgpaaaai"]
+
+[ext_resource type="AudioStream" uid="uid://dhlgh53bp1vgb" path="res://assets/audio/012_Sirens_in_Darkness.mp3" id="1_ou0ro"]
+[ext_resource type="AudioStream" uid="uid://cl53wqemkbfqd" path="res://assets/audio/space.mp3" id="2_kuo6i"]
+[ext_resource type="AudioStream" uid="uid://bnfjfs2ejjn4h" path="res://assets/audio/ObservingTheStar.ogg" id="3_xug0a"]
+[ext_resource type="AudioStream" uid="uid://sykekn8h5cpb" path="res://assets/audio/arcticambienttheme.wav" id="4_fxxq8"]
+[ext_resource type="AudioStream" uid="uid://cmdnx2bfkar2g" path="res://assets/audio/the charm 68.wav" id="5_advhf"]
+
+[node name="BackgroundMusic" type="Node"]
+
+[node name="SirensInDarkness" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_ou0ro")
+bus = &"Music"
+
+[node name="SpaceOrchestral" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_kuo6i")
+bus = &"Music"
+
+[node name="ObservingTheStar" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xug0a")
+
+[node name="AmbientArctic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_fxxq8")
+
+[node name="TheCharm68" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_advhf")
