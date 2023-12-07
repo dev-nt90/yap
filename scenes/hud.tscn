@@ -1,0 +1,156 @@
+[gd_scene load_steps=19 format=3 uid="uid://bdgmlurbq10bq"]
+
+[ext_resource type="PackedScene" uid="uid://bkvqfcsye1sq7" path="res://scenes/ui/pause_menu.tscn" id="1_402ma"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_n8dob"]
+[ext_resource type="PackedScene" uid="uid://3o0jms1uw10g" path="res://assets/gems/ruby.aseprite" id="3_u5is0"]
+[ext_resource type="PackedScene" uid="uid://s60m6a1gqyqs" path="res://assets/gems/emerald.aseprite" id="4_q6wq3"]
+[ext_resource type="Texture2D" uid="uid://du5qhx4cjjd24" path="res://assets/gems/emerald.png" id="5_jd7kl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcrqt"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(0, 0, 40, 39)
+margin = Rect2(3, 1, 8, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q64cr"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(40, 0, 40, 39)
+margin = Rect2(3, 1, 8, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2kis"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(120, 38, 39, 38)
+margin = Rect2(3, 2, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5lr1"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(77, 39, 38, 37)
+margin = Rect2(4, 3, 10, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw3x1"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(38, 76, 37, 36)
+margin = Rect2(5, 3, 11, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phti0"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(75, 76, 37, 36)
+margin = Rect2(5, 2, 11, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77i3f"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(38, 39, 39, 37)
+margin = Rect2(4, 1, 9, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c18ks"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(120, 0, 40, 38)
+margin = Rect2(3, 1, 8, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsivj"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(80, 0, 40, 39)
+margin = Rect2(3, 1, 8, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hej1"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(0, 39, 38, 38)
+margin = Rect2(4, 2, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3o5d"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(112, 76, 37, 36)
+margin = Rect2(5, 3, 11, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y47xa"]
+atlas = ExtResource("5_jd7kl")
+region = Rect2(0, 77, 37, 36)
+margin = Rect2(5, 3, 11, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_glw4l"]
+animations = [{
+"frames": [{
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_tcrqt")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_q64cr")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_u2kis")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_c5lr1")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_mw3x1")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_phti0")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_77i3f")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_c18ks")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_hsivj")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_4hej1")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_q3o5d")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_y47xa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_n8dob")
+
+[node name="PauseMenu" parent="." instance=ExtResource("1_402ma")]
+
+[node name="TimeElapsedTimer" type="Timer" parent="."]
+
+[node name="TimeElapsedLabel" type="Label" parent="."]
+offset_left = 736.0
+offset_right = 800.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(0, 0.584314, 0.972549, 0.733333)
+text = "00:00"
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 53.0
+offset_bottom = 48.0
+scale = Vector2(3.36, 1)
+
+[node name="ruby" parent="." instance=ExtResource("3_u5is0")]
+position = Vector2(24, 24)
+
+[node name="RubyCount" type="Label" parent="."]
+offset_left = 40.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 39.0
+text = "X ##"
+
+[node name="emerald" parent="." instance=ExtResource("4_q6wq3")]
+position = Vector2(97, 28)
+scale = Vector2(0.666667, 0.668077)
+sprite_frames = SubResource("SpriteFrames_glw4l")
+
+[node name="EmeraldCount" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 16.0
+offset_right = 152.0
+offset_bottom = 39.0
+text = "X ##"
+
+[connection signal="timeout" from="TimeElapsedTimer" to="." method="_on_time_elapsed_timer_timeout"]

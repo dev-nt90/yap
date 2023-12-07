@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://j520piyp1nb7"]
+
+[ext_resource type="Script" path="res://scripts/ui/OptionsDialogue.gd" id="1_yvevn"]
+[ext_resource type="PackedScene" uid="uid://bqimkld2ov7k2" path="res://scenes/ui/volume_slider.tscn" id="2_acx33"]
+
+[node name="OptionsRoot" type="Node2D"]
+
+[node name="OptionsDialogue" type="Control" parent="."]
+visibility_layer = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -160.0
+offset_right = -200.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yvevn")
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="OptionsDialogue"]
+layout_mode = 1
+offset_right = 400.0
+offset_bottom = 320.0
+mouse_filter = 2
+color = Color(0.0980392, 0.415686, 0.392157, 0.956863)
+
+[node name="MusicVolumeLabel" type="Label" parent="OptionsDialogue"]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 32.0
+offset_right = 207.0
+offset_bottom = 55.0
+scale = Vector2(0.76, 0.76)
+text = "Music Volume:
+"
+
+[node name="SoundsVolumeLabel" type="Label" parent="OptionsDialogue"]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 141.0
+offset_bottom = 79.0
+scale = Vector2(0.68, 0.72)
+text = "Sounds Volume:
+"
+
+[node name="CloseOptionsButton" type="Button" parent="OptionsDialogue"]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 272.0
+offset_right = 66.0
+offset_bottom = 303.0
+text = "Close"
+
+[node name="MusicVolumeSlider" parent="OptionsDialogue" instance=ExtResource("2_acx33")]
+layout_mode = 1
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 272.0
+offset_bottom = 48.0
+bus_name = "Music"
+
+[node name="SfxVolumeSlider" parent="OptionsDialogue" instance=ExtResource("2_acx33")]
+layout_mode = 1
+offset_left = 112.0
+offset_top = 56.0
+offset_right = 272.0
+offset_bottom = 72.0
+bus_name = "sfx"
+
+[node name="MasterVolumeSlider" parent="OptionsDialogue" instance=ExtResource("2_acx33")]
+layout_mode = 1
+offset_left = 112.0
+offset_top = 8.0
+offset_right = 294.0
+offset_bottom = 24.0
+scale = Vector2(0.88, 1)
+bus_name = "Master"
+
+[node name="MasterVolumeLabel" type="Label" parent="OptionsDialogue"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 138.0
+offset_bottom = 31.0
+scale = Vector2(0.72, 0.72)
+text = "Master Volume:
+"
+
+[connection signal="pressed" from="OptionsDialogue/CloseOptionsButton" to="OptionsDialogue" method="_on_close_options_button_pressed"]

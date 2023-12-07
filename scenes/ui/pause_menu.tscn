@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkvqfcsye1sq7"]
+
+[ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_8ddln"]
+[ext_resource type="PackedScene" uid="uid://j520piyp1nb7" path="res://scenes/ui/options_dialogue.tscn" id="2_g3tv0"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ddln")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 640.0
+color = Color(0.0117647, 0.0509804, 0.0117647, 0.780392)
+
+[node name="PausedLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -13.0
+offset_right = 31.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.188235, 0.596078, 0, 1)
+text = "PAUSED"
+
+[node name="ResumeButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 576.0
+offset_right = 144.0
+offset_bottom = 624.0
+tooltip_text = "Resumes game progress"
+focus_neighbor_left = NodePath("../ExitGameButton")
+focus_neighbor_right = NodePath("../OptionsButton")
+focus_next = NodePath("../OptionsButton")
+focus_previous = NodePath("../ExitGameButton")
+theme_override_colors/icon_pressed_color = Color(2.45166e-07, 0.15704, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
+text = "Resume"
+
+[node name="RestartLevelButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 576.0
+offset_right = 576.0
+offset_bottom = 624.0
+tooltip_text = "Restarts the current level"
+focus_neighbor_left = NodePath("../OptionsButton")
+focus_neighbor_right = NodePath("../ExitGameButton")
+focus_next = NodePath("../ExitGameButton")
+focus_previous = NodePath("../OptionsButton")
+theme_override_colors/icon_pressed_color = Color(0, 0.156863, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
+text = "Restart Level"
+
+[node name="ExitGameButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 656.0
+offset_top = 576.0
+offset_right = 784.0
+offset_bottom = 624.0
+tooltip_text = "Exits the game"
+focus_neighbor_left = NodePath("../RestartLevelButton")
+focus_neighbor_right = NodePath("../ResumeButton")
+focus_next = NodePath("../ResumeButton")
+focus_previous = NodePath("../RestartLevelButton")
+text = "Exit Game"
+
+[node name="OptionsDialogue" parent="." instance=ExtResource("2_g3tv0")]
+position = Vector2(408, 328)
+
+[node name="OptionsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 576.0
+offset_right = 352.0
+offset_bottom = 624.0
+text = "Options"
+
+[connection signal="gui_input" from="ResumeButton" to="." method="_on_resume_button_gui_input"]
+[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="gui_input" from="RestartLevelButton" to="." method="_on_restart_level_button_gui_input"]
+[connection signal="pressed" from="RestartLevelButton" to="." method="_on_restart_level_button_pressed"]
+[connection signal="gui_input" from="ExitGameButton" to="." method="_on_exit_game_button_gui_input"]
+[connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
+[connection signal="gui_input" from="OptionsButton" to="." method="_on_options_button_gui_input"]
+[connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]

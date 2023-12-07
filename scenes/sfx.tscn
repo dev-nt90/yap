@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf2ud24sh5smk"]
+
+[ext_resource type="AudioStream" uid="uid://cg1qjrc0x7kgt" path="res://assets/audio/shimmer_1.wav" id="1_6dvgs"]
+
+[node name="sfx" type="Node"]
+
+[node name="emerald" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_6dvgs")
+
+[node name="ruby" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_6dvgs")

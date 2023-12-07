@@ -1,0 +1,128 @@
+[gd_scene load_steps=16 format=3 uid="uid://bo4m4oydfi67o"]
+
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="3_f7ybm"]
+[ext_resource type="Texture2D" uid="uid://d0rb863pxilcd" path="res://assets/Backgrounds/pixel_forest.png" id="4_1pshu"]
+[ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="4_pkuej"]
+[ext_resource type="Texture2D" uid="uid://ndhkbomh0af" path="res://assets/Backgrounds/background-grass-nosky-pixel.png" id="5_ceass"]
+[ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="6_woxiy"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="7_uld6p"]
+[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/ruby.tscn" id="8_dub7l"]
+[ext_resource type="AudioStream" uid="uid://cg1qjrc0x7kgt" path="res://assets/audio/shimmer_1.wav" id="9_xxyo2"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="11_f05sw"]
+[ext_resource type="PackedScene" uid="uid://17yam4n7xpb6" path="res://scenes/fall_zone.tscn" id="11_tl3af"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="12_7f6cn"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="12_umxwt"]
+
+[sub_resource type="GDScript" id="GDScript_sciwa"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    #https://opengameart.org/content/space-orchestral
+    $BackgroundMusic/SpaceOrchestral.play()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+    pass
+"
+
+[sub_resource type="Gradient" id="Gradient_s88b5"]
+offsets = PackedFloat32Array(0.0021645, 0.497835, 1)
+colors = PackedColorArray(0.811765, 0.937255, 0.988235, 1, 1, 1, 1, 1, 0.811765, 0.937255, 0.988235, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1t5w6"]
+gradient = SubResource("Gradient_s88b5")
+width = 800
+height = 640
+fill_from = Vector2(0.523077, 1)
+fill_to = Vector2(0.48547, 0)
+
+[node name="SceneRoot" type="Node2D"]
+script = SubResource("GDScript_sciwa")
+
+[node name="DebugStartPosition" type="Marker2D" parent="."]
+position = Vector2(-208, 72)
+
+[node name="LevelTimer" type="Timer" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_f7ybm")]
+position = Vector2(37.72, 75.305)
+debug = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_left = -5000
+limit_top = -5000
+limit_right = 5000
+limit_bottom = 5000
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("4_pkuej")
+format = 2
+layer_0/tile_data = PackedInt32Array(131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 131090, 0, 0, 131091, 0, 0, 196607, 4, 0, 196606, 4, 0, 196605, 4, 0, 196604, 4, 0, 196603, 4, 0, 196602, 4, 0, 196601, 4, 0, 196600, 4, 0, 196599, 4, 0, 196598, 4, 0, 196597, 4, 0, 196596, 4, 0, 196595, 4, 0, 196594, 4, 0, 196593, 4, 0, 196592, 4, 0, 196591, 4, 0, 196589, 4, 0, 196590, 4, 0, 196588, 4, 0, 196587, 4, 0, 196586, 4, 0, 196585, 4, 0, 196584, 4, 0, 196583, 4, 0, 131047, 4, 0, 65511, 4, 0, -25, 4, 0, -65561, 4, 0, -131097, 4, 0, -196633, 4, 0, -262169, 4, 0, -327705, 4, 0, -393241, 4, 0, -22, 4, 0, -65558, 4, 0, -131094, 4, 0, -196630, 4, 0, -262166, 4, 0, -327702, 4, 0, -393238, 4, 0, -458777, 4, 0, -524313, 4, 0, -589849, 4, 0, -655385, 4, 0, -720921, 4, 0, -720920, 4, 0, -720919, 4, 0, -720918, 4, 0, -720917, 4, 0, -458774, 4, 0, -458773, 4, 0, -458772, 4, 0, -458771, 4, 0, -458770, 4, 0, -458769, 4, 0, -458768, 4, 0, -458767, 4, 0, -458766, 4, 0, -458765, 4, 0, -458764, 4, 0, -458763, 4, 0, -458762, 4, 0, -458761, 4, 0, -458760, 4, 0, -458759, 4, 0, -458758, 4, 0, -458757, 4, 0, -458756, 4, 0, -458755, 4, 0, -458754, 4, 0, -524290, 4, 0, -589826, 4, 0, -655362, 4, 0, -720898, 4, 0, -786434, 4, 0, -851970, 4, 0, -917506, 4, 0, -983042, 4, 0, -1048578, 4, 0, -1114114, 4, 0, -1114115, 4, 0, -1114116, 4, 0, -1114117, 4, 0, -1114118, 4, 0, -1114119, 4, 0, -1114120, 4, 0, -1114121, 4, 0, -1114122, 4, 0, -1114123, 4, 0, -1114124, 4, 0, -1114125, 4, 0, -1114126, 4, 0, -1114127, 4, 0, -1114128, 4, 0, -1114129, 4, 0, -1114130, 4, 0, -1114131, 4, 0, -1114132, 4, 0, -1114133, 4, 0, -1114134, 4, 0, -1114135, 4, 0, -1114136, 4, 0, -1114137, 4, 0, -1114138, 4, 0, -720916, 4, 0, -720915, 4, 0, -720914, 4, 0, -720913, 4, 0, -720912, 4, 0, -720911, 4, 0, -720910, 4, 0, -720909, 4, 0, -720908, 4, 0, -720907, 4, 0, -720906, 4, 0, -720905, 4, 0, -720904, 4, 0, -720903, 4, 0, -720902, 4, 0, -786438, 4, 0, -851974, 4, 0, -917510, 4, 0, -917511, 4, 0, -917512, 4, 0, -917513, 4, 0, -917514, 4, 0, -917515, 4, 0, -917516, 4, 0, -917517, 4, 0, -917518, 4, 0, -917519, 4, 0, -917520, 4, 0, -917521, 4, 0, -917522, 4, 0, -917523, 4, 0, -917524, 4, 0, -917525, 4, 0, -917526, 4, 0, -917527, 4, 0, -917528, 4, 0, -917529, 4, 0, -917530, 4, 0, -917531, 4, 0, -1114139, 4, 0, -917532, 4, 0, -917534, 4, 0, -917533, 4, 0, -917535, 4, 0, -983071, 4, 0, -1048607, 4, 0, -655387, 4, 0, -589851, 4, 0, -524315, 4, 0, -524316, 4, 0, -720923, 4, 0, -786459, 4, 0, -851995, 4, 0, -786460, 4, 0, -1179648, 4, 0, -1179647, 4, 0, -1179646, 4, 0, -1114110, 4, 0, -1048574, 4, 0, -1048575, 4, 0, -1048576, 4, 0, -983040, 4, 0, -917504, 4, 0, -917503, 4, 0, -917502, 4, 0, -1114143, 4, 0, -1179679, 4, 0, -1245215, 4, 0, -1310751, 4, 0, -1376287, 4, 0, -1441823, 4, 0, -1507358, 4, 0, -1507359, 4, 0, -1507357, 4, 0, -1507356, 4, 0, -1507355, 4, 0, -1507354, 4, 0, -1507353, 4, 0, -1507352, 4, 0, -1507351, 4, 0, -1507350, 4, 0, -1507349, 4, 0, -1507348, 4, 0, -1507347, 4, 0, -1507346, 4, 0, -1507345, 4, 0, -1507344, 4, 0, -1507343, 4, 0, -1507342, 4, 0, -1507341, 4, 0, -1507340, 4, 0, -1507339, 4, 0, -1507338, 4, 0, -1507337, 4, 0, -1507336, 4, 0, -1507335, 4, 0, -1507334, 4, 0, -1507333, 4, 0, -1507332, 4, 0, -1507331, 4, 0, -1507330, 4, 0, -1507329, 4, 0, -1572864, 4, 0, -1507363, 4, 0, -1507362, 4, 0, -1507361, 4, 0, -1441825, 4, 0, -1376289, 4, 0, -1376290, 4, 0, -1310753, 4, 0, -1245217, 4, 0, -1245218, 4, 0, -1245219, 4, 0, -1179650, 4, 0, -1245186, 4, 0, -1245185, 4, 0, -1310720, 4, 0, -1310718, 4, 0, -1310719, 4, 0, -1310717, 4, 0, -1310716, 4, 0, -1376252, 4, 0, -1441788, 4, 0, -1507324, 4, 0, -1572860, 4, 0, -1638396, 4, 0, -1703932, 4, 0, -1769468, 4, 0, -1835004, 4, 0, -1900540, 4, 0, -1900541, 4, 0, -1900542, 4, 0, -1900543, 4, 0, -1900544, 4, 0, -1835009, 4, 0, -1835010, 4, 0, -1835011, 4, 0, -1835012, 4, 0, -1835013, 4, 0, -1835014, 4, 0, -1835015, 4, 0, -1835016, 4, 0, -1835017, 4, 0, -1835018, 4, 0, -1835019, 4, 0, -1835020, 4, 0, -1835021, 4, 0, -1835022, 4, 0, -1835023, 4, 0, -1835024, 4, 0, -1835025, 4, 0, -1835026, 4, 0, -1835027, 4, 0, -1835028, 4, 0, -1835029, 4, 0, -1835030, 4, 0, -1835031, 4, 0, -1835032, 4, 0, -1835033, 4, 0, -1835034, 4, 0, -1835035, 4, 0, -1835036, 4, 0, -1835037, 4, 0, -1835038, 4, 0, -1835039, 4, 0, -1835040, 4, 0, -1835041, 4, 0, -1835042, 4, 0, -1835043, 4, 0, -1572895, 4, 0, -1638431, 4, 0, -1638432, 4, 0, -1638433, 4, 0, -1638436, 4, 0, -1638435, 4, 0, -1638434, 4, 0, -1638437, 4, 0, -1638438, 4, 0, -1703974, 4, 0, -1769510, 4, 0, -1835046, 4, 0, -1900582, 4, 0, -1966118, 4, 0, -2031654, 4, 0, -2097190, 4, 0, -2162726, 4, 0, -2162725, 4, 0, -2162724, 4, 0, -2162723, 4, 0, -2162722, 4, 0, -2162721, 4, 0, -2162720, 4, 0, -2162719, 4, 0, -2162718, 4, 0, -2162717, 4, 0, -2162716, 4, 0, -2162715, 4, 0, -2162714, 4, 0, -2162713, 4, 0, -2162712, 4, 0, -2162728, 4, 0, -2162729, 4, 0, -2162730, 4, 0, -2097194, 4, 0, -2031658, 4, 0, -2031657, 4, 0, -2031656, 4, 0, -1966120, 4, 0, -1900584, 4, 0, -1900585, 4, 0, -1900586, 4, 0, -2162711, 4, 0, -2162710, 4, 0, -2162709, 4, 0, -2162708, 4, 0, -2162707, 4, 0, -2162706, 4, 0, -2162705, 4, 0, -2162704, 4, 0, -2162703, 4, 0, -2162702, 4, 0, -2162701, 4, 0, -2162700, 4, 0, -2162699, 4, 0, -2162698, 4, 0, -2162697, 4, 0, -2162696, 4, 0, -2162695, 4, 0, -2162694, 4, 0, -2162693, 4, 0, -2162692, 4, 0, -2162691, 4, 0, -2162690, 4, 0, -2162689, 4, 0, -2228224, 4, 0, -2228223, 4, 0, -2228222, 4, 0, -2228221, 4, 0, -2228220, 4, 0, -2228219, 4, 0, -2228218, 4, 0, -1966076, 4, 0, -2031612, 4, 0, -2031611, 4, 0, -1835002, 4, 0, -1769466, 4, 0, -1703930, 4, 0, -1703929, 4, 0, -1703928, 4, 0, -1769464, 4, 0, -1835000, 4, 0, -1638392, 4, 0, -1572856, 4, 0, -2031610, 4, 0, -2031609, 4, 0, -2031608, 4, 0, -2031607, 4, 0, -2031606, 4, 0, -2031605, 4, 0, -2097141, 4, 0, -2162677, 4, 0, -2228213, 4, 0, -2293749, 4, 0, -2359285, 4, 0, -2424821, 4, 0, -2490357, 4, 0, -2555893, 4, 0, -2621429, 4, 0, -2621430, 4, 0, -2621431, 4, 0, -2621432, 4, 0, -2621433, 4, 0, -2621434, 4, 0, -2621435, 4, 0, -2621436, 4, 0, -2621437, 4, 0, -2621438, 4, 0, -2621439, 4, 0, -2621440, 4, 0, -2555905, 4, 0, -2555906, 4, 0, -2555907, 4, 0, -2555908, 4, 0, -2555909, 4, 0, -2555910, 4, 0, -2555911, 4, 0, -2555912, 4, 0, -2555913, 4, 0, -2555914, 4, 0, -2555915, 4, 0, -2555916, 4, 0, -2555917, 4, 0, -2555918, 4, 0, -2555919, 4, 0, -2555920, 4, 0, -2621457, 4, 0, -2621458, 4, 0, -2621459, 4, 0, -2621460, 4, 0, -2621461, 4, 0, -2621462, 4, 0, -2621463, 4, 0, -2621464, 4, 0, -2621465, 4, 0, -2621466, 4, 0, -2621467, 4, 0, -2621468, 4, 0, -2621469, 4, 0, -2621470, 4, 0, -2621471, 4, 0, -2621472, 4, 0, -2621473, 4, 0, -2621474, 4, 0, -2621475, 4, 0, -2621476, 4, 0, -2621477, 4, 0, -2621478, 4, 0, -2621479, 4, 0, -2621480, 4, 0, -2621481, 4, 0, -2621482, 4, 0, -2621425, 4, 0, -2621426, 4, 0, -2621427, 4, 0, -2555891, 4, 0, -2490355, 4, 0, -2424819, 4, 0, -2359283, 4, 0, -2359282, 4, 0, -2359281, 4, 0, -2424817, 4, 0, -2490353, 4, 0, -2490354, 4, 0, -2228262, 4, 0, -2293798, 4, 0, -2293800, 4, 0, -2293799, 4, 0, -2293801, 4, 0, -2293802, 4, 0, -2293803, 4, 0, -2293804, 4, 0, -2293805, 4, 0, -2359341, 4, 0, -2424877, 4, 0, -2490413, 4, 0, -2555949, 4, 0, -2621485, 4, 0, -2687021, 4, 0, -2752557, 4, 0, -2818093, 4, 0, -2883629, 4, 0, -2949165, 4, 0, -3014701, 4, 0, -3080237, 4, 0, -3014705, 4, 0, -3014704, 4, 0, -3014703, 4, 0, -2949167, 4, 0, -2883631, 4, 0, -2818095, 4, 0, -3080236, 4, 0, -3080235, 4, 0, -3080234, 4, 0, -3080233, 4, 0, -3080232, 4, 0, -3080231, 4, 0, -3080230, 4, 0, -3080229, 4, 0)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="BackgroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(800, 640)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BackgroundLayer"]
+texture = SubResource("GradientTexture2D_1t5w6")
+centered = false
+
+[node name="SkyLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1024, 0)
+
+[node name="SkySprite" type="Sprite2D" parent="ParallaxBackground/SkyLayer"]
+position = Vector2(0, -544)
+texture = ExtResource("4_1pshu")
+centered = false
+
+[node name="NearbyLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/NearbyLayer"]
+position = Vector2(0, -400)
+texture = ExtResource("5_ceass")
+centered = false
+
+[node name="BackgroundMusic" parent="." instance=ExtResource("12_7f6cn")]
+
+[node name="HUD" parent="." instance=ExtResource("7_uld6p")]
+
+[node name="FallZone" parent="." instance=ExtResource("11_tl3af")]
+position = Vector2(1080, 352)
+scale = Vector2(1670.69, -4.27601)
+
+[node name="Pause" parent="." instance=ExtResource("6_woxiy")]
+
+[node name="Rubies" type="Node2D" parent="."]
+
+[node name="RubyArea" parent="Rubies" instance=ExtResource("8_dub7l")]
+position = Vector2(240, 72)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Rubies"]
+stream = ExtResource("9_xxyo2")
+bus = &"sfx"
+
+[node name="Emerald" type="Node2D" parent="."]
+
+[node name="EmeraldBody" parent="Emerald" instance=ExtResource("11_f05sw")]
+position = Vector2(512, -2656)
+
+[node name="EmeraldBody2" parent="Emerald" instance=ExtResource("11_f05sw")]
+position = Vector2(-448, -48)
+
+[node name="sfx" parent="." instance=ExtResource("12_umxwt")]
+
+[connection signal="ruby_collected" from="Rubies/RubyArea" to="Player" method="_on_ruby_area_ruby_collected"]
+[connection signal="emerald_collected" from="Emerald/EmeraldBody" to="Player" method="_on_emerald_body_emerald_collected"]
+[connection signal="emerald_collected" from="Emerald/EmeraldBody2" to="Player" method="_on_emerald_body_emerald_collected"]
