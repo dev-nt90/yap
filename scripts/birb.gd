@@ -11,7 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
     if is_companion:
-        leader = get_node("/root/SceneRoot/Player")
+        leader = get_node("/root/SceneManager/CurrentScene/SceneRoot/Player")
     $seagull.play()
     
 func _process(_delta):

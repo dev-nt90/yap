@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://b16xir6lb2vsh"]
+
+[ext_resource type="PackedScene" uid="uid://s60m6a1gqyqs" path="res://assets/gems/emerald.aseprite" id="1_1g1q4"]
+[ext_resource type="Script" path="res://scripts/ui/end_requirement_popup.gd" id="1_7eo42"]
+[ext_resource type="PackedScene" uid="uid://3o0jms1uw10g" path="res://assets/gems/ruby.aseprite" id="2_isnic"]
+
+[node name="EndRequirementPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7eo42")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 72.0
+color = Color(0, 0, 0, 0.603922)
+
+[node name="emerald" parent="." instance=ExtResource("1_1g1q4")]
+position = Vector2(32, 32)
+
+[node name="ruby" parent="." instance=ExtResource("2_isnic")]
+position = Vector2(224, 32)
+
+[node name="EmeraldRequirementLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 24.0
+offset_right = 166.0
+offset_bottom = 47.0
+bbcode_enabled = true
+text = "X ##/## (##%)"
+
+[node name="RubyRequirementLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 24.0
+offset_right = 350.0
+offset_bottom = 47.0
+bbcode_enabled = true
+text = "X ##/## (##%)"

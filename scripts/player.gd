@@ -2,10 +2,13 @@
 # Figure out how DI works in GDScript and move this impl logic into animation/physics/state controllers/services/etc
 extends CharacterBody2D
 
+signal cutscene_entered
+
 enum States {
     AIR = 1,
     FLOOR,
-    WALL
+    WALL,
+    CUTSCENE
 }
 
 # set to TRUE to have player spawn in at "DebugStartPosition" node
@@ -30,11 +33,17 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
     disable_friction_smoke()
+    set_physics_process(false)
+    
     if debug:
+        set_physics_process(true)
+        $LevelTransitionBackground.visible = false
         var debugStartPosition = get_parent().get_node("DebugStartPosition")
         position.x = debugStartPosition.position.x
-        position.y = debugStartPosition.position.x
-    
+        position.y = debugStartPosition.position.y
+        
+
+        
 func _physics_process(delta):
     handle_state(delta)
     handle_sprint()
@@ -77,11 +86,14 @@ func handle_state_agnostic():
     # apply horizontal flipping to our currently playing animation and wallchecker
     if(direction < 0):
         $HeroWalkSprite.flip_h = true
+        $CollisionShape2D.rotation_degrees = 180.0
         $WallChecker.rotation_degrees = 90
     elif(direction > 0):
         $HeroWalkSprite.flip_h = false
+        $CollisionShape2D.rotation_degrees = 0.0
         $WallChecker.rotation_degrees = -90
-
+    
+    #assert_can_climb()
     move_and_slide()
 
 func handle_floor_state():
@@ -271,7 +283,7 @@ func disable_friction_smoke():
     $FrictionSmoke.emitting = false
 
 func _on_fall_zone_body_entered(_body):
-    get_tree().reload_current_scene()
+    SceneManager.reload_scene()
 
 func _on_ruby_area_ruby_collected():
     get_parent().get_node("HUD").increment_ruby_count()
@@ -285,3 +297,52 @@ func _on_emerald_body_emerald_collected():
     get_parent().get_node("HUD").increment_emerald_count()
     var emerald = get_parent().get_node("sfx").get_node("emerald")
     emerald.play()
+
+func emit_cutscene_entered():
+    emit_signal("cutscene_entered")
+    print("cutscene_entered")
+    current_state = States.CUTSCENE
+
+
+func _on_animation_player_animation_finished(anim_name):
+    if debug:
+        return
+    if anim_name == "level_transition":
+        set_physics_process(true)
+        $CollisionShape2D.disabled = false
+        $LevelTransitionBackground.visible = false
+
+
+func _on_animation_player_animation_started(anim_name):
+    if debug:
+        return
+    if anim_name == "level_transition":
+        $CollisionShape2D.disabled = true
+        $LevelTransitionBackground.visible = true
+
+func _on_end_hint_area_body_entered(_body):
+    var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
+    var emerald_denom = get_parent().get_node("LevelExitRequirements").get_emeralds_required()
+    
+    var ruby_num = get_parent().get_node("HUD").get_current_ruby_count()
+    var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
+    
+    get_parent().get_node("EndHintArea/EndRequirementPopup").set_ruby_progress(ruby_num, ruby_denom)
+    get_parent().get_node("EndHintArea/EndRequirementPopup").set_emerald_progress(emerald_num, emerald_denom)
+    
+    get_parent().get_node("EndHintArea/EndRequirementPopup").visible = true
+
+func _on_end_hint_area_body_exited(_body):
+    get_parent().get_node("EndHintArea/EndRequirementPopup").visible = false
+
+
+func _on_cabin_area_level_end_area_entered():
+    var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
+    var emerald_denom = get_parent().get_node("LevelExitRequirements").get_emeralds_required()
+    
+    var ruby_num = get_parent().get_node("HUD").get_current_ruby_count()
+    var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
+    
+    if ruby_num >= ruby_denom and emerald_num >= emerald_denom:
+        SceneManager.next_level()
+        

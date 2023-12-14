@@ -1,22 +1,51 @@
-[gd_scene load_steps=12 format=3 uid="uid://gir16deu86n3"]
+[gd_scene load_steps=13 format=3 uid="uid://gir16deu86n3"]
 
-[ext_resource type="Script" path="res://scripts/ui/title_menu/title_menu.gd" id="1_14s5c"]
+[ext_resource type="Script" path="res://scripts/ui/title_menu.gd" id="1_03tm5"]
 [ext_resource type="Texture2D" uid="uid://dai4cvyu2itiw" path="res://assets/Backgrounds/backgroundCastles.png" id="2_y037s"]
 [ext_resource type="Texture2D" uid="uid://bkost1drhjct5" path="res://assets/ui/title.aseprite" id="3_w0yp5"]
 [ext_resource type="Texture2D" uid="uid://df7hk44pt5yc7" path="res://assets/ui/tagline.aseprite" id="4_qh30a"]
 [ext_resource type="PackedScene" uid="uid://j520piyp1nb7" path="res://scenes/ui/options_dialogue.tscn" id="5_s5w1l"]
-[ext_resource type="Script" path="res://scripts/ui/title_menu/BirbSpawner.gd" id="6_weu0u"]
-[ext_resource type="Script" path="res://scripts/ui/title_menu/BirbDespawnAreaLeft.gd" id="7_cix4g"]
-[ext_resource type="Script" path="res://scripts/ui/title_menu/BirbDespawnAreaRight.gd" id="8_n8057"]
+[ext_resource type="Texture2D" uid="uid://bsu52vsbprepl" path="res://assets/characters/birb/seagull2.png" id="7_hakht"]
+[ext_resource type="Texture2D" uid="uid://daqwp7pqeu534" path="res://assets/characters/birb/seagull.png" id="7_rdb0f"]
 [ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="9_jjxa5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hverk"]
-size = Vector2(50, 21.3355)
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sr3um"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jd7b0"]
-size = Vector2(61, 1280)
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kxv2v"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 400, 1)
+angle_min = -45.4
+direction = Vector3(100, 85.75, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+angular_velocity_min = 1.0
+angular_velocity_max = 1.0
+gravity = Vector3(100, 20.075, 0)
+anim_speed_min = 5.0
+anim_speed_max = 16.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_upwp8"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rho5v"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 100, 1)
+gravity = Vector3(-100, 45, 0)
+anim_speed_min = 20.0
+anim_speed_max = 20.0
 
 [node name="TitleMenu" type="Node2D"]
+script = ExtResource("1_03tm5")
 
 [node name="TitleMenuUi" type="Control" parent="."]
 layout_mode = 3
@@ -25,7 +54,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_14s5c")
 
 [node name="Background" type="TextureRect" parent="TitleMenuUi"]
 layout_mode = 0
@@ -81,44 +109,29 @@ texture = ExtResource("4_qh30a")
 [node name="OptionsDialogue" parent="TitleMenuUi" instance=ExtResource("5_s5w1l")]
 position = Vector2(416, 320)
 
-[node name="BirbSpawner" type="Node2D" parent="."]
-script = ExtResource("6_weu0u")
+[node name="LeftBirbParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_sr3um")
+position = Vector2(-56, 272)
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_kxv2v")
+texture = ExtResource("7_hakht")
+lifetime = 6.0
+randomness = 0.5
 
-[node name="BirbSpawnPointLeft" type="Marker2D" parent="BirbSpawner"]
-position = Vector2(-48, 336)
-
-[node name="BirbSpawnPointRight" type="Marker2D" parent="BirbSpawner"]
-position = Vector2(1088, 352)
-
-[node name="BirbDespawnAreaLeft" type="Area2D" parent="BirbSpawner"]
-position = Vector2(-288, 400)
-scale = Vector2(1.883, 1000)
-script = ExtResource("7_cix4g")
-metadata/_edit_group_ = true
-
-[node name="BirbDespawnLeft" type="CollisionShape2D" parent="BirbSpawner/BirbDespawnAreaLeft"]
-shape = SubResource("RectangleShape2D_hverk")
-
-[node name="BirbDespawnAreaRight" type="Area2D" parent="BirbSpawner"]
-position = Vector2(1184, 344)
-scale = Vector2(1, 16.68)
-script = ExtResource("8_n8057")
-metadata/_edit_group_ = true
-
-[node name="BirbDespawnRight" type="CollisionShape2D" parent="BirbSpawner/BirbDespawnAreaRight"]
-shape = SubResource("RectangleShape2D_jd7b0")
-
-[node name="Timer" type="Timer" parent="BirbSpawner"]
-wait_time = 2.0
-autostart = true
+[node name="RightBirbParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_upwp8")
+position = Vector2(1128, 272)
+scale = Vector2(1.58893, 2.56683)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_rho5v")
+texture = ExtResource("7_rdb0f")
+lifetime = 7.0
 
 [node name="BackgroundMusic" parent="." instance=ExtResource("9_jjxa5")]
 
-[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/StartButton" to="TitleMenuUi" method="_on_start_button_gui_input"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/StartButton" to="TitleMenuUi" method="_on_start_button_pressed"]
-[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/ExitButton" to="TitleMenuUi" method="_on_exit_button_gui_input"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/ExitButton" to="TitleMenuUi" method="_on_exit_button_pressed"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/OptionsButton" to="TitleMenuUi" method="_on_options_button_pressed"]
-[connection signal="body_entered" from="BirbSpawner/BirbDespawnAreaLeft" to="BirbSpawner/BirbDespawnAreaLeft" method="_on_body_entered"]
-[connection signal="body_entered" from="BirbSpawner/BirbDespawnAreaRight" to="BirbSpawner/BirbDespawnAreaRight" method="_on_body_entered"]
-[connection signal="timeout" from="BirbSpawner/Timer" to="BirbSpawner" method="_on_timer_timeout"]
+[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/StartButton" to="." method="_on_start_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/ReferenceRect/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/ExitButton" to="." method="_on_exit_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/ReferenceRect/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/OptionsButton" to="." method="_on_options_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/ReferenceRect/OptionsButton" to="." method="_on_options_button_pressed"]

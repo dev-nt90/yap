@@ -12,11 +12,13 @@ func _process(_delta):
         get_tree().paused = !get_tree().paused
         
         var is_paused = get_tree().paused
-        var pause_menu = get_node("/root/SceneRoot/HUD/PauseMenu") # TODO: referencing the pause menu directly sucks; refactor this 
+        
+        var pause_menu =  get_parent().get_node("HUD/PauseMenu")
         
         # did we just pause or unpause?
         if not is_paused:
             pause_menu.hide()
         else:
             pause_menu.show()
-            get_node("/root/SceneRoot/HUD/PauseMenu/ResumeButton").grab_focus() # TODO: referencing the pause menu directly sucks; refactor this 
+            pause_menu.get_node("ResumeButton").grab_focus()
+            #get_node("/root/SceneManager/CurrentScene/SceneRoot/HUD/PauseMenu/ResumeButton").grab_focus() # TODO: referencing the pause menu directly sucks; refactor this 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbsrsboygmfxp"]
+[gd_scene load_steps=8 format=3 uid="uid://bbsrsboygmfxp"]
 
+[ext_resource type="Script" path="res://scripts/cabin.gd" id="1_2rqct"]
 [ext_resource type="Texture2D" uid="uid://cncn1aex7t0i4" path="res://assets/structures/cabin.aseprite" id="1_jewh2"]
 [ext_resource type="Texture2D" uid="uid://co618rylqxboc" path="res://assets/particles/smoke-smudge.aseprite" id="2_m4tht"]
 
@@ -26,6 +27,8 @@ scale_max = 0.75
 color_ramp = SubResource("GradientTexture1D_i88jo")
 
 [node name="CabinArea" type="Area2D"]
+collision_layer = 32
+script = ExtResource("1_2rqct")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -44,3 +47,5 @@ texture = ExtResource("2_m4tht")
 lifetime = 3.0
 speed_scale = 2.01
 fixed_fps = 60
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

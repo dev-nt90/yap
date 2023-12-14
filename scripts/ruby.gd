@@ -6,12 +6,6 @@ signal ruby_collected
 func _ready():
     $ruby.play()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-    pass
-
-
 func _on_body_entered(_body):
     # TODO play "collected" animation
     emit_signal("ruby_collected")

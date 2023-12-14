@@ -12,10 +12,6 @@ func _ready():
     $RubyCount.text = String(gemPattern % rubyCount)
     $EmeraldCount.text = String(gemPattern % emeraldCount)
 
-func _process(_delta):
-    pass
-
-
 func _on_time_elapsed_timer_timeout():
     seconds_elapsed += 1
     var seconds = seconds_elapsed % 60
@@ -30,3 +26,9 @@ func increment_ruby_count():
 func increment_emerald_count():
     emeraldCount += 1
     $EmeraldCount.text = String(gemPattern % emeraldCount)
+
+func get_current_ruby_count():
+    return rubyCount
+    
+func get_current_emerald_count():
+    return emeraldCount

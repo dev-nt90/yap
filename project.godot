@@ -13,7 +13,7 @@ config_version=5
 config/name="YAP"
 run/main_scene="res://scenes/ui/title_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/gems/emerald.png"
 
 [aseprite_importers]
 
@@ -21,7 +21,7 @@ aseprite_executable_path="G:\\dev\\gaming\\aseprite\\aseprite\\build\\bin\\asepr
 
 [autoload]
 
-Globals="*res://scripts/autoload/globals.gd"
+SceneManager="*res://scenes/scene_manager.tscn"
 
 [debug]
 
@@ -86,8 +86,10 @@ sprint={
 2d_physics/layer_4="item"
 2d_physics/layer_5="enemy"
 2d_physics/layer_6="structure"
+2d_physics/layer_7="ui_trigger"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

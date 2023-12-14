@@ -2,22 +2,27 @@ extends Control
 
 func _ready():
     # do not show pause menu initially
-    hide()
+    hide_all()
     
     # only care about pause menu stuff when the game is paused
     process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-    $OptionsDialogue.hide()
 
+func hide_all():
+    hide()
+    $OptionsDialogue.hide()
+    
 # mouse support
 # ResumeButton
 func _on_resume_button_pressed():
+    hide_all()
     get_tree().paused = false
-    get_node("/root/SceneRoot/HUD/PauseMenu").hide() # TODO: referencing the pause menu directly sucks; refactor this 
+    
     
 # RestartLevelButton
 func _on_restart_level_button_pressed():
+    hide_all()
     get_tree().paused = false # unpause the game, since we had to be paused to enter this function
-    get_tree().reload_current_scene()
+    SceneManager.reload_scene()
     
 # ExitGameButton
 func _on_exit_game_button_pressed():
