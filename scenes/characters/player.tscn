@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://dsxlweajxdtdf"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_utu5o"]
+[ext_resource type="Script" path="res://scripts/characters/player.gd" id="1_utu5o"]
 [ext_resource type="Script" path="res://scripts/player/AnimationPlayer.gd" id="2_gp3bp"]
-[ext_resource type="Script" path="res://scripts/cutscene_handler.gd" id="4_fwjqj"]
+[ext_resource type="Script" path="res://scripts/infra/cutscene_handler.gd" id="4_fwjqj"]
 [ext_resource type="Texture2D" uid="uid://co618rylqxboc" path="res://assets/particles/smoke-smudge.aseprite" id="4_r6wo7"]
 [ext_resource type="Texture2D" uid="uid://bxlwvd6v3beux" path="res://assets/characters/hero/hero-walk.png" id="5_1qdrv"]
 [ext_resource type="Texture2D" uid="uid://51vmsgpspqtw" path="res://assets/Backgrounds/level_transition.png" id="6_g6irq"]

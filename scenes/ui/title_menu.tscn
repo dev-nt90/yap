@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://j520piyp1nb7" path="res://scenes/ui/options_dialogue.tscn" id="5_s5w1l"]
 [ext_resource type="Texture2D" uid="uid://bsu52vsbprepl" path="res://assets/characters/birb/seagull2.png" id="7_hakht"]
 [ext_resource type="Texture2D" uid="uid://daqwp7pqeu534" path="res://assets/characters/birb/seagull.png" id="7_rdb0f"]
-[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="9_jjxa5"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="9_jjxa5"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_sr3um"]
 particles_animation = true

@@ -17,6 +17,7 @@ const SPEED = 10
 var projectile_ready = true
 var current_state = STATES.IDLE
 var player : CharacterBody2D = null
+var ground_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,9 +25,12 @@ func _ready():
     $ProjectileCooldownTimer.stop()
     $HealthBarContainer.set_max_value(max_health)
     $HealthBarContainer.set_current_value(max_health)
+    ground_position = position.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+    position.y = ground_position
+    velocity.y = 0 # no funny business ya hear?
     match current_state:
         STATES.IDLE:
             handle_idle_state()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://rmkpvhvohb6n"]
 
 [ext_resource type="PackedScene" uid="uid://3o0jms1uw10g" path="res://assets/gems/ruby.aseprite" id="1_s8h2s"]
-[ext_resource type="Script" path="res://scripts/ruby.gd" id="1_sefmu"]
+[ext_resource type="Script" path="res://scripts/collectibles/ruby.gd" id="1_sefmu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_irn6a"]
 radius = 8.0

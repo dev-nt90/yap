@@ -293,14 +293,13 @@ func disable_friction_smoke():
 func _on_fall_zone_body_entered(_body):
     SceneManager.reload_scene()
 
+# TODO: this should probably be handled by the ruby itself
 func _on_ruby_area_ruby_collected():
     get_parent().get_node("HUD").increment_ruby_count()
     var ruby = get_parent().get_node("sfx").get_node("ruby")
     ruby.play()
 
-func _on_cabin_area_body_entered(_body):
-    get_tree().change_scene_to_file("res://scenes/Level2.tscn")
-
+# TODO: this should probably be handled by the emerald itself
 func _on_emerald_body_emerald_collected():
     get_parent().get_node("HUD").increment_emerald_count()
     var emerald = get_parent().get_node("sfx").get_node("emerald")

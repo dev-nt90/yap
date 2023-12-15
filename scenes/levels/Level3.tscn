@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://csvaxf3y1hgxm"]
 
-[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="1_kw14g"]
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="1_kw14g"]
 [ext_resource type="Script" path="res://scripts/levels/Level3.gd" id="1_vuvr2"]
-[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="2_wjx7n"]
-[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="3_7tu2d"]
-[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="4_hmgyc"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/ui/hud.tscn" id="2_wjx7n"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="3_7tu2d"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="4_hmgyc"]
 [ext_resource type="TileSet" uid="uid://b8fc72ki0ddpb" path="res://assets/ice-world-tileset.tres" id="6_oohsl"]
 [ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="7_8dpo8"]
-[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="8_upopo"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/collectibles/emerald.tscn" id="8_upopo"]
 
 [sub_resource type="Gradient" id="Gradient_ch5by"]
 offsets = PackedFloat32Array(0, 0.529536, 1)

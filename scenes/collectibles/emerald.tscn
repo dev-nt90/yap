@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://rt7k6bliisl1"]
 
 [ext_resource type="PackedScene" uid="uid://s60m6a1gqyqs" path="res://assets/gems/emerald.aseprite" id="1_i7diu"]
-[ext_resource type="Script" path="res://scripts/emerald.gd" id="1_nanct"]
+[ext_resource type="Script" path="res://scripts/collectibles/emerald.gd" id="1_nanct"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8vtku"]
 radius = 16.0

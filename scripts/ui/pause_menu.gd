@@ -7,7 +7,7 @@ func _ready():
     # only care about pause menu stuff when the game is paused
     process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 
-func hide_all():
+func hide_all(): # TODO: this might be unnecessary since hiding the parent *should* hide its children
     hide()
     $OptionsDialogue.hide()
     

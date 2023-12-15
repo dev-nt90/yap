@@ -21,7 +21,7 @@ aseprite_executable_path="G:\\dev\\gaming\\aseprite\\aseprite\\build\\bin\\asepr
 
 [autoload]
 
-SceneManager="*res://scenes/scene_manager.tscn"
+SceneManager="*res://scenes/infra/scene_manager.tscn"
 
 [debug]
 

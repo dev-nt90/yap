@@ -1,18 +1,18 @@
 [gd_scene load_steps=11 format=3 uid="uid://b7uli15yp1d5b"]
 
-[ext_resource type="Script" path="res://scripts/Level2.gd" id="1_wp5rn"]
-[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="2_u65lr"]
+[ext_resource type="Script" path="res://scripts/levels/Level2.gd" id="1_lurlu"]
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="2_u65lr"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="3_jdopy"]
-[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="4_uopvd"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/ui/hud.tscn" id="4_uopvd"]
 [ext_resource type="PackedScene" uid="uid://dvytp401bv32h" path="res://assets/Backgrounds/night-sky.aseprite" id="5_sga06"]
-[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="6_bjili"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="6_bjili"]
 [ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="7_mhdv0"]
-[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="8_7mw1v"]
-[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="9_51hl1"]
-[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/ruby.tscn" id="10_ljlj5"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/collectibles/emerald.tscn" id="8_7mw1v"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="9_51hl1"]
+[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/collectibles/ruby.tscn" id="10_ljlj5"]
 
 [node name="SceneRoot" type="Node2D"]
-script = ExtResource("1_wp5rn")
+script = ExtResource("1_lurlu")
 
 [node name="Player" parent="." instance=ExtResource("2_u65lr")]
 position = Vector2(-8, -128)

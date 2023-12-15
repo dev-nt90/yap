@@ -1,22 +1,21 @@
-[gd_scene load_steps=25 format=3 uid="uid://bo4m4oydfi67o"]
+[gd_scene load_steps=24 format=3 uid="uid://bo4m4oydfi67o"]
 
-[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/player.tscn" id="3_f7ybm"]
+[ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="3_f7ybm"]
 [ext_resource type="Texture2D" uid="uid://d0rb863pxilcd" path="res://assets/Backgrounds/pixel_forest.png" id="4_1pshu"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="4_pkuej"]
 [ext_resource type="Texture2D" uid="uid://ndhkbomh0af" path="res://assets/Backgrounds/background-grass-nosky-pixel.png" id="5_ceass"]
 [ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="6_woxiy"]
-[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/hud.tscn" id="7_uld6p"]
-[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/ruby.tscn" id="8_dub7l"]
-[ext_resource type="AudioStream" uid="uid://cg1qjrc0x7kgt" path="res://assets/audio/shimmer_1.wav" id="9_xxyo2"]
-[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/emerald.tscn" id="11_f05sw"]
-[ext_resource type="PackedScene" uid="uid://17yam4n7xpb6" path="res://scenes/fall_zone.tscn" id="11_tl3af"]
-[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/background_music.tscn" id="12_7f6cn"]
-[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/sfx.tscn" id="12_umxwt"]
-[ext_resource type="PackedScene" uid="uid://ccr02pjl5ma4k" path="res://scenes/transition_scene.tscn" id="13_fx5w2"]
+[ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/ui/hud.tscn" id="7_uld6p"]
+[ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/collectibles/ruby.tscn" id="8_dub7l"]
+[ext_resource type="PackedScene" uid="uid://rt7k6bliisl1" path="res://scenes/collectibles/emerald.tscn" id="11_f05sw"]
+[ext_resource type="PackedScene" uid="uid://17yam4n7xpb6" path="res://scenes/infra/fall_zone.tscn" id="11_tl3af"]
+[ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="12_7f6cn"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="12_umxwt"]
+[ext_resource type="PackedScene" uid="uid://ccr02pjl5ma4k" path="res://scenes/infra/transition_scene.tscn" id="13_fx5w2"]
 [ext_resource type="PackedScene" uid="uid://b7uli15yp1d5b" path="res://scenes/levels/Level2.tscn" id="14_4xx5d"]
-[ext_resource type="PackedScene" uid="uid://bbsrsboygmfxp" path="res://scenes/cabin.tscn" id="14_eqyq5"]
+[ext_resource type="PackedScene" uid="uid://bbsrsboygmfxp" path="res://scenes/structures/cabin.tscn" id="14_eqyq5"]
 [ext_resource type="PackedScene" uid="uid://b16xir6lb2vsh" path="res://scenes/ui/end_requirement_popup.tscn" id="15_xqpgw"]
-[ext_resource type="PackedScene" uid="uid://pjoloq38kge2" path="res://scenes/level_exit_requirements.tscn" id="16_j4aak"]
+[ext_resource type="PackedScene" uid="uid://pjoloq38kge2" path="res://scenes/infra/level_exit_requirements.tscn" id="16_j4aak"]
 [ext_resource type="PackedScene" uid="uid://bnew5qhvo3y4" path="res://scenes/characters/shroomy.tscn" id="18_n5p6v"]
 
 [sub_resource type="GDScript" id="GDScript_sciwa"]
@@ -399,10 +398,6 @@ position = Vector2(1432, -152)
 [node name="RubyArea8" parent="Rubies" instance=ExtResource("8_dub7l")]
 position = Vector2(-160, -184)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Rubies"]
-stream = ExtResource("9_xxyo2")
-bus = &"sfx"
-
 [node name="Emeralds" type="Node2D" parent="."]
 
 [node name="EmeraldBody" parent="Emeralds" instance=ExtResource("11_f05sw")]
@@ -576,6 +571,15 @@ rubies_required = 50
 
 [node name="Shroomy" parent="Enemies" instance=ExtResource("18_n5p6v")]
 position = Vector2(-1208, 96)
+
+[node name="Shroomy2" parent="Enemies" instance=ExtResource("18_n5p6v")]
+position = Vector2(2304, 32)
+
+[node name="Shroomy3" parent="Enemies" instance=ExtResource("18_n5p6v")]
+position = Vector2(2544, 32)
+
+[node name="Shroomy4" parent="Enemies" instance=ExtResource("18_n5p6v")]
+position = Vector2(2072, 32)
 
 [connection signal="player_death" from="Player" to="HUD" method="_on_player_player_death"]
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_fall_zone_body_entered"]

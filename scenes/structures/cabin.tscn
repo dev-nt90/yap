@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bbsrsboygmfxp"]
 
-[ext_resource type="Script" path="res://scripts/cabin.gd" id="1_2rqct"]
+[ext_resource type="Script" path="res://scripts/structures/cabin.gd" id="1_2rqct"]
 [ext_resource type="Texture2D" uid="uid://cncn1aex7t0i4" path="res://assets/structures/cabin.aseprite" id="1_jewh2"]
 [ext_resource type="Texture2D" uid="uid://co618rylqxboc" path="res://assets/particles/smoke-smudge.aseprite" id="2_m4tht"]
 

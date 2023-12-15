@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cnynond5hy0cg"]
 
-[ext_resource type="Script" path="res://scripts/birb.gd" id="1_vgjxp"]
+[ext_resource type="Script" path="res://scripts/characters/birb.gd" id="1_vgjxp"]
 [ext_resource type="PackedScene" uid="uid://d3btoote7v02e" path="res://assets/characters/birb/seagull.aseprite" id="2_4w0wa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kiaun"]
