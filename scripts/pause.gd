@@ -1,12 +1,8 @@
 extends Node
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
     process_mode = Node.PROCESS_MODE_ALWAYS
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
     if Input.is_action_just_pressed("pause"):
         get_tree().paused = !get_tree().paused
@@ -21,4 +17,3 @@ func _process(_delta):
         else:
             pause_menu.show()
             pause_menu.get_node("ResumeButton").grab_focus()
-            #get_node("/root/SceneManager/CurrentScene/SceneRoot/HUD/PauseMenu/ResumeButton").grab_focus() # TODO: referencing the pause menu directly sucks; refactor this 

@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://bnew5qhvo3y4"]
+
+[ext_resource type="Texture2D" uid="uid://caobphj614sgb" path="res://assets/characters/enemies/shroomy.png" id="1_3diqc"]
+[ext_resource type="Script" path="res://scripts/characters/enemies/shroomy.gd" id="1_8ec1i"]
+[ext_resource type="PackedScene" uid="uid://can6s85h1baj3" path="res://scenes/ui/health_bar_container.tscn" id="3_1cidn"]
+
+[sub_resource type="Animation" id="Animation_k24qf"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_kcpdb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_iefn3"]
+resource_name = "projectile_windup"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t3h6n"]
+_data = {
+"RESET": SubResource("Animation_kcpdb"),
+"idle": SubResource("Animation_k24qf"),
+"projectile_windup": SubResource("Animation_iefn3")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjpy2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vn2ag"]
+radius = 25.0
+height = 56.0
+
+[node name="Shroomy" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 37
+script = ExtResource("1_8ec1i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3diqc")
+hframes = 16
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t3h6n")
+}
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 16
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+scale = Vector2(25, 15)
+shape = SubResource("RectangleShape2D_jjpy2")
+
+[node name="ProjectileCooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_vn2ag")
+
+[node name="Projectiles" type="Node" parent="."]
+
+[node name="HealthBarContainer" parent="." instance=ExtResource("3_1cidn")]
+offset_left = -23.0
+offset_top = -32.0
+offset_right = -23.0
+offset_bottom = -32.0
+scale = Vector2(0.374201, 0.177978)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="timeout" from="ProjectileCooldownTimer" to="." method="_on_projectile_cooldown_timer_timeout"]

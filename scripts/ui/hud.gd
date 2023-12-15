@@ -32,3 +32,15 @@ func get_current_ruby_count():
     
 func get_current_emerald_count():
     return emeraldCount
+
+
+func _on_player_player_death():
+    reset_ui()
+    $GameOverScreen.show()
+    
+func reset_ui():
+    rubyCount = 0
+    emeraldCount = 0
+    $RubyCount.text = String(gemPattern % rubyCount)
+    $EmeraldCount.text = String(gemPattern % emeraldCount)
+    $TimeElapsedLabel.text = str(0)

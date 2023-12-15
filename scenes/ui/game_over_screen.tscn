@@ -41,26 +41,8 @@ offset_right = 736.0
 offset_bottom = 624.0
 tooltip_text = "Exits the game"
 focus_neighbor_left = NodePath("../RestartLevelButton")
-focus_neighbor_right = NodePath("../MainMenuButton")
-focus_next = NodePath("../MainMenuButton")
 focus_previous = NodePath("../RestartLevelButton")
 text = "Exit Game"
-
-[node name="MainMenuButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 576.0
-offset_right = 192.0
-offset_bottom = 624.0
-tooltip_text = "Resumes game progress"
-focus_neighbor_left = NodePath("../ExitGameButton")
-focus_neighbor_right = NodePath("../RestartLevelButton")
-focus_next = NodePath("../RestartLevelButton")
-focus_previous = NodePath("../ExitGameButton")
-theme_override_colors/icon_pressed_color = Color(2.45166e-07, 0.15704, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
-text = "Main Menu"
 
 [node name="RestartLevelButton" type="Button" parent="."]
 layout_mode = 0
@@ -69,10 +51,14 @@ offset_top = 576.0
 offset_right = 448.0
 offset_bottom = 624.0
 tooltip_text = "Restarts the current level"
-focus_neighbor_left = NodePath("../MainMenuButton")
 focus_neighbor_right = NodePath("../ExitGameButton")
 focus_next = NodePath("../ExitGameButton")
 theme_override_colors/icon_pressed_color = Color(0, 0.156863, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
 text = "Restart Level"
+
+[connection signal="gui_input" from="ExitGameButton" to="." method="_on_exit_game_button_gui_input"]
+[connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
+[connection signal="gui_input" from="RestartLevelButton" to="." method="_on_restart_level_button_gui_input"]
+[connection signal="pressed" from="RestartLevelButton" to="." method="_on_restart_level_button_pressed"]

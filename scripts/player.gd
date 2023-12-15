@@ -3,16 +3,19 @@
 extends CharacterBody2D
 
 signal cutscene_entered
+signal player_death
 
 enum States {
     AIR = 1,
     FLOOR,
     WALL,
-    CUTSCENE
+    CUTSCENE,
+    DEATH
 }
 
 # set to TRUE to have player spawn in at "DebugStartPosition" node
 @export var debug = false 
+@export var max_health: int = 100
 
 const SPEED = 300.0
 const RUNSPEED_MULTIPLIER = 2.5
@@ -22,7 +25,9 @@ const WALL_JUMP_BUFFER_LIMIT = 5
 var wall_jump_direction_buffer: Array[bool] = []
 var wall_jump_jump_buffer: Array[bool] = []
 var double_jump_available = true
+
 var current_state = States.AIR
+var current_health = max_health
 
 var direction
 
@@ -33,7 +38,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
     disable_friction_smoke()
+    set_health_bar_max()
+    set_health_bar() # TODO: calling this results in the health bar displaying automatically... keep or change?
+    
     set_physics_process(false)
+    current_state = States.AIR
+    current_health = max_health
     
     if debug:
         set_physics_process(true)
@@ -41,8 +51,6 @@ func _ready():
         var debugStartPosition = get_parent().get_node("DebugStartPosition")
         position.x = debugStartPosition.position.x
         position.y = debugStartPosition.position.y
-        
-
         
 func _physics_process(delta):
     handle_state(delta)
@@ -307,18 +315,24 @@ func emit_cutscene_entered():
 func _on_animation_player_animation_finished(anim_name):
     if debug:
         return
-    if anim_name == "level_transition":
-        set_physics_process(true)
-        $CollisionShape2D.disabled = false
-        $LevelTransitionBackground.visible = false
+    if anim_name == "level_transition": 
+        # HACK: reusing the level transition animation for death results in a split state.
+        # not the end of the world but should probably fix
+        if current_state != States.DEATH:
+            set_physics_process(true) # only turn everything back on if the player is still alive
+        else:
+            emit_signal("player_death") # HACK: having to wire up this signal on every level isn't great
+            get_tree().paused = true
+        $CollisionShape2D.set_deferred("disabled", false) # HACK: we are having to set_deferred here since on death we are trying to pause the game
+        $LevelTransitionBackground.set_deferred("visible", false)
 
-
+# initial trigger is on the animation player itself
 func _on_animation_player_animation_started(anim_name):
     if debug:
         return
     if anim_name == "level_transition":
-        $CollisionShape2D.disabled = true
-        $LevelTransitionBackground.visible = true
+        $CollisionShape2D.set_deferred("disabled", true)
+        $LevelTransitionBackground.set_deferred("visible", true)
 
 func _on_end_hint_area_body_entered(_body):
     var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
@@ -344,5 +358,23 @@ func _on_cabin_area_level_end_area_entered():
     var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
     
     if ruby_num >= ruby_denom and emerald_num >= emerald_denom:
-        SceneManager.next_level()
+        SceneManager.load_next_level()
         
+func modify_health(modify_amount):
+    current_health += modify_amount
+    set_health_bar()
+    
+    if current_health <= 0:
+        handle_death()
+    
+func set_health_bar_max():
+    $HealthBarContainer.set_max_value(max_health)
+    
+func set_health_bar():
+    $HealthBarContainer.set_current_value(current_health)
+    
+func handle_death():
+    $AnimationPlayer.play("level_transition")
+    current_state = States.DEATH
+    velocity.x = 0
+    velocity.y = 0

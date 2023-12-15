@@ -7,7 +7,7 @@ var next_scene = null
 func reload_scene():
     set_scene(next_scene)
 
-func next_level():
+func load_next_level():
     var next_level = get_node("CurrentScene/SceneRoot").get_next_level()
     set_scene(next_level)
 

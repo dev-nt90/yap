@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://bdgmlurbq10bq"]
+[gd_scene load_steps=20 format=3 uid="uid://bdgmlurbq10bq"]
 
 [ext_resource type="PackedScene" uid="uid://bkvqfcsye1sq7" path="res://scenes/ui/pause_menu.tscn" id="1_402ma"]
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_n8dob"]
 [ext_resource type="PackedScene" uid="uid://3o0jms1uw10g" path="res://assets/gems/ruby.aseprite" id="3_u5is0"]
 [ext_resource type="PackedScene" uid="uid://s60m6a1gqyqs" path="res://assets/gems/emerald.aseprite" id="4_q6wq3"]
 [ext_resource type="Texture2D" uid="uid://du5qhx4cjjd24" path="res://assets/gems/emerald.png" id="5_jd7kl"]
+[ext_resource type="PackedScene" uid="uid://5rp4an8wf1gw" path="res://scenes/ui/game_over_screen.tscn" id="6_pykop"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tcrqt"]
 atlas = ExtResource("5_jd7kl")
@@ -152,5 +153,7 @@ offset_top = 16.0
 offset_right = 152.0
 offset_bottom = 39.0
 text = "X ##"
+
+[node name="GameOverScreen" parent="." instance=ExtResource("6_pykop")]
 
 [connection signal="timeout" from="TimeElapsedTimer" to="." method="_on_time_elapsed_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dsxlweajxdtdf"]
+[gd_scene load_steps=17 format=3 uid="uid://dsxlweajxdtdf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_utu5o"]
 [ext_resource type="Script" path="res://scripts/player/AnimationPlayer.gd" id="2_gp3bp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://co618rylqxboc" path="res://assets/particles/smoke-smudge.aseprite" id="4_r6wo7"]
 [ext_resource type="Texture2D" uid="uid://bxlwvd6v3beux" path="res://assets/characters/hero/hero-walk.png" id="5_1qdrv"]
 [ext_resource type="Texture2D" uid="uid://51vmsgpspqtw" path="res://assets/Backgrounds/level_transition.png" id="6_g6irq"]
+[ext_resource type="PackedScene" uid="uid://can6s85h1baj3" path="res://scenes/ui/health_bar_container.tscn" id="7_8xktj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krnca"]
 radius = 6.41448
@@ -96,41 +97,6 @@ tracks/0/keys = {
 "values": [0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
 }
 
-[sub_resource type="Animation" id="Animation_cecdc"]
-resource_name = "walk"
-length = 0.65
-loop_mode = 1
-step = 0.03
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HeroWalkSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18, 0.21, 0.24, 0.27, 0.3, 0.33, 0.36, 0.39, 0.42, 0.45, 0.48, 0.51, 0.54, 0.57, 0.6, 0.63),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
-}
-
-[sub_resource type="Animation" id="Animation_w84dc"]
-resource_name = "wall"
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HeroWalkSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [19]
-}
-
 [sub_resource type="Animation" id="Animation_axv5e"]
 resource_name = "level_transition"
 length = 2.0
@@ -169,6 +135,41 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_cecdc"]
+resource_name = "walk"
+length = 0.65
+loop_mode = 1
+step = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeroWalkSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18, 0.21, 0.24, 0.27, 0.3, 0.33, 0.36, 0.39, 0.42, 0.45, 0.48, 0.51, 0.54, 0.57, 0.6, 0.63),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_w84dc"]
+resource_name = "wall"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeroWalkSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uanp3"]
@@ -240,6 +241,13 @@ scale = Vector2(3.5, 10)
 texture = ExtResource("6_g6irq")
 hframes = 2
 frame = 1
+
+[node name="HealthBarContainer" parent="." instance=ExtResource("7_8xktj")]
+offset_left = -58.0
+offset_top = -65.0
+offset_right = -58.0
+offset_bottom = -65.0
+scale = Vector2(1, 0.360001)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
