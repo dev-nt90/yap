@@ -1,0 +1,115 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu4adec1w1nbf"]
+
+[ext_resource type="PackedScene" uid="uid://s60m6a1gqyqs" path="res://assets/gems/emerald.aseprite" id="1_50bj7"]
+[ext_resource type="Script" path="res://scripts/ui/level_complete_screen_container.gd" id="1_a5sy6"]
+[ext_resource type="PackedScene" uid="uid://3o0jms1uw10g" path="res://assets/gems/ruby.aseprite" id="2_y2cgp"]
+
+[node name="LevelCompleteScreenContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a5sy6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 800.0
+offset_bottom = 640.0
+color = Color(0.0117647, 0.0509804, 0.0117647, 0.780392)
+
+[node name="EmeraldsCollectedLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 144.0
+offset_right = 392.0
+offset_bottom = 167.0
+bbcode_enabled = true
+text = "collected: ##/## (##%)"
+
+[node name="RubiesCollectedLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 224.0
+offset_right = 464.0
+offset_bottom = 247.0
+bbcode_enabled = true
+text = "collected: ##/## (##%)"
+
+[node name="emerald" parent="." instance=ExtResource("1_50bj7")]
+position = Vector2(80, 152)
+frame_progress = 0.501407
+
+[node name="ruby" parent="." instance=ExtResource("2_y2cgp")]
+position = Vector2(80, 240)
+scale = Vector2(1.5, 1.5)
+
+[node name="TimeElapsedLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 304.0
+offset_right = 792.0
+offset_bottom = 327.0
+bbcode_enabled = true
+text = "Time elapsed for this run: ## minutes ## seconds ## milliseconds (##:##:##)"
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 560.0
+offset_right = 168.0
+offset_bottom = 608.0
+text = "Continue"
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 648.0
+offset_top = 568.0
+offset_right = 760.0
+offset_bottom = 608.0
+text = "Restart"
+
+[node name="EnemiesDefeatedLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 448.0
+offset_right = 632.0
+offset_bottom = 471.0
+bbcode_enabled = true
+text = "Enemies defeated: ##/## (##%)"
+
+[node name="ParTimeLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 352.0
+offset_right = 792.0
+offset_bottom = 375.0
+bbcode_enabled = true
+text = "Par time: ## minutes ## seconds ## milliseconds (##:##:##)"
+
+[node name="TimeDiffLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 400.0
+offset_right = 945.0
+offset_bottom = 440.0
+bbcode_enabled = true
+text = "Difference between your time and par time: (##:##:##) (faster/slower/tie!)"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -136.0
+offset_top = 48.0
+offset_right = 520.0
+offset_bottom = 88.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[pulse color=#ffd700 freq=3.0][font_size=30]Level completed![/font_size][/pulse]"
+
+[connection signal="gui_input" from="ContinueButton" to="." method="_on_continue_button_gui_input"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="gui_input" from="RestartButton" to="." method="_on_restart_button_gui_input"]
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

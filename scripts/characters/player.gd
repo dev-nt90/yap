@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 signal cutscene_entered
 signal player_death
+signal level_exit_requirements_met
 
 enum States {
     AIR = 1,
@@ -348,7 +349,10 @@ func _on_end_hint_area_body_entered(_body):
 func _on_end_hint_area_body_exited(_body):
     get_parent().get_node("EndHintArea/EndRequirementPopup").visible = false
 
-
+# TODO: there needs to be a better way to broadcast this information
+# in other words, there needs to a generic level exit instead of tying it directly to one specific scene
+#
+# A potential option might be to have the scene manager receive the "requirements met" signal, and take a PackedScene as input for the end area
 func _on_cabin_area_level_end_area_entered():
     var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
     var emerald_denom = get_parent().get_node("LevelExitRequirements").get_emeralds_required()
@@ -357,7 +361,7 @@ func _on_cabin_area_level_end_area_entered():
     var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
     
     if ruby_num >= ruby_denom and emerald_num >= emerald_denom:
-        SceneManager.load_next_level()
+        emit_signal("level_exit_requirements_met")
         
 func modify_health(modify_amount):
     current_health += modify_amount

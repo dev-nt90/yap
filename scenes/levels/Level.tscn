@@ -22,6 +22,7 @@
 script/source = "extends Node2D
 
 @export var next_level : PackedScene
+@export var level_par_time : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,6 +36,9 @@ func _on_player_cutscene_entered():
 
 func get_next_level():
     return next_level
+
+func get_par_time():
+    return level_par_time
 "
 
 [sub_resource type="Gradient" id="Gradient_jcj0y"]
@@ -62,6 +66,7 @@ fill_to = Vector2(0.48547, 0)
 [node name="SceneRoot" type="Node2D"]
 script = SubResource("GDScript_sciwa")
 next_level = ExtResource("14_4xx5d")
+level_par_time = "3:00.000"
 
 [node name="DebugStartPosition" type="Marker2D" parent="."]
 position = Vector2(9328, -3480)
@@ -72,6 +77,7 @@ scale = Vector2(7.34, 7.34)
 [node name="Player" parent="." instance=ExtResource("3_f7ybm")]
 position = Vector2(32, -112)
 collision_mask = 94
+debug = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 offset = Vector2(0, -50)
@@ -564,8 +570,6 @@ offset_bottom = -8.15626
 scale = Vector2(0.0292938, 0.0432836)
 
 [node name="LevelExitRequirements" parent="." instance=ExtResource("16_j4aak")]
-emeralds_required = 2
-rubies_required = 50
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -581,6 +585,7 @@ position = Vector2(2544, 32)
 [node name="Shroomy4" parent="Enemies" instance=ExtResource("18_n5p6v")]
 position = Vector2(2072, 32)
 
+[connection signal="level_exit_requirements_met" from="Player" to="HUD" method="_on_player_level_exit_requirements_met"]
 [connection signal="player_death" from="Player" to="HUD" method="_on_player_player_death"]
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_fall_zone_body_entered"]
 [connection signal="ruby_collected" from="Rubies/RubyArea" to="Player" method="_on_ruby_area_ruby_collected"]

@@ -20,4 +20,4 @@ func set_ruby_complete():
     $RubyRequirementLabel.bbcode_text = "[rainbow][wave]complete![/wave][/rainbow]"
 
 func set_emerald_complete():
-    $EmeraldRequirementLabel.text = "[rainbow][wave]complete![/wave][/rainbow]"
+    $EmeraldRequirementLabel.bbcode_text = "[rainbow][wave]complete![/wave][/rainbow]"
