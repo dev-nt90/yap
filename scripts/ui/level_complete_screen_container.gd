@@ -8,6 +8,8 @@ const ENEMIES_DEFEATED_PATTERN = "Enemies defeated: %02d/%02d (%02d%%)"
 var time_elapsed
 var par_time
 var start_time_dict
+var ruby_total : int
+var emerald_total : int
 
 func _ready():
     hide()    
@@ -43,26 +45,32 @@ func _on_continue_button_gui_input(event):
         if event.button_index == JOY_BUTTON_A and event.pressed:
             _on_continue_button_pressed()
 
+func set_ruby_total(ruby_total_in):
+    self.ruby_total = ruby_total_in
+
+func set_emerald_total(emerald_total_in):
+    self.emerald_total = emerald_total_in
+
 # collectible stats
-func set_ruby_progress(current_ruby_count, ruby_total):
-    var ruby_percent = float(current_ruby_count)/float(ruby_total) * 100
+func set_ruby_progress(current_ruby_count):
+    var ruby_percent = float(current_ruby_count)/float(self.ruby_total) * 100
     var rubies_collected_str = ""
     
-    if(current_ruby_count >= ruby_total):
-        rubies_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN + "[/rainbow][/wave]" % [current_ruby_count, ruby_total, ruby_percent])
+    if(current_ruby_count >= self.ruby_total):
+        rubies_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN % [current_ruby_count, self.ruby_total, ruby_percent] + "[/rainbow][/wave]")
     else:
-        rubies_collected_str = String(GEMS_COLLECTED_PATTERN % [current_ruby_count, ruby_total, ruby_percent])
+        rubies_collected_str = String(GEMS_COLLECTED_PATTERN % [current_ruby_count, self.ruby_total, ruby_percent])
         
     $RubiesCollectedLabel.bbcode_text = rubies_collected_str
 
-func set_emerald_progress(current_emerald_count, emerald_total):
-    var emerald_percent = float(current_emerald_count)/float(emerald_total) * 100
+func set_emerald_progress(current_emerald_count):
+    var emerald_percent = float(current_emerald_count)/float(self.emerald_total) * 100
     var emeralds_collected_str = ""
     
-    if (current_emerald_count >= emerald_total):
-        emeralds_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN + "[/rainbow][/wave]" % [current_emerald_count, emerald_total, emerald_percent])
+    if (current_emerald_count >= self.emerald_total):
+        emeralds_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN  % [current_emerald_count, self.emerald_total, emerald_percent] + "[/rainbow][/wave]")
     else:
-        emeralds_collected_str = String(GEMS_COLLECTED_PATTERN % [current_emerald_count, emerald_total, emerald_percent])
+        emeralds_collected_str = String(GEMS_COLLECTED_PATTERN % [current_emerald_count, self.emerald_total, emerald_percent])
         
     $EmeraldsCollectedLabel.bbcode_text = emeralds_collected_str
 

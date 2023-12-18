@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://nrjdgkedo3jx"]
+
+[ext_resource type="Script" path="res://scripts/ui/advanced_controls_popup.gd" id="1_hu3uj"]
+
+[node name="AdvancedControlsPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hu3uj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0588235, 0.172549, 0.054902, 0.705882)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 736.0
+offset_bottom = 576.0
+theme_override_font_sizes/normal_font_size = 23
+text = "-Jumping into a wall will initiate a wall jump. During a wall jump, the character slowly slides down the wall. To continue a wall jump, jump in the direction opposite from the wall the player is currently sliding down.
+
+-Pressing jump while in mid-air will initiate a double jump.
+
+-The option to \"run\" is available during jumps, including wall jumps. To make a large wall jump, simply hold down the run button while wall jumping. The game is meant to played such that you should never have to let go of the \"run\" button unless you want to.
+
+-Reaching certain gems and enemies will require somewhat creative use of these techniques. Don't be shy about using them, this is the way the game was meant to be played!"
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 584.0
+offset_right = 160.0
+offset_bottom = 624.0
+text = "Close"
+
+[connection signal="gui_input" from="CloseButton" to="." method="_on_close_button_gui_input"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

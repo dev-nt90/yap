@@ -320,6 +320,7 @@ func _on_animation_player_animation_finished(anim_name):
         # not the end of the world but should probably fix
         if current_state != States.DEATH:
             set_physics_process(true) # only turn everything back on if the player is still alive
+            $PlayerCamera/AnimationPlayer.play("level_name_fade_in")
         else:
             emit_signal("player_death") # HACK: having to wire up this signal on every level isn't great
             get_tree().paused = true

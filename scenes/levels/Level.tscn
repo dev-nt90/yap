@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://bo4m4oydfi67o"]
+[gd_scene load_steps=28 format=3 uid="uid://bo4m4oydfi67o"]
 
 [ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="3_f7ybm"]
+[ext_resource type="Script" path="res://scripts/infra/PlayerCamera.gd" id="3_lookg"]
 [ext_resource type="Texture2D" uid="uid://d0rb863pxilcd" path="res://assets/Backgrounds/pixel_forest.png" id="4_1pshu"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="4_pkuej"]
 [ext_resource type="Texture2D" uid="uid://ndhkbomh0af" path="res://assets/Backgrounds/background-grass-nosky-pixel.png" id="5_ceass"]
@@ -23,6 +24,7 @@ script/source = "extends Node2D
 
 @export var next_level : PackedScene
 @export var level_par_time : String
+@export var level_name : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,16 +41,47 @@ func get_next_level():
 
 func get_par_time():
     return level_par_time
+
+func get_level_name():
+    return level_name
 "
 
-[sub_resource type="Gradient" id="Gradient_jcj0y"]
-offsets = PackedFloat32Array(0, 0.683983)
-colors = PackedColorArray(1, 1, 1, 1, 0.109804, 0.109804, 0.109804, 0)
+[sub_resource type="Animation" id="Animation_axloo"]
+resource_name = "level_name_fade_in"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_nhxsq"]
-gradient = SubResource("Gradient_jcj0y")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[sub_resource type="Animation" id="Animation_twctb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v68wh"]
+_data = {
+"RESET": SubResource("Animation_twctb"),
+"level_name_fade_in": SubResource("Animation_axloo")
+}
 
 [sub_resource type="Gradient" id="Gradient_s88b5"]
 offsets = PackedFloat32Array(0.0021645, 0.497835, 1)
@@ -61,12 +94,22 @@ height = 640
 fill_from = Vector2(0.523077, 1)
 fill_to = Vector2(0.48547, 0)
 
+[sub_resource type="Gradient" id="Gradient_jcj0y"]
+offsets = PackedFloat32Array(0, 0.683983)
+colors = PackedColorArray(1, 1, 1, 1, 0.109804, 0.109804, 0.109804, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nhxsq"]
+gradient = SubResource("Gradient_jcj0y")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ma5nx"]
 
 [node name="SceneRoot" type="Node2D"]
 script = SubResource("GDScript_sciwa")
 next_level = ExtResource("14_4xx5d")
 level_par_time = "3:00.000"
+level_name = "Dilapidated Castle"
 
 [node name="DebugStartPosition" type="Marker2D" parent="."]
 position = Vector2(9328, -3480)
@@ -77,9 +120,8 @@ scale = Vector2(7.34, 7.34)
 [node name="Player" parent="." instance=ExtResource("3_f7ybm")]
 position = Vector2(32, -112)
 collision_mask = 94
-debug = true
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
 offset = Vector2(0, -50)
 limit_left = -5000
 limit_top = -5000
@@ -92,12 +134,31 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 editor_draw_limits = true
 editor_draw_drag_margin = true
+script = ExtResource("3_lookg")
 
-[node name="PointLight2D14" type="PointLight2D" parent="Player"]
-color = Color(0.788235, 1, 1, 1)
-energy = 0.56
-texture = SubResource("GradientTexture2D_nhxsq")
-texture_scale = 1.75
+[node name="LevelNameLabel" type="RichTextLabel" parent="Player/PlayerCamera"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_top = -176.0
+offset_right = 118.0
+offset_bottom = -136.0
+grow_horizontal = 2
+scale = Vector2(1.49486, 1.16)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/normal_font_size = 29
+text = "asdfasdfasdfasdf"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/PlayerCamera"]
+libraries = {
+"": SubResource("AnimationLibrary_v68wh")
+}
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("4_pkuej")

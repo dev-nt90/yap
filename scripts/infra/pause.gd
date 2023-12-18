@@ -13,7 +13,7 @@ func _process(_delta):
         
         # did we just pause or unpause?
         if not is_paused:
-            pause_menu.hide()
+            pause_menu.hide_all()
         else:
-            pause_menu.show()
-            pause_menu.get_node("ResumeButton").grab_focus()
+            pause_menu.show_pause_menu()
+            pause_menu.get_node("PauseMenuControls/ResumeButton").grab_focus()

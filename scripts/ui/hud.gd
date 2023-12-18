@@ -14,6 +14,11 @@ func _ready():
     $RubyCount.text = String(gemPattern % rubyCount)
     $EmeraldCount.text = String(gemPattern % emeraldCount)
     par_time = get_parent().get_par_time()
+    
+    var total_ruby_count = get_parent().get_node("Rubies").get_child_count()
+    var total_emerald_count = get_parent().get_node("Emeralds").get_child_count()
+    $LevelCompleteScreenContainer.set_ruby_total(total_ruby_count)
+    $LevelCompleteScreenContainer.set_emerald_total(total_emerald_count)
 
 func _on_time_elapsed_timer_timeout():
     seconds_elapsed += 1
@@ -51,17 +56,15 @@ func _on_player_level_exit_requirements_met():
     # TODO: do we need to pause the game for this?
     # TODO: stats object for times, collectibles, combat, etc? keeping track of this stuff directly in the HUD isn't great
     # collectibles
-    var total_ruby_count = get_parent().get_node("Rubies").get_child_count()
-    var total_emerald_count = get_parent().get_node("Emeralds").get_child_count()
-    $LevelCompleteScreenContainer.set_ruby_progress(rubyCount, total_ruby_count)
-    $LevelCompleteScreenContainer.set_emerald_progress(emeraldCount, total_emerald_count)
+    $LevelCompleteScreenContainer.set_ruby_progress(self.rubyCount)
+    $LevelCompleteScreenContainer.set_emerald_progress(self.emeraldCount)
     
     # combat
     var enemies_defeated = 0 # TODO: track this
-    var enemies_total = get_parent().get_node("Enemies").get_child_count()
+    # TODO: this won't work as we queue_free deleted enemies, fix this such that it works in the same way as collectibles
+    var enemies_total = get_parent().get_node("Enemies").get_child_count() 
     $LevelCompleteScreenContainer.set_enemy_progress(enemies_defeated, enemies_total)
     
-    # TODO: get/set par time
     # time
     $TimeElapsedTimer.stop()
     $LevelCompleteScreenContainer.set_time_elapsed()

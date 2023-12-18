@@ -38,7 +38,7 @@ text = "collected: ##/## (##%)"
 
 [node name="emerald" parent="." instance=ExtResource("1_50bj7")]
 position = Vector2(80, 152)
-frame_progress = 0.501407
+frame_progress = 0.619936
 
 [node name="ruby" parent="." instance=ExtResource("2_y2cgp")]
 position = Vector2(80, 240)

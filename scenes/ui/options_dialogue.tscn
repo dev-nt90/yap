@@ -90,4 +90,5 @@ scale = Vector2(0.72, 0.72)
 text = "Master Volume:
 "
 
+[connection signal="gui_input" from="OptionsDialogue/CloseOptionsButton" to="OptionsDialogue" method="_on_close_options_button_gui_input"]
 [connection signal="pressed" from="OptionsDialogue/CloseOptionsButton" to="OptionsDialogue" method="_on_close_options_button_pressed"]

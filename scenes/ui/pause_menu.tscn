@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkvqfcsye1sq7"]
+[gd_scene load_steps=5 format=3 uid="uid://bkvqfcsye1sq7"]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_8ddln"]
 [ext_resource type="PackedScene" uid="uid://j520piyp1nb7" path="res://scenes/ui/options_dialogue.tscn" id="2_g3tv0"]
+[ext_resource type="PackedScene" uid="uid://dlky14okx6yah" path="res://scenes/ui/controls_popup.tscn" id="3_fgarq"]
+[ext_resource type="PackedScene" uid="uid://nrjdgkedo3jx" path="res://scenes/ui/advanced_controls_popup.tscn" id="4_ap02d"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -12,14 +14,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ddln")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
+[node name="PauseMenuControls" type="Node" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenuControls"]
 offset_right = 800.0
 offset_bottom = 640.0
 color = Color(0.0117647, 0.0509804, 0.0117647, 0.780392)
 
-[node name="PausedLabel" type="Label" parent="."]
-layout_mode = 1
+[node name="PausedLabel" type="Label" parent="PauseMenuControls"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -34,8 +36,7 @@ grow_vertical = 2
 theme_override_colors/font_outline_color = Color(0.188235, 0.596078, 0, 1)
 text = "PAUSED"
 
-[node name="ResumeButton" type="Button" parent="."]
-layout_mode = 0
+[node name="ResumeButton" type="Button" parent="PauseMenuControls"]
 offset_left = 16.0
 offset_top = 576.0
 offset_right = 144.0
@@ -50,24 +51,22 @@ theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
 text = "Resume"
 
-[node name="RestartLevelButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 448.0
+[node name="RestartLevelButton" type="Button" parent="PauseMenuControls"]
+offset_left = 496.0
 offset_top = 576.0
-offset_right = 576.0
+offset_right = 624.0
 offset_bottom = 624.0
 tooltip_text = "Restarts the current level"
-focus_neighbor_left = NodePath("../OptionsButton")
+focus_neighbor_left = NodePath("../ControlsButton")
 focus_neighbor_right = NodePath("../ExitGameButton")
 focus_next = NodePath("../ExitGameButton")
-focus_previous = NodePath("../OptionsButton")
+focus_previous = NodePath("../ControlsButton")
 theme_override_colors/icon_pressed_color = Color(0, 0.156863, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
 text = "Restart Level"
 
-[node name="ExitGameButton" type="Button" parent="."]
-layout_mode = 0
+[node name="ExitGameButton" type="Button" parent="PauseMenuControls"]
 offset_left = 656.0
 offset_top = 576.0
 offset_right = 784.0
@@ -79,22 +78,44 @@ focus_next = NodePath("../ResumeButton")
 focus_previous = NodePath("../RestartLevelButton")
 text = "Exit Game"
 
-[node name="OptionsDialogue" parent="." instance=ExtResource("2_g3tv0")]
-position = Vector2(408, 328)
-
-[node name="OptionsButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 224.0
+[node name="OptionsButton" type="Button" parent="PauseMenuControls"]
+offset_left = 176.0
 offset_top = 576.0
-offset_right = 352.0
+offset_right = 304.0
 offset_bottom = 624.0
+focus_neighbor_left = NodePath("../ResumeButton")
+focus_neighbor_right = NodePath("../ControlsButton")
+focus_next = NodePath("../ControlsButton")
+focus_previous = NodePath("../ResumeButton")
 text = "Options"
 
-[connection signal="gui_input" from="ResumeButton" to="." method="_on_resume_button_gui_input"]
-[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="gui_input" from="RestartLevelButton" to="." method="_on_restart_level_button_gui_input"]
-[connection signal="pressed" from="RestartLevelButton" to="." method="_on_restart_level_button_pressed"]
-[connection signal="gui_input" from="ExitGameButton" to="." method="_on_exit_game_button_gui_input"]
-[connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]
-[connection signal="gui_input" from="OptionsButton" to="." method="_on_options_button_gui_input"]
-[connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
+[node name="ControlsButton" type="Button" parent="PauseMenuControls"]
+offset_left = 336.0
+offset_top = 576.0
+offset_right = 464.0
+offset_bottom = 624.0
+focus_neighbor_left = NodePath("../OptionsButton")
+focus_neighbor_right = NodePath("../RestartLevelButton")
+focus_next = NodePath("../RestartLevelButton")
+focus_previous = NodePath("../OptionsButton")
+text = "Controls"
+
+[node name="PauseMenuPopups" type="Node" parent="."]
+
+[node name="OptionsDialogue" parent="PauseMenuPopups" instance=ExtResource("2_g3tv0")]
+position = Vector2(408, 328)
+
+[node name="ControlsPopup" parent="PauseMenuPopups" instance=ExtResource("3_fgarq")]
+
+[node name="AdvancedControlsPopup" parent="PauseMenuPopups" instance=ExtResource("4_ap02d")]
+
+[connection signal="gui_input" from="PauseMenuControls/ResumeButton" to="." method="_on_resume_button_gui_input"]
+[connection signal="pressed" from="PauseMenuControls/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="gui_input" from="PauseMenuControls/RestartLevelButton" to="." method="_on_restart_level_button_gui_input"]
+[connection signal="pressed" from="PauseMenuControls/RestartLevelButton" to="." method="_on_restart_level_button_pressed"]
+[connection signal="gui_input" from="PauseMenuControls/ExitGameButton" to="." method="_on_exit_game_button_gui_input"]
+[connection signal="pressed" from="PauseMenuControls/ExitGameButton" to="." method="_on_exit_game_button_pressed"]
+[connection signal="gui_input" from="PauseMenuControls/OptionsButton" to="." method="_on_options_button_gui_input"]
+[connection signal="pressed" from="PauseMenuControls/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="gui_input" from="PauseMenuControls/ControlsButton" to="." method="_on_controls_button_gui_input"]
+[connection signal="pressed" from="PauseMenuControls/ControlsButton" to="." method="_on_controls_button_pressed"]

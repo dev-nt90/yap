@@ -19,6 +19,7 @@ func _on_transition_scene_transitioned():
     for child in $CurrentScene.get_children():
         child.queue_free()
     
+    # TODO: maybe bug here when transitioning from level which was restarted or started from "current scene" editor option
     var instance = next_scene.instantiate()
     instance.name = "SceneRoot" # certain nodes expect the level roots to be named this way
     $CurrentScene.add_child(instance)
