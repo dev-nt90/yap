@@ -12,7 +12,6 @@ func _ready():
 func _on_start_button_pressed():
     $BackgroundMusic/TheCharm68.stop()
     SceneManager.set_scene(load("res://scenes/levels/Level.tscn"))
-    queue_free() # HACK: since we're managing the title menu outside of the scene manager, we must free it manually
     
 func _on_start_button_gui_input(event):
     if event is InputEventJoypadButton:

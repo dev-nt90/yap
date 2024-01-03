@@ -114,6 +114,7 @@ animations = [{
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_n8dob")
+debug = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("1_402ma")]
 
@@ -158,5 +159,20 @@ text = "X ##"
 [node name="GameOverScreen" parent="." instance=ExtResource("6_pykop")]
 
 [node name="LevelCompleteScreenContainer" parent="." instance=ExtResource("7_mq0yn")]
+
+[node name="DebugStateLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 144.0
+offset_bottom = 79.0
+text = "State: "
+
+[node name="DebugPosLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 176.0
+offset_bottom = 137.0
+text = "Pos.x 
+Pos.y"
 
 [connection signal="timeout" from="TimeElapsedTimer" to="." method="_on_time_elapsed_timer_timeout"]

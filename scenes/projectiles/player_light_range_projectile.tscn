@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0lhav7oeracr"]
+
+[ext_resource type="Texture2D" uid="uid://dqjoo7xkbkawx" path="res://assets/projectiles/player-light-range-projectile.png" id="1_3w4r3"]
+[ext_resource type="Script" path="res://scripts/projectiles/player_light_range_projectile.gd" id="1_ey6tn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6377"]
+size = Vector2(120, 10)
+
+[sub_resource type="Gradient" id="Gradient_auyyu"]
+colors = PackedColorArray(1.92523e-07, 0.940843, 0.954826, 1, 0.895225, 0.979613, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ldltd"]
+gradient = SubResource("Gradient_auyyu")
+fill_from = Vector2(1, 0.512821)
+fill_to = Vector2(0, 0.529915)
+
+[node name="PlayerLightRangeProjectile" type="Area2D"]
+collision_layer = 129
+collision_mask = 272
+script = ExtResource("1_ey6tn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, -3)
+shape = SubResource("RectangleShape2D_s6377")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(5.5, -3)
+scale = Vector2(1.76563, 0.09375)
+energy = 2.1
+texture = SubResource("GradientTexture2D_ldltd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3w4r3")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

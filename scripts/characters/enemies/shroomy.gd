@@ -1,9 +1,16 @@
+# HACK: not pictured in this script, but for the attached node itself
+# Apparently a character body is requires a collision object. But for nodes to communicate with this one, we need
+# an area. TODO: figure this out
+
 extends CharacterBody2D
+
+signal enemy_defeated
 
 enum STATES {
     IDLE,
     PLAYER_IN_RANGE,
-    FIRING_PROJECTILE
+    FIRING_PROJECTILE,
+    DEATH
 }
 
 @export var firing_distance: int = 200
@@ -19,15 +26,13 @@ var current_state = STATES.IDLE
 var player : CharacterBody2D = null
 var ground_position
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
     $AnimationPlayer.play("idle")
     $ProjectileCooldownTimer.stop()
     $HealthBarContainer.set_max_value(max_health)
     $HealthBarContainer.set_current_value(max_health)
-    ground_position = position.y
+    ground_position = position.y # HACK: this
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
     position.y = ground_position
     velocity.y = 0 # no funny business ya hear?
@@ -109,4 +114,16 @@ func _on_projectile_cooldown_timer_timeout():
 
 func modify_health(modify_amount):
     current_health += modify_amount
-    $HealthBarContainer.set_current_value(max_health)    
+    $HealthBarContainer.set_current_value(max_health)
+
+# TODO: figure out a better way for nodes and their projectiles to communicate
+func _on_hitbox_area_area_entered(_area):
+    print("shroomy hitbox area area entered")
+    modify_health(-5)
+    $HealthBarContainer.set_current_value(self.current_health)
+    if self.current_health <= 0:
+        # TODO: death animation
+        emit_signal("enemy_defeated")        
+        queue_free()
+    
+

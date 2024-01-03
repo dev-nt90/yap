@@ -2,6 +2,10 @@ extends Control
 
 var hint_pattern = "X %02d/%02d (%02d%%)"
 
+func _ready():
+    $emerald.play()
+    $ruby.play()
+
 func set_ruby_progress(current_ruby_count, ruby_total):
     if(current_ruby_count >= ruby_total):
         set_ruby_complete()

@@ -10,6 +10,7 @@ var par_time
 var start_time_dict
 var ruby_total : int
 var emerald_total : int
+var enemy_total : int
 
 func _ready():
     hide()    
@@ -50,6 +51,9 @@ func set_ruby_total(ruby_total_in):
 
 func set_emerald_total(emerald_total_in):
     self.emerald_total = emerald_total_in
+    
+func set_enemy_total(enemy_total_in):
+    self.enemy_total = enemy_total_in
 
 # collectible stats
 func set_ruby_progress(current_ruby_count):
@@ -57,7 +61,7 @@ func set_ruby_progress(current_ruby_count):
     var rubies_collected_str = ""
     
     if(current_ruby_count >= self.ruby_total):
-        rubies_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN % [current_ruby_count, self.ruby_total, ruby_percent] + "[/rainbow][/wave]")
+        rubies_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN % [current_ruby_count, self.ruby_total, ruby_percent] + "[/wave][/rainbow]")
     else:
         rubies_collected_str = String(GEMS_COLLECTED_PATTERN % [current_ruby_count, self.ruby_total, ruby_percent])
         
@@ -68,21 +72,21 @@ func set_emerald_progress(current_emerald_count):
     var emeralds_collected_str = ""
     
     if (current_emerald_count >= self.emerald_total):
-        emeralds_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN  % [current_emerald_count, self.emerald_total, emerald_percent] + "[/rainbow][/wave]")
+        emeralds_collected_str = String("[rainbow][wave]" + GEMS_COLLECTED_PATTERN  % [current_emerald_count, self.emerald_total, emerald_percent] + "[/wave][/rainbow]")
     else:
         emeralds_collected_str = String(GEMS_COLLECTED_PATTERN % [current_emerald_count, self.emerald_total, emerald_percent])
         
     $EmeraldsCollectedLabel.bbcode_text = emeralds_collected_str
 
 # combat stats
-func set_enemy_progress(current_enemy_count, enemies_total):
-    var enemy_percent = float(current_enemy_count)/float(enemies_total) * 100
+func set_enemy_progress(current_enemy_count):
+    var enemy_percent = float(current_enemy_count)/float(self.enemy_total) * 100
     
     var enemies_defeated_str = ""
-    if (current_enemy_count >= enemies_total):
-        enemies_defeated_str = String("[rainbow][wave]" + ENEMIES_DEFEATED_PATTERN + "[/rainbow][/wave]" % [current_enemy_count, enemies_total, enemy_percent])
+    if (current_enemy_count >= enemy_total):
+        enemies_defeated_str = String("[rainbow][wave]" + ENEMIES_DEFEATED_PATTERN + "[/wave][/rainbow]" % [current_enemy_count, self.enemy_total, enemy_percent])
     else:
-        enemies_defeated_str = String(ENEMIES_DEFEATED_PATTERN % [current_enemy_count, enemies_total, enemy_percent])
+        enemies_defeated_str = String(ENEMIES_DEFEATED_PATTERN % [current_enemy_count, self.enemy_total, enemy_percent])
         
     $EnemiesDefeatedLabel.bbcode_text = enemies_defeated_str
     

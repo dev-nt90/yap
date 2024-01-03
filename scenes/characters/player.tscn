@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dsxlweajxdtdf"]
+[gd_scene load_steps=23 format=3 uid="uid://dsxlweajxdtdf"]
 
 [ext_resource type="Script" path="res://scripts/characters/player.gd" id="1_utu5o"]
 [ext_resource type="Script" path="res://scripts/player/AnimationPlayer.gd" id="2_gp3bp"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bxlwvd6v3beux" path="res://assets/characters/hero/hero-walk.png" id="5_1qdrv"]
 [ext_resource type="Texture2D" uid="uid://51vmsgpspqtw" path="res://assets/Backgrounds/level_transition.png" id="6_g6irq"]
 [ext_resource type="PackedScene" uid="uid://can6s85h1baj3" path="res://scenes/ui/health_bar_container.tscn" id="7_8xktj"]
+[ext_resource type="Texture2D" uid="uid://e31t8n8ionss" path="res://assets/characters/hero/light-melee2.png" id="8_kfqb8"]
+[ext_resource type="Texture2D" uid="uid://cixtsn8h7vxqg" path="res://assets/characters/hero/light-range.png" id="9_0mq3q"]
+[ext_resource type="PackedScene" uid="uid://7ff7gfsr3iv1" path="res://scenes/infra/player_camera.tscn" id="10_yjfsy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krnca"]
 radius = 6.41448
@@ -61,6 +64,42 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LightMeleeSprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LightMeleeHitboxArea/LightMeleeHitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LightRangeSprite:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_2qnqh"]
@@ -137,6 +176,50 @@ tracks/2/keys = {
 "values": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0]
 }
 
+[sub_resource type="Animation" id="Animation_sr711"]
+resource_name = "light_melee"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightMeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LightMeleeHitboxArea/LightMeleeHitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_bhltl"]
+resource_name = "light_range"
+length = 0.95
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightRangeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
 [sub_resource type="Animation" id="Animation_cecdc"]
 resource_name = "walk"
 length = 0.65
@@ -178,6 +261,8 @@ _data = {
 "idle": SubResource("Animation_2qnqh"),
 "jump": SubResource("Animation_tc8dl"),
 "level_transition": SubResource("Animation_axv5e"),
+"light_melee": SubResource("Animation_sr711"),
+"light_range": SubResource("Animation_bhltl"),
 "walk": SubResource("Animation_cecdc"),
 "wall": SubResource("Animation_w84dc")
 }
@@ -191,13 +276,16 @@ initial_velocity_min = 61.73
 initial_velocity_max = 118.73
 gravity = Vector3(0, 1, 0)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lghao"]
+radius = 32.0
+
 [node name="Player" type="CharacterBody2D"]
 top_level = true
 collision_mask = 30
 script = ExtResource("1_utu5o")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-6.5, 17.5)
 scale = Vector2(3.04, 3.36)
 shape = SubResource("CapsuleShape2D_krnca")
@@ -249,5 +337,33 @@ offset_right = -58.0
 offset_bottom = -65.0
 scale = Vector2(1, 0.360001)
 
+[node name="LightMeleeSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("8_kfqb8")
+hframes = 13
+
+[node name="LightMeleeHitboxArea" type="Area2D" parent="."]
+position = Vector2(40, 16)
+collision_layer = 128
+collision_mask = 16
+
+[node name="LightMeleeHitbox" type="CollisionShape2D" parent="LightMeleeHitboxArea"]
+position = Vector2(8, 16)
+shape = SubResource("CircleShape2D_lghao")
+
+[node name="Projectiles" type="Node" parent="."]
+
+[node name="LightProjectileCooldownTimer" type="Timer" parent="."]
+
+[node name="LightRangeSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("9_0mq3q")
+hframes = 10
+
+[node name="PlayerCamera" parent="." instance=ExtResource("10_yjfsy")]
+offset = Vector2(0, 0)
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
+[connection signal="body_entered" from="LightMeleeHitboxArea" to="." method="_on_light_melee_hitbox_area_body_entered"]
+[connection signal="timeout" from="LightProjectileCooldownTimer" to="." method="_on_light_projectile_cooldown_timer_timeout"]

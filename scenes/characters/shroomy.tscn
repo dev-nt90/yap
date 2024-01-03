@@ -79,7 +79,7 @@ libraries = {
 }
 
 [node name="DetectionArea" type="Area2D" parent="."]
-collision_layer = 16
+collision_layer = 0
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
@@ -88,10 +88,6 @@ shape = SubResource("RectangleShape2D_jjpy2")
 
 [node name="ProjectileCooldownTimer" type="Timer" parent="."]
 wait_time = 2.0
-
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7)
-shape = SubResource("CapsuleShape2D_vn2ag")
 
 [node name="Projectiles" type="Node" parent="."]
 
@@ -102,6 +98,19 @@ offset_right = -23.0
 offset_bottom = -32.0
 scale = Vector2(0.374201, 0.177978)
 
+[node name="HitboxArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 128
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_vn2ag")
+
+[node name="HitboxShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_vn2ag")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="timeout" from="ProjectileCooldownTimer" to="." method="_on_projectile_cooldown_timer_timeout"]
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_area_entered"]

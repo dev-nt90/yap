@@ -1,7 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://bo4m4oydfi67o"]
+[gd_scene load_steps=24 format=3 uid="uid://bo4m4oydfi67o"]
 
 [ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="3_f7ybm"]
-[ext_resource type="Script" path="res://scripts/infra/PlayerCamera.gd" id="3_lookg"]
 [ext_resource type="Texture2D" uid="uid://d0rb863pxilcd" path="res://assets/Backgrounds/pixel_forest.png" id="4_1pshu"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="4_pkuej"]
 [ext_resource type="Texture2D" uid="uid://ndhkbomh0af" path="res://assets/Backgrounds/background-grass-nosky-pixel.png" id="5_ceass"]
@@ -46,43 +45,6 @@ func get_level_name():
     return level_name
 "
 
-[sub_resource type="Animation" id="Animation_axloo"]
-resource_name = "level_name_fade_in"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelNameLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3, 4, 6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_twctb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelNameLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_v68wh"]
-_data = {
-"RESET": SubResource("Animation_twctb"),
-"level_name_fade_in": SubResource("Animation_axloo")
-}
-
 [sub_resource type="Gradient" id="Gradient_s88b5"]
 offsets = PackedFloat32Array(0.0021645, 0.497835, 1)
 colors = PackedColorArray(0.811765, 0.937255, 0.988235, 1, 1, 1, 1, 1, 0.811765, 0.937255, 0.988235, 1)
@@ -120,45 +82,7 @@ scale = Vector2(7.34, 7.34)
 [node name="Player" parent="." instance=ExtResource("3_f7ybm")]
 position = Vector2(32, -112)
 collision_mask = 94
-
-[node name="PlayerCamera" type="Camera2D" parent="Player"]
-offset = Vector2(0, -50)
-limit_left = -5000
-limit_top = -5000
-limit_right = 25000
-limit_bottom = 5000
-limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-editor_draw_limits = true
-editor_draw_drag_margin = true
-script = ExtResource("3_lookg")
-
-[node name="LevelNameLabel" type="RichTextLabel" parent="Player/PlayerCamera"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -192.0
-offset_top = -176.0
-offset_right = 118.0
-offset_bottom = -136.0
-grow_horizontal = 2
-scale = Vector2(1.49486, 1.16)
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/normal_font_size = 29
-text = "asdfasdfasdfasdf"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/PlayerCamera"]
-libraries = {
-"": SubResource("AnimationLibrary_v68wh")
-}
+debug = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("4_pkuej")
@@ -195,6 +119,7 @@ centered = false
 [node name="BackgroundMusic" parent="." instance=ExtResource("12_7f6cn")]
 
 [node name="HUD" parent="." instance=ExtResource("7_uld6p")]
+debug = false
 
 [node name="FallZone" parent="." instance=ExtResource("11_tl3af")]
 position = Vector2(1080, 496)
@@ -478,8 +403,6 @@ position = Vector2(-2144, -1504)
 
 [node name="sfx" parent="." instance=ExtResource("12_umxwt")]
 
-[node name="TransitionScene" parent="." instance=ExtResource("13_fx5w2")]
-
 [node name="CabinArea" parent="." instance=ExtResource("14_eqyq5")]
 position = Vector2(11167, -3364)
 
@@ -646,6 +569,8 @@ position = Vector2(2544, 32)
 [node name="Shroomy4" parent="Enemies" instance=ExtResource("18_n5p6v")]
 position = Vector2(2072, 32)
 
+[node name="TransitionScene" parent="." instance=ExtResource("13_fx5w2")]
+
 [connection signal="level_exit_requirements_met" from="Player" to="HUD" method="_on_player_level_exit_requirements_met"]
 [connection signal="player_death" from="Player" to="HUD" method="_on_player_player_death"]
 [connection signal="body_entered" from="FallZone" to="Player" method="_on_fall_zone_body_entered"]
@@ -742,3 +667,7 @@ position = Vector2(2072, 32)
 [connection signal="level_end_area_entered" from="CabinArea" to="Player" method="_on_cabin_area_level_end_area_entered"]
 [connection signal="body_entered" from="EndHintArea" to="Player" method="_on_end_hint_area_body_entered"]
 [connection signal="body_exited" from="EndHintArea" to="Player" method="_on_end_hint_area_body_exited"]
+[connection signal="enemy_defeated" from="Enemies/Shroomy" to="HUD" method="_on_shroomy_enemy_defeated"]
+[connection signal="enemy_defeated" from="Enemies/Shroomy2" to="HUD" method="_on_shroomy_enemy_defeated"]
+[connection signal="enemy_defeated" from="Enemies/Shroomy3" to="HUD" method="_on_shroomy_enemy_defeated"]
+[connection signal="enemy_defeated" from="Enemies/Shroomy4" to="HUD" method="_on_shroomy_enemy_defeated"]

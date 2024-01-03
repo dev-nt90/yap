@@ -5,6 +5,7 @@ extends CharacterBody2D
 signal cutscene_entered
 signal player_death
 signal level_exit_requirements_met
+signal light_melee_hitbox_entered
 
 enum States {
     AIR = 1,
@@ -14,7 +15,18 @@ enum States {
     DEATH
 }
 
+enum AttackStates
+{
+    NONE,
+    LIGHT_MELEE,
+    HEAVY_MELEE,
+    LIGHT_RANGE,
+    HEAVY_RANGE
+}
+
 # set to TRUE to have player spawn in at "DebugStartPosition" node
+# BUG: enabling this value to true in both the level instance and the original player scene causes the camera to become detached
+# so do not set this value in the original player scene 
 @export var debug = false 
 @export var max_health: int = 100
 
@@ -23,16 +35,21 @@ const RUNSPEED_MULTIPLIER = 2.5
 const JUMP_VELOCITY = -550.0
 const WALL_JUMP_BUFFER_LIMIT = 5
 
+var light_projectile = preload("res://scenes/projectiles/player_light_range_projectile.tscn")
+
 var wall_jump_direction_buffer: Array[bool] = []
 var wall_jump_jump_buffer: Array[bool] = []
 var double_jump_available = true
+var light_projectile_ready = true
 
 var current_state = States.AIR
+var current_attack_state = AttackStates.NONE
 var current_health = max_health
 
 var direction
 
 @onready var animation_player = $AnimationPlayer
+@onready var hud_node = get_parent().get_node("HUD")
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -55,10 +72,22 @@ func _ready():
         
 func _physics_process(delta):
     handle_state(delta)
+    
+    # why manage attack states separately from other states? 
+    # the idea is for attack states to be additive
+    # in other words you should still be able to attack while mid-air or taking damage
+    handle_attack_state(delta) 
     handle_sprint()
     handle_state_agnostic()
     tick_buffer()
     
+    set_hud_debug_labels()
+    
+func set_hud_debug_labels():
+    if debug:
+        hud_node.set_debug_pos_label(self.position)
+        hud_node.set_debug_state_label(self.current_state)
+        
 func handle_state(delta):
     direction = get_direction_input()
     match current_state:
@@ -68,14 +97,74 @@ func handle_state(delta):
             handle_floor_state()
         States.WALL:
             handle_wall_state(delta)
+
+func handle_attack_state(_delta):
+    # disallow attack while attached to a wall
+    if current_state == States.WALL:
+        current_attack_state = AttackStates.NONE
+        disable_attack_sprites()
+        enable_movement_sprite()
+        return
         
+    if Input.is_action_just_pressed("light_melee"):
+        current_attack_state = AttackStates.LIGHT_MELEE
+        disable_movement_sprite()
+        
+        # Light range
+        $LightRangeSprite.visible = false
+        
+        # Light melee
+        $LightMeleeSprite.visible = true
+        $LightMeleeHitboxArea/LightMeleeHitbox.disabled = false
+        
+        animation_player.play("light_melee")
+    elif Input.is_action_just_pressed("light_range") and light_projectile_ready:
+        current_attack_state = AttackStates.LIGHT_RANGE
+        disable_movement_sprite()
+        
+        # Light range
+        $LightRangeSprite.visible = true
+        
+        # Light melee
+        $LightMeleeSprite.visible = false
+        $LightMeleeHitboxArea/LightMeleeHitbox.disabled = true
+        
+        animation_player.play("light_range")
+            
+    match current_attack_state:
+        AttackStates.LIGHT_MELEE:
+            handle_light_melee()
+        AttackStates.LIGHT_RANGE:
+            handle_light_range()
+
+func disable_attack_sprites():
+    $LightMeleeSprite.visible = false
+    $LightMeleeHitboxArea/LightMeleeHitbox.disabled = true
+    
+    $LightRangeSprite.visible = false
+    
+func enable_movement_sprite():
+    $HeroWalkSprite.visible = true
+    
+func disable_movement_sprite():
+    $HeroWalkSprite.visible = false
+    
+func handle_light_melee():
+    pass
+    
+func handle_light_range():
+    pass
+    
 func handle_sprint():
     if current_state == States.AIR:
         disable_friction_smoke()
         
+        # allow mid-air change of speed
         if Input.is_action_pressed("sprint") and direction != 0:
             velocity.x = lerp(velocity.x, SPEED * RUNSPEED_MULTIPLIER * direction, 0.75)
             animation_player.speed_scale = 2.0
+    
+    # only enable friction smoke if the player is on the floor and moving
     elif Input.is_action_pressed("sprint") and current_state == States.FLOOR and direction != 0:
         enable_friction_smoke()
         $FrictionSmoke.scale.x = lerp($FrictionSmoke.scale.x, 1.0, .1) * direction 
@@ -87,20 +176,32 @@ func handle_sprint():
     elif Input.is_action_just_released("sprint"):
         disable_friction_smoke()
     
-"""
-This function handles any logic which can apply when the player is in any state.
-"""
 
-func handle_state_agnostic():
-    # apply horizontal flipping to our currently playing animation and wallchecker
+# TODO: do this on input instead of every frame
+func flip_sprites():
     if(direction < 0):
         $HeroWalkSprite.flip_h = true
-        $CollisionShape2D.rotation_degrees = 180.0
+        $LightMeleeSprite.flip_h = true
+        $LightRangeSprite.flip_h = true
+        
+        $PlayerHitbox.rotation_degrees = 180.0
+        $LightMeleeHitboxArea.position.x = -40
         $WallChecker.rotation_degrees = 90
     elif(direction > 0):
         $HeroWalkSprite.flip_h = false
-        $CollisionShape2D.rotation_degrees = 0.0
+        $LightMeleeSprite.flip_h = false
+        $LightRangeSprite.flip_h = false
+        
+        $PlayerHitbox.rotation_degrees = 0.0
+        $LightMeleeHitboxArea.position.x = 40
         $WallChecker.rotation_degrees = -90
+
+"""
+This function handles any logic which can apply when the player is in any state.
+"""
+func handle_state_agnostic():
+    # apply horizontal flipping to our currently playing animation and wallchecker
+    flip_sprites()
     
     #assert_can_climb()
     move_and_slide()
@@ -121,12 +222,13 @@ func handle_floor_state():
         velocity.x = move_toward(velocity.x, 0, SPEED)
     
     # if we're not moving, go idle, otherwise walk
-    if velocity.x == 0:
-        animation_player.speed_scale = 1.0
-        animation_player.play("idle")
-    else:
-        animation_player.speed_scale = 1.0
-        animation_player.play("walk")
+    if current_attack_state == AttackStates.NONE:
+        if velocity.x == 0:
+            animation_player.speed_scale = 1.0
+            animation_player.play("idle")
+        else:
+            animation_player.speed_scale = 1.0
+            animation_player.play("walk")
     
     # apply jump from floor, transition to AIR
     if Input.is_action_just_pressed("jump"):
@@ -144,7 +246,8 @@ func handle_air_state(delta):
         return
     
     # play relevant animation
-    animation_player.play("jump")
+    if current_attack_state == AttackStates.NONE:
+        animation_player.play("jump")
     
     # apply gravity
     velocity.y += gravity * delta
@@ -296,13 +399,13 @@ func _on_fall_zone_body_entered(_body):
 
 # TODO: this should probably be handled by the ruby itself
 func _on_ruby_area_ruby_collected():
-    get_parent().get_node("HUD").increment_ruby_count()
+    hud_node.increment_ruby_count()
     var ruby = get_parent().get_node("sfx").get_node("ruby")
     ruby.play()
 
 # TODO: this should probably be handled by the emerald itself
 func _on_emerald_body_emerald_collected():
-    get_parent().get_node("HUD").increment_emerald_count()
+    hud_node.increment_emerald_count()
     var emerald = get_parent().get_node("sfx").get_node("emerald")
     emerald.play()
 
@@ -313,9 +416,10 @@ func emit_cutscene_entered():
 
 
 func _on_animation_player_animation_finished(anim_name):
-    if debug:
-        return
     if anim_name == "level_transition": 
+        
+        if debug:
+            return
         # HACK: reusing the level transition animation for death results in a split state.
         # not the end of the world but should probably fix
         if current_state != States.DEATH:
@@ -324,23 +428,37 @@ func _on_animation_player_animation_finished(anim_name):
         else:
             emit_signal("player_death") # HACK: having to wire up this signal on every level isn't great
             get_tree().paused = true
-        $CollisionShape2D.set_deferred("disabled", false) # HACK: we are having to set_deferred here since on death we are trying to pause the game
+        $PlayerHitbox.set_deferred("disabled", false) # HACK: we are having to set_deferred here since on death we are trying to pause the game
         $LevelTransitionBackground.set_deferred("visible", false)
-
-# initial trigger is on the animation player itself
+    elif anim_name == "light_melee":
+        current_attack_state = AttackStates.NONE
+        disable_attack_sprites()
+        enable_movement_sprite()
+        animation_player.speed_scale = 1.0
+    elif anim_name == "light_range":
+        instantiate_light_range_projectile()
+        current_attack_state = AttackStates.NONE
+        disable_attack_sprites()
+        enable_movement_sprite()
+        animation_player.speed_scale = 1.0
+        
 func _on_animation_player_animation_started(anim_name):
-    if debug:
-        return
     if anim_name == "level_transition":
-        $CollisionShape2D.set_deferred("disabled", true)
+        if debug:
+            return
+        $PlayerHitbox.set_deferred("disabled", true)
         $LevelTransitionBackground.set_deferred("visible", true)
+    if anim_name == "light_melee":
+        animation_player.speed_scale = 2.5
+    if anim_name == "light_range":
+        animation_player.speed_scale = 2.1
 
 func _on_end_hint_area_body_entered(_body):
     var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
     var emerald_denom = get_parent().get_node("LevelExitRequirements").get_emeralds_required()
     
-    var ruby_num = get_parent().get_node("HUD").get_current_ruby_count()
-    var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
+    var ruby_num = hud_node.get_current_ruby_count()
+    var emerald_num = hud_node.get_current_emerald_count()
     
     get_parent().get_node("EndHintArea/EndRequirementPopup").set_ruby_progress(ruby_num, ruby_denom)
     get_parent().get_node("EndHintArea/EndRequirementPopup").set_emerald_progress(emerald_num, emerald_denom)
@@ -358,8 +476,8 @@ func _on_cabin_area_level_end_area_entered():
     var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
     var emerald_denom = get_parent().get_node("LevelExitRequirements").get_emeralds_required()
     
-    var ruby_num = get_parent().get_node("HUD").get_current_ruby_count()
-    var emerald_num = get_parent().get_node("HUD").get_current_emerald_count()
+    var ruby_num = hud_node.get_current_ruby_count()
+    var emerald_num = hud_node.get_current_emerald_count()
     
     if ruby_num >= ruby_denom and emerald_num >= emerald_denom:
         emit_signal("level_exit_requirements_met")
@@ -382,3 +500,35 @@ func handle_death():
     current_state = States.DEATH
     velocity.x = 0
     velocity.y = 0
+
+
+func _on_light_melee_hitbox_area_body_entered(_body):
+    print("_on_light_melee_hitbox_area_body_entered")
+    emit_signal("light_melee_hitbox_entered")
+    
+func instantiate_light_range_projectile():
+    
+    var new_projectile = light_projectile.instantiate()
+    var projectile_direction = Vector2.ZERO
+    if $HeroWalkSprite.flip_h:
+        projectile_direction = Vector2.LEFT
+        new_projectile.set_position(self.position + Vector2(-40, 30))
+    else:
+        projectile_direction = Vector2.RIGHT
+        new_projectile.set_position(self.position + Vector2(40, 30))
+        
+    new_projectile.set_direction(projectile_direction)
+    $Projectiles.add_child(new_projectile)
+    handle_projectile_cooldown()
+    
+func handle_projectile_cooldown():
+    #mark projectile unavailable
+    light_projectile_ready = false
+    
+    #start the cooldown timer
+    $LightProjectileCooldownTimer.start()
+
+
+func _on_light_projectile_cooldown_timer_timeout():
+    light_projectile_ready = true
+    $LightProjectileCooldownTimer.stop()

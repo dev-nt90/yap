@@ -87,6 +87,8 @@ _data = {
 
 [node name="ShroomyProjectile" type="Area2D"]
 scale = Vector2(0.75, 0.75)
+collision_layer = 256
+collision_mask = 129
 script = ExtResource("1_8fdfb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

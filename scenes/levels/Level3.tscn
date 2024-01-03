@@ -26,16 +26,6 @@ script = ExtResource("1_vuvr2")
 [node name="Player" parent="." instance=ExtResource("1_kw14g")]
 debug = true
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-limit_left = -10000
-limit_top = -10000
-limit_right = 10000
-limit_bottom = 10000
-position_smoothing_enabled = true
-rotation_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-
 [node name="HUD" parent="." instance=ExtResource("2_wjx7n")]
 
 [node name="BackgroundMusic" parent="." instance=ExtResource("3_7tu2d")]
