@@ -10,4 +10,6 @@ script = ExtResource("1_cjyte")
 
 [node name="CurrentScene" type="Node" parent="."]
 
-[connection signal="transitioned" from="TransitionScene" to="." method="_on_transition_scene_transitioned"]
+[connection signal="scene_started" from="." to="TransitionScene" method="_on_scene_manager_scene_started"]
+[connection signal="faded_to_black" from="TransitionScene" to="." method="_on_transition_scene_faded_to_black"]
+[connection signal="faded_to_normal" from="TransitionScene" to="." method="_on_transition_scene_faded_to_normal"]

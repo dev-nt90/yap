@@ -39,7 +39,8 @@ func _on_restart_button_gui_input(event):
 
 # ContinueButton
 func _on_continue_button_pressed():
-    SceneManager.load_next_level()
+    var next_scene = get_parent().get_parent().get_next_level() # HACK: this
+    SceneManager.set_scene(next_scene)
 
 func _on_continue_button_gui_input(event):
     if event is InputEventJoypadButton:

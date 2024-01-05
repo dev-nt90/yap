@@ -361,7 +361,6 @@ texture = ExtResource("9_0mq3q")
 hframes = 10
 
 [node name="PlayerCamera" parent="." instance=ExtResource("10_yjfsy")]
-offset = Vector2(0, 0)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]

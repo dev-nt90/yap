@@ -114,7 +114,6 @@ animations = [{
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_n8dob")
-debug = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("1_402ma")]
 

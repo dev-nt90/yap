@@ -16,7 +16,7 @@ fill_to = Vector2(0, 0.529915)
 
 [node name="PlayerLightRangeProjectile" type="Area2D"]
 collision_layer = 129
-collision_mask = 272
+collision_mask = 306
 script = ExtResource("1_ey6tn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

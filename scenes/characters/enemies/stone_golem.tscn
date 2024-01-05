@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1bco0fkwexa3"]
+
+[ext_resource type="Texture2D" uid="uid://bfeh8jweci8tq" path="res://assets/characters/enemies/stone-golem.png" id="1_bv4gn"]
+
+[node name="StoneGolem" type="Node2D"]
+
+[node name="GolemBody" type="Sprite2D" parent="."]
+texture = ExtResource("1_bv4gn")

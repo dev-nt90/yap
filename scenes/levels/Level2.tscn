@@ -85,7 +85,6 @@ position = Vector2(1408, 320)
 [node name="sfx" parent="." instance=ExtResource("9_51hl1")]
 
 [node name="HUD" parent="." instance=ExtResource("4_uopvd")]
-visible = false
 
 [node name="LevelExitRequirements" parent="." instance=ExtResource("13_yyd0b")]
 emeralds_required = 3

@@ -25,8 +25,6 @@ enum AttackStates
 }
 
 # set to TRUE to have player spawn in at "DebugStartPosition" node
-# BUG: enabling this value to true in both the level instance and the original player scene causes the camera to become detached
-# so do not set this value in the original player scene 
 @export var debug = false 
 @export var max_health: int = 100
 
@@ -395,7 +393,7 @@ func disable_friction_smoke():
     $FrictionSmoke.emitting = false
 
 func _on_fall_zone_body_entered(_body):
-    SceneManager.reload_scene()
+    handle_death()
 
 # TODO: this should probably be handled by the ruby itself
 func _on_ruby_area_ruby_collected():
@@ -417,7 +415,6 @@ func emit_cutscene_entered():
 
 func _on_animation_player_animation_finished(anim_name):
     if anim_name == "level_transition": 
-        
         if debug:
             return
         # HACK: reusing the level transition animation for death results in a split state.
@@ -500,7 +497,6 @@ func handle_death():
     current_state = States.DEATH
     velocity.x = 0
     velocity.y = 0
-
 
 func _on_light_melee_hitbox_area_body_entered(_body):
     print("_on_light_melee_hitbox_area_body_entered")
