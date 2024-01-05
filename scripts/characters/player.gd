@@ -395,23 +395,10 @@ func disable_friction_smoke():
 func _on_fall_zone_body_entered(_body):
     handle_death()
 
-# TODO: this should probably be handled by the ruby itself
-func _on_ruby_area_ruby_collected():
-    hud_node.increment_ruby_count()
-    var ruby = get_parent().get_node("sfx").get_node("ruby")
-    ruby.play()
-
-# TODO: this should probably be handled by the emerald itself
-func _on_emerald_body_emerald_collected():
-    hud_node.increment_emerald_count()
-    var emerald = get_parent().get_node("sfx").get_node("emerald")
-    emerald.play()
-
 func emit_cutscene_entered():
     emit_signal("cutscene_entered")
     print("cutscene_entered")
     current_state = States.CUTSCENE
-
 
 func _on_animation_player_animation_finished(anim_name):
     if anim_name == "level_transition": 
