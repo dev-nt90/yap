@@ -21,8 +21,14 @@ func _ready():
 # https://forum.godotengine.org/t/why-was-getting-milliseconds-system-time-removed-in-godot-4-0/6381/3
 func get_current_time_dict_with_ms():
     var unix_time: float = Time.get_unix_time_from_system()
+    
+    @warning_ignore("narrowing_conversion")
     var unix_time_int: int = unix_time
+    
+    @warning_ignore("narrowing_conversion")
     var dt: Dictionary = Time.get_datetime_dict_from_unix_time(unix_time)
+    
+    @warning_ignore("narrowing_conversion")
     var ms: int = (unix_time - unix_time_int) * 1000.0
     dt["ms"] = ms
     
@@ -39,8 +45,7 @@ func _on_restart_button_gui_input(event):
 
 # ContinueButton
 func _on_continue_button_pressed():
-    var next_scene = get_parent().get_parent().get_next_level() # HACK: this
-    SceneManager.set_scene(next_scene)
+    SceneManager.go_to_next_scene()
 
 func _on_continue_button_gui_input(event):
     if event is InputEventJoypadButton:

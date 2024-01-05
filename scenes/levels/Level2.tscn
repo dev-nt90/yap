@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7uli15yp1d5b"]
+[gd_scene load_steps=14 format=3 uid="uid://b7uli15yp1d5b"]
 
 [ext_resource type="Script" path="res://scripts/levels/Level2.gd" id="1_lurlu"]
-[ext_resource type="PackedScene" uid="uid://csvaxf3y1hgxm" path="res://scenes/levels/Level3.tscn" id="2_to3ay"]
 [ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="2_u65lr"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="3_jdopy"]
 [ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/ui/hud.tscn" id="4_uopvd"]
@@ -14,11 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://rmkpvhvohb6n" path="res://scenes/collectibles/ruby.tscn" id="10_ljlj5"]
 [ext_resource type="PackedScene" uid="uid://pjoloq38kge2" path="res://scenes/infra/level_exit_requirements.tscn" id="13_yyd0b"]
 [ext_resource type="PackedScene" uid="uid://bbsrsboygmfxp" path="res://scenes/structures/cabin.tscn" id="14_7e2mc"]
-[ext_resource type="PackedScene" uid="uid://ccr02pjl5ma4k" path="res://scenes/infra/transition_scene.tscn" id="15_jxk57"]
 
 [node name="SceneRoot" type="Node2D"]
 script = ExtResource("1_lurlu")
-next_level = ExtResource("2_to3ay")
 level_par_time = "3:00.000"
 level_name = "Moonlit path"
 
@@ -92,8 +89,6 @@ rubies_required = 50
 
 [node name="CabinArea" parent="." instance=ExtResource("14_7e2mc")]
 position = Vector2(11167, -3364)
-
-[node name="TransitionScene" parent="." instance=ExtResource("15_jxk57")]
 
 [node name="Enemies" type="Node" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bo4m4oydfi67o"]
+[gd_scene load_steps=24 format=3 uid="uid://bo4m4oydfi67o"]
 
 [ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="3_f7ybm"]
 [ext_resource type="Texture2D" uid="uid://d0rb863pxilcd" path="res://assets/Backgrounds/pixel_forest.png" id="4_1pshu"]
@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://17yam4n7xpb6" path="res://scenes/infra/fall_zone.tscn" id="11_tl3af"]
 [ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="12_7f6cn"]
 [ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="12_umxwt"]
-[ext_resource type="PackedScene" uid="uid://ccr02pjl5ma4k" path="res://scenes/infra/transition_scene.tscn" id="13_fx5w2"]
-[ext_resource type="PackedScene" uid="uid://b7uli15yp1d5b" path="res://scenes/levels/Level2.tscn" id="14_4xx5d"]
 [ext_resource type="PackedScene" uid="uid://bbsrsboygmfxp" path="res://scenes/structures/cabin.tscn" id="14_eqyq5"]
 [ext_resource type="PackedScene" uid="uid://b16xir6lb2vsh" path="res://scenes/ui/end_requirement_popup.tscn" id="15_xqpgw"]
 [ext_resource type="PackedScene" uid="uid://pjoloq38kge2" path="res://scenes/infra/level_exit_requirements.tscn" id="16_j4aak"]
@@ -23,7 +21,6 @@
 [sub_resource type="GDScript" id="GDScript_sciwa"]
 script/source = "extends Node2D
 
-@export var next_level : PackedScene
 @export var level_par_time : String
 @export var level_name : String
 
@@ -32,14 +29,11 @@ func _ready():
     #https://opengameart.org/content/space-orchestral
     #$Player.cutscene_entered.connect(_on_player_cutscene_entered)
     $BackgroundMusic/SpaceOrchestral.play()
-    SceneManager.set_current_scene(preload(\"res://scenes/levels/Level.tscn\"))
+    SceneManager.set_current_scene_path(\"res://scenes/levels/Level.tscn\")
     
 
 func _on_player_cutscene_entered():
     print(\"player cutscene entered\")
-
-func get_next_level():
-    return next_level
 
 func get_par_time():
     return level_par_time
@@ -72,7 +66,6 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="SceneRoot" type="Node2D"]
 script = SubResource("GDScript_sciwa")
-next_level = ExtResource("14_4xx5d")
 level_par_time = "3:00.000"
 level_name = "Dilapidated Castle"
 
@@ -576,8 +569,6 @@ position = Vector2(5864, -3336)
 
 [node name="StoneGolem" parent="Enemies" instance=ExtResource("18_at6pe")]
 position = Vector2(7472, 72)
-
-[node name="TransitionScene" parent="." instance=ExtResource("13_fx5w2")]
 
 [connection signal="level_exit_requirements_met" from="Player" to="HUD" method="_on_player_level_exit_requirements_met"]
 [connection signal="player_death" from="Player" to="HUD" method="_on_player_player_death"]

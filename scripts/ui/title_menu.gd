@@ -11,7 +11,7 @@ func _ready():
 
 func _on_start_button_pressed():
     $BackgroundMusic/TheCharm68.stop()
-    SceneManager.set_scene(load("res://scenes/levels/Level.tscn"))
+    SceneManager.go_to_next_scene()
     
 func _on_start_button_gui_input(event):
     if event is InputEventJoypadButton:

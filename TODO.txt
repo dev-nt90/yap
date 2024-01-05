@@ -69,6 +69,7 @@
 	-object communication sucks or is nearly non-existent
 	-finalize control scheme
 -ui
+	-on death, level restart button should be focused
 	-design needs improvement, currently generic, without style
 	-better font
 	-generic function buttons (restart current level, exit, return to menu, etc)
@@ -76,3 +77,22 @@
 	-pause script would be good to integrate with hud or pause menu
 	-finish controller support
 	-update control scheme popup
+	
+-each level currently has and (mostly) requires the following:
+	-SceneRoot (Node2D) as root of level, with a level par time and name
+	-DebugStartPosition (marker)
+	-Instance of Player
+	-TileMap
+	-ParallaxBackground (optional)
+	-Instance of BackgroundMusic (Node)
+	-Instance of HUD
+	-Instance of FallZone; size and position must be adjusted manually
+	-Instance of Pause
+	-Rubies collection (Node2D) ideally with at least 1 instance of a ruby
+	-Emerald collection (Node2D) ideally with at least 1 instance of an emerald
+	-Instance of sfx (Node)
+	-Instance of CabinArea (this needs to change to a generic level end area)
+	-Environment Lights (optional)
+	-Instance of EndHintArea... should probably attach this to the generic level end area once ready
+	-Instance of LevelExitRequirements - with values set
+	-Enemies collection (Node) ideally with at least 1 instance of an enemy

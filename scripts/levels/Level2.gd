@@ -1,14 +1,11 @@
 extends Node2D
 
-@export var next_level : PackedScene
 @export var level_par_time : String
 @export var level_name : String
 
 func _ready():
     $BackgroundMusic/ObservingTheStar.play()
-
-func get_next_level():
-    return next_level
+    SceneManager.set_current_scene_path("res://scenes/levels/Level2.tscn")
 
 func get_par_time():
     return level_par_time
