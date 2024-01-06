@@ -402,13 +402,14 @@ func emit_cutscene_entered():
 
 func _on_animation_player_animation_finished(anim_name):
     if anim_name == "level_transition": 
+        var hud_animation_player = get_parent().get_node("HUD/AnimationPlayer")
+        hud_animation_player.play("level_name_fade_in")
         if debug:
             return
         # HACK: reusing the level transition animation for death results in a split state.
         # not the end of the world but should probably fix
         if current_state != States.DEATH:
             set_physics_process(true) # only turn everything back on if the player is still alive
-            $PlayerCamera/AnimationPlayer.play("level_name_fade_in")
         else:
             emit_signal("player_death") # HACK: having to wire up this signal on every level isn't great
             get_tree().paused = true

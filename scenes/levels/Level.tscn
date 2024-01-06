@@ -22,7 +22,6 @@
 script/source = "extends Node2D
 
 @export var level_par_time : String
-@export var level_name : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,9 +36,6 @@ func _on_player_cutscene_entered():
 
 func get_par_time():
     return level_par_time
-
-func get_level_name():
-    return level_name
 "
 
 [sub_resource type="Gradient" id="Gradient_s88b5"]
@@ -67,10 +63,9 @@ fill_from = Vector2(0.5, 0.5)
 [node name="SceneRoot" type="Node2D"]
 script = SubResource("GDScript_sciwa")
 level_par_time = "3:00.000"
-level_name = "Dilapidated Castle"
 
 [node name="DebugStartPosition" type="Marker2D" parent="."]
-position = Vector2(9912, -3448)
+position = Vector2(-3880, -4184)
 scale = Vector2(7.34, 7.34)
 
 [node name="LevelTimer" type="Timer" parent="."]
@@ -114,9 +109,10 @@ centered = false
 [node name="BackgroundMusic" parent="." instance=ExtResource("12_7f6cn")]
 
 [node name="HUD" parent="." instance=ExtResource("7_uld6p")]
+level_name = "Dilapidated Castle"
 
 [node name="FallZone" parent="." instance=ExtResource("11_tl3af")]
-position = Vector2(1080, 496)
+position = Vector2(1080, 600)
 scale = Vector2(3789.7, 12.5759)
 
 [node name="Pause" parent="." instance=ExtResource("6_woxiy")]

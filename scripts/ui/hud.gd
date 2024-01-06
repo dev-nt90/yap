@@ -8,8 +8,11 @@ var rubyCount = 0
 var emeraldCount = 0
 var enemy_defeated_count = 0
 var par_time
+@export var level_name : String
 
 func _ready():
+    $LevelNameLabel.text = level_name
+    
     $TimeElapsedTimer.start()
     $ruby.play()
     $emerald.play()
