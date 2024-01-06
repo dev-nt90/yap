@@ -5,18 +5,42 @@ func _ready():
     hide_all()
     
     # only care about pause menu stuff when the game is paused
-    process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+    process_mode = Node.PROCESS_MODE_WHEN_PAUSED      
 
 func hide_all(): 
+    hide_controls()
+    
+    hide_popups()
+        
+    hide()
+
+func hide_controls():
     var controls = get_node("PauseMenuControls").get_children()
     for control in controls:
         control.hide()
-    
+        
+func hide_popups():
     var popups = get_node("PauseMenuPopups").get_children()
     for popup in popups:
         popup.hide()
         
-    hide()
+func any_popups_visible() -> bool:
+    var popups_visible = false
+    var popups = get_node("PauseMenuPopups").get_children()
+    for popup in popups:
+        if popup.visible:
+            popups_visible = true
+            break
+    return popups_visible
+    
+func any_controls_visible() -> bool:
+    var controls_visible = false
+    var controls = get_node("PauseMenuControls").get_children()
+    for control in controls:
+        if control.visible:
+            controls_visible = true
+            break
+    return controls_visible
 
 func show_pause_menu():
     show()
@@ -53,6 +77,7 @@ func _on_controls_button_pressed():
 
 # controller support
 # ResumeButton
+# BUG: this input is captured in the player script, resulting in a jump on pause screen exit
 func _on_resume_button_gui_input(event):
     if event is InputEventJoypadButton:
         if event.button_index == JOY_BUTTON_A and event.pressed:
