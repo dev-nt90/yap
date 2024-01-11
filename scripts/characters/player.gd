@@ -44,10 +44,13 @@ var current_state = States.AIR
 var current_attack_state = AttackStates.NONE
 var current_health = max_health
 
+var key_count = 0
+
 var direction
 
 @onready var animation_player = $AnimationPlayer
 @onready var hud_node = get_parent().get_node("HUD")
+@onready var sfx = get_parent().get_node("sfx")
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -60,6 +63,9 @@ func _ready():
     set_physics_process(false)
     current_state = States.AIR
     current_health = max_health
+    key_count = 0
+    
+    $LightMeleeHitboxArea/LightMeleeHitbox.disabled = true
     
     if debug:
         set_physics_process(true)
@@ -232,6 +238,7 @@ func handle_floor_state():
     if Input.is_action_just_pressed("jump"):
         velocity.y = JUMP_VELOCITY
         current_state = States.AIR
+        sfx.get_node("jump1").play()
         
 func handle_air_state(delta):
     # transition state
@@ -258,20 +265,28 @@ func handle_air_state(delta):
     if Input.is_action_just_pressed("jump") and double_jump_available:
         velocity.y = JUMP_VELOCITY
         double_jump_available = false
+        sfx.get_node("jump1").stop()
+        sfx.get_node("jump2").play()
 
 func handle_wall_state(delta):
     # do state transition
     if is_on_floor():
         #disable_friction_smoke()
         current_state = States.FLOOR
+        sfx.get_node("wall-slide").stop()
         return
     elif not is_near_wall():
         #disable_friction_smoke()
         current_state = States.AIR
+        sfx.get_node("wall-slide").stop()
         return
         
     # apply lesser gravity, so the initial slide down the wall is relatively slow
     velocity.y += (gravity * delta) * 0.4
+    
+    if velocity.y > 200:
+        if not sfx.get_node("wall-slide").playing:
+            sfx.get_node("wall-slide").play()
     
     #TODO: fix wall jump friction smoke
     #enable_friction_smoke()
@@ -417,6 +432,7 @@ func _on_animation_player_animation_finished(anim_name):
         $LevelTransitionBackground.set_deferred("visible", false)
     elif anim_name == "light_melee":
         current_attack_state = AttackStates.NONE
+        $LightMeleeHitboxArea/LightMeleeHitbox.disabled = true
         disable_attack_sprites()
         enable_movement_sprite()
         animation_player.speed_scale = 1.0
@@ -427,6 +443,7 @@ func _on_animation_player_animation_finished(anim_name):
         enable_movement_sprite()
         animation_player.speed_scale = 1.0
         
+        
 func _on_animation_player_animation_started(anim_name):
     if anim_name == "level_transition":
         if debug:
@@ -435,8 +452,11 @@ func _on_animation_player_animation_started(anim_name):
         $LevelTransitionBackground.set_deferred("visible", true)
     if anim_name == "light_melee":
         animation_player.speed_scale = 2.5
+        sfx.get_node("short-electric-burst").play()
     if anim_name == "light_range":
         animation_player.speed_scale = 2.1
+        sfx.get_node("short-electric-burst2").play()
+        
 
 func _on_end_hint_area_body_entered(_body):
     var ruby_denom = get_parent().get_node("LevelExitRequirements").get_rubies_required()
@@ -491,7 +511,6 @@ func _on_light_melee_hitbox_area_body_entered(_body):
     emit_signal("light_melee_hitbox_entered")
     
 func instantiate_light_range_projectile():
-    
     var new_projectile = light_projectile.instantiate()
     var projectile_direction = Vector2.ZERO
     if $HeroWalkSprite.flip_h:
@@ -516,3 +535,15 @@ func handle_projectile_cooldown():
 func _on_light_projectile_cooldown_timer_timeout():
     light_projectile_ready = true
     $LightProjectileCooldownTimer.stop()
+
+func _on_key_key_collected():
+    key_count += 1
+    hud_node.set_key_count(key_count)
+
+func get_key_count():
+    return key_count
+
+func _on_key_door_door_opened():
+    key_count -= 1
+    hud_node.set_key_count(key_count)
+

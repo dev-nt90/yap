@@ -1,11 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://bf2ud24sh5smk"]
+[gd_scene load_steps=8 format=3 uid="uid://bf2ud24sh5smk"]
 
 [ext_resource type="AudioStream" uid="uid://cg1qjrc0x7kgt" path="res://assets/audio/shimmer_1.wav" id="1_6dvgs"]
+[ext_resource type="Script" path="res://scenes/infra/sfx.gd" id="1_bp5ui"]
+[ext_resource type="AudioStream" uid="uid://b0tdomvn6ai6f" path="res://assets/audio/sfx/short-electric-burst.wav" id="3_p4qvu"]
+[ext_resource type="AudioStream" uid="uid://njxm3syf03xt" path="res://assets/audio/sfx/short-electric-burst2.wav" id="4_1os78"]
+[ext_resource type="AudioStream" uid="uid://bj3ju2lyhtde2" path="res://assets/audio/sfx/wall-slide.wav" id="5_iendv"]
+[ext_resource type="AudioStream" uid="uid://dyfpqvga2gc03" path="res://assets/audio/sfx/jump1.wav" id="6_gfq7a"]
+[ext_resource type="AudioStream" uid="uid://cb1o2vc2uahar" path="res://assets/audio/sfx/jump2.wav" id="7_xhs37"]
 
 [node name="sfx" type="Node"]
+script = ExtResource("1_bp5ui")
 
 [node name="emerald" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_6dvgs")
+bus = &"sfx"
 
 [node name="ruby" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_6dvgs")
+bus = &"sfx"
+
+[node name="short-electric-burst" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_p4qvu")
+bus = &"sfx"
+
+[node name="short-electric-burst2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1os78")
+bus = &"sfx"
+
+[node name="wall-slide" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_iendv")
+bus = &"sfx"
+
+[node name="jump1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_gfq7a")
+bus = &"sfx"
+
+[node name="jump2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xhs37")
+bus = &"sfx"
+
+[connection signal="finished" from="ruby" to="." method="_on_ruby_finished"]
+[connection signal="finished" from="wall-slide" to="." method="_on_wallslide_finished"]

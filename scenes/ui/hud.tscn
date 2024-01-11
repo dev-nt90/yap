@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bdgmlurbq10bq"]
+[gd_scene load_steps=26 format=3 uid="uid://bdgmlurbq10bq"]
 
 [ext_resource type="PackedScene" uid="uid://bkvqfcsye1sq7" path="res://scenes/ui/pause_menu.tscn" id="1_402ma"]
 [ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_n8dob"]
@@ -7,6 +7,45 @@
 [ext_resource type="Texture2D" uid="uid://du5qhx4cjjd24" path="res://assets/gems/emerald.png" id="5_jd7kl"]
 [ext_resource type="PackedScene" uid="uid://5rp4an8wf1gw" path="res://scenes/ui/game_over_screen.tscn" id="6_pykop"]
 [ext_resource type="PackedScene" uid="uid://cu4adec1w1nbf" path="res://scenes/ui/level_complete_screen_container.tscn" id="7_mq0yn"]
+[ext_resource type="Texture2D" uid="uid://cs2bkov2hxsib" path="res://assets/ui/defeated-enemy-icon.png" id="8_v4o66"]
+[ext_resource type="Texture2D" uid="uid://beq8j7cnwnmlt" path="res://assets/structures/key.aseprite" id="9_17fjv"]
+
+[sub_resource type="Animation" id="Animation_twctb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_axloo"]
+resource_name = "level_name_fade_in"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelNameLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v68wh"]
+_data = {
+"RESET": SubResource("Animation_twctb"),
+"level_name_fade_in": SubResource("Animation_axloo")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tcrqt"]
 atlas = ExtResource("5_jd7kl")
@@ -112,95 +151,43 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="Animation" id="Animation_twctb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelNameLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_axloo"]
-resource_name = "level_name_fade_in"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelNameLabel:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3, 4, 6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_v68wh"]
-_data = {
-"RESET": SubResource("Animation_twctb"),
-"level_name_fade_in": SubResource("Animation_axloo")
-}
-
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_n8dob")
 
 [node name="PauseMenu" parent="." instance=ExtResource("1_402ma")]
+visible = false
 
 [node name="TimeElapsedTimer" type="Timer" parent="."]
 
 [node name="TimeElapsedLabel" type="Label" parent="."]
-offset_left = 736.0
-offset_right = 800.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
 offset_bottom = 32.0
+grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0.584314, 0.972549, 0.733333)
 text = "00:00"
 
-[node name="Panel" type="Panel" parent="."]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 53.0
-offset_bottom = 48.0
+[node name="ProgressPanel" type="Panel" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 145.0
+offset_bottom = 72.0
 scale = Vector2(3.36, 1)
-
-[node name="ruby" parent="." instance=ExtResource("3_u5is0")]
-position = Vector2(24, 24)
-
-[node name="RubyCount" type="Label" parent="."]
-offset_left = 40.0
-offset_top = 16.0
-offset_right = 80.0
-offset_bottom = 39.0
-text = "X ##"
-
-[node name="emerald" parent="." instance=ExtResource("4_q6wq3")]
-position = Vector2(97, 28)
-scale = Vector2(0.666667, 0.668077)
-sprite_frames = SubResource("SpriteFrames_glw4l")
-
-[node name="EmeraldCount" type="Label" parent="."]
-offset_left = 112.0
-offset_top = 16.0
-offset_right = 152.0
-offset_bottom = 39.0
-text = "X ##"
+metadata/_edit_group_ = true
 
 [node name="GameOverScreen" parent="." instance=ExtResource("6_pykop")]
+visible = false
 
 [node name="LevelCompleteScreenContainer" parent="." instance=ExtResource("7_mq0yn")]
+visible = false
 
 [node name="DebugStateLabel" type="Label" parent="."]
 offset_left = 16.0
-offset_top = 56.0
+offset_top = 64.0
 offset_right = 144.0
-offset_bottom = 79.0
+offset_bottom = 87.0
 text = "State: "
 
 [node name="DebugPosLabel" type="Label" parent="."]
@@ -213,10 +200,17 @@ Pos.y"
 
 [node name="LevelNameLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
-offset_left = 128.0
-offset_top = 128.0
-offset_right = 640.0
-offset_bottom = 191.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -104.0
+offset_right = 256.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -225,5 +219,58 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_v68wh")
 }
+
+[node name="RubyCount" type="Label" parent="."]
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 112.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 15
+text = "X ##"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmeraldCount" type="Label" parent="."]
+offset_left = 160.0
+offset_top = 16.0
+offset_right = 223.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 15
+text = "X ##"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ruby" parent="." instance=ExtResource("3_u5is0")]
+position = Vector2(42, 42)
+scale = Vector2(1.83333, 1.83333)
+
+[node name="emerald" parent="." instance=ExtResource("4_q6wq3")]
+position = Vector2(144, 48)
+scale = Vector2(1.33333, 1.16667)
+sprite_frames = SubResource("SpriteFrames_glw4l")
+
+[node name="Defeated-enemy-icon" type="Sprite2D" parent="."]
+position = Vector2(248, 40)
+scale = Vector2(1, 0.875)
+texture = ExtResource("8_v4o66")
+
+[node name="EnemiesDefeatedCount" type="Label" parent="."]
+offset_left = 280.0
+offset_top = 32.0
+offset_right = 320.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 15
+text = "X ##"
+
+[node name="Key" type="Sprite2D" parent="."]
+position = Vector2(360, 48)
+texture = ExtResource("9_17fjv")
+
+[node name="KeyCount" type="Label" parent="."]
+offset_left = 392.0
+offset_top = 32.0
+offset_right = 432.0
+offset_bottom = 55.0
+text = "x ##"
 
 [connection signal="timeout" from="TimeElapsedTimer" to="." method="_on_time_elapsed_timer_timeout"]

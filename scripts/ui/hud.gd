@@ -3,11 +3,14 @@ extends CanvasLayer
 @export var debug:bool = false
 
 var seconds_elapsed = 0
+var par_time
+
 var gemPattern = "X %02d"
 var rubyCount = 0
 var emeraldCount = 0
 var enemy_defeated_count = 0
-var par_time
+var key_count = 0
+
 @export var level_name : String
 
 func _ready():
@@ -16,8 +19,11 @@ func _ready():
     $TimeElapsedTimer.start()
     $ruby.play()
     $emerald.play()
+    $EnemiesDefeatedCount.text = String(gemPattern % enemy_defeated_count)
     $RubyCount.text = String(gemPattern % rubyCount)
     $EmeraldCount.text = String(gemPattern % emeraldCount)
+    $KeyCount.text = String(gemPattern % key_count)
+    
     par_time = get_parent().get_par_time()
     
     var total_ruby_count = get_parent().get_node("Rubies").get_child_count()
@@ -51,12 +57,23 @@ func increment_ruby_count():
 func increment_emerald_count():
     emeraldCount += 1
     $EmeraldCount.text = String(gemPattern % emeraldCount)
+    
+func increment_enemy_defeated_count():
+    enemy_defeated_count += 1
+    $EnemiesDefeatedCount.text = String(gemPattern % enemy_defeated_count)
+
+func set_key_count(new_count:int):
+    key_count = new_count
+    $KeyCount.text = String(gemPattern % key_count)
 
 func get_current_ruby_count():
     return rubyCount
     
 func get_current_emerald_count():
     return emeraldCount
+
+func get_current_key_count():
+    return key_count
 
 func _on_player_player_death():
     reset_ui()
@@ -66,7 +83,8 @@ func reset_ui():
     rubyCount = 0
     emeraldCount = 0
     enemy_defeated_count = 0
-    #TODO: enemy defeated label
+    set_key_count(0)
+    $EnemiesDefeatedCount.text = String(gemPattern % enemy_defeated_count)
     $RubyCount.text = String(gemPattern % rubyCount)
     $EmeraldCount.text = String(gemPattern % emeraldCount)
     $TimeElapsedLabel.text = str(0)

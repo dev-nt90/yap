@@ -50,7 +50,10 @@
 			-range
 				-mage?
 				-teleporting melee?
+		
 -levels
+	-Level components which could be glued together. In other words, instead of hand-drawing the tile maps, make component pieces which could be reused, and 
+	 potentially teach the player something new, or challenge them in their knowledge.
 	-generic level scene such that we are not recreating the same components every time (e.g. player, level behavior scripts, etc)
 	-general variety, fleshing out
 	-an overworld map would be fantastic; like 5 worlds with 3 levels each
@@ -80,19 +83,27 @@
 	
 -each level currently has and (mostly) requires the following:
 	-SceneRoot (Node2D) as root of level, with a level par time and name
+		-expose time and name functions
 	-DebugStartPosition (marker)
 	-Instance of Player
+		-signal HUD for level exit requirements
+		-signal HUD for player death
 	-TileMap
 	-ParallaxBackground (optional)
 	-Instance of BackgroundMusic (Node)
 	-Instance of HUD
-	-Instance of FallZone; size and position must be adjusted manually
+	-Instance of FallZone; 
+		-size and position must be adjusted manually
+		-signal player body entered
 	-Instance of Pause
 	-Rubies collection (Node2D) ideally with at least 1 instance of a ruby
+		-each instance signal self on body entered
+		-each instance signal player on ruby area collected
 	-Emerald collection (Node2D) ideally with at least 1 instance of an emerald
 	-Instance of sfx (Node)
 	-Instance of CabinArea (this needs to change to a generic level end area)
 	-Environment Lights (optional)
 	-Instance of EndHintArea... should probably attach this to the generic level end area once ready
+		-each instance needs to be wired up for player collection
 	-Instance of LevelExitRequirements - with values set
 	-Enemies collection (Node) ideally with at least 1 instance of an enemy

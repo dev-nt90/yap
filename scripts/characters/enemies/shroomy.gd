@@ -122,8 +122,11 @@ func _on_hitbox_area_area_entered(_area):
     modify_health(-5)
     $HealthBarContainer.set_current_value(self.current_health)
     if self.current_health <= 0:
+        # BUG: why is this double counting?
+        get_parent().get_parent().get_node("HUD").increment_enemy_defeated_count()
         # TODO: death animation
-        emit_signal("enemy_defeated")        
+        emit_signal("enemy_defeated")
+        
         queue_free()
     
 

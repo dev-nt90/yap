@@ -12,9 +12,12 @@ grow_vertical = 2
 script = ExtResource("1_oectm")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 800.0
-offset_bottom = 640.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.0117647, 0.0509804, 0.0117647, 0.780392)
 
 [node name="Label" type="Label" parent="."]
@@ -34,22 +37,36 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Game Over"
 
 [node name="ExitGameButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 608.0
-offset_top = 576.0
-offset_right = 736.0
-offset_bottom = 624.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -80.0
+offset_right = -64.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
 tooltip_text = "Exits the game"
 focus_neighbor_left = NodePath("../RestartLevelButton")
 focus_previous = NodePath("../RestartLevelButton")
 text = "Exit Game"
 
 [node name="RestartLevelButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 320.0
-offset_top = 576.0
-offset_right = 448.0
-offset_bottom = 624.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
 tooltip_text = "Restarts the current level"
 focus_neighbor_right = NodePath("../ExitGameButton")
 focus_next = NodePath("../ExitGameButton")
@@ -57,6 +74,18 @@ theme_override_colors/icon_pressed_color = Color(0, 0.156863, 0, 1)
 theme_override_colors/icon_hover_color = Color(0, 0.380392, 0, 1)
 theme_override_colors/icon_focus_color = Color(0, 0.380392, 0, 1)
 text = "Restart Level"
+
+[node name="ReturnButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -80.0
+offset_right = 204.0
+offset_bottom = -32.0
+grow_vertical = 0
+text = "Return to temple"
 
 [connection signal="gui_input" from="ExitGameButton" to="." method="_on_exit_game_button_gui_input"]
 [connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

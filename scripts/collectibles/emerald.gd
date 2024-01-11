@@ -9,6 +9,6 @@ func _on_body_entered(_body):
     get_parent().get_parent().get_node("sfx").get_node("emerald").play()
     
     # update hud
-    get_parent().get_parent().get_node("HUD").increment_ruby_count()
+    get_parent().get_parent().get_node("HUD").increment_emerald_count()
     
     queue_free()

@@ -14,18 +14,20 @@ grow_vertical = 2
 script = ExtResource("1_7eo42")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 384.0
-offset_bottom = 72.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
 color = Color(0, 0, 0, 0.603922)
 
-[node name="emerald" parent="." instance=ExtResource("1_1g1q4")]
+[node name="emerald" parent="ColorRect" instance=ExtResource("1_1g1q4")]
 position = Vector2(32, 32)
 
-[node name="ruby" parent="." instance=ExtResource("2_isnic")]
+[node name="ruby" parent="ColorRect" instance=ExtResource("2_isnic")]
 position = Vector2(224, 32)
 
-[node name="EmeraldRequirementLabel" type="RichTextLabel" parent="."]
+[node name="EmeraldRequirementLabel" type="RichTextLabel" parent="ColorRect"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 24.0
@@ -34,7 +36,7 @@ offset_bottom = 47.0
 bbcode_enabled = true
 text = "X ##/## (##%)"
 
-[node name="RubyRequirementLabel" type="RichTextLabel" parent="."]
+[node name="RubyRequirementLabel" type="RichTextLabel" parent="ColorRect"]
 layout_mode = 0
 offset_left = 240.0
 offset_top = 24.0

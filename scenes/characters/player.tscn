@@ -1,8 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://dsxlweajxdtdf"]
+[gd_scene load_steps=22 format=3 uid="uid://dsxlweajxdtdf"]
 
 [ext_resource type="Script" path="res://scripts/characters/player.gd" id="1_utu5o"]
 [ext_resource type="Script" path="res://scripts/player/AnimationPlayer.gd" id="2_gp3bp"]
-[ext_resource type="Script" path="res://scripts/infra/cutscene_handler.gd" id="4_fwjqj"]
 [ext_resource type="Texture2D" uid="uid://co618rylqxboc" path="res://assets/particles/smoke-smudge.aseprite" id="4_r6wo7"]
 [ext_resource type="Texture2D" uid="uid://bxlwvd6v3beux" path="res://assets/characters/hero/hero-walk.png" id="5_1qdrv"]
 [ext_resource type="Texture2D" uid="uid://51vmsgpspqtw" path="res://assets/Backgrounds/level_transition.png" id="6_g6irq"]
@@ -12,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://7ff7gfsr3iv1" path="res://scenes/infra/player_camera.tscn" id="10_yjfsy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krnca"]
-radius = 6.41448
-height = 31.8452
+radius = 2.63158
+height = 28.5714
 
 [sub_resource type="Animation" id="Animation_u3fit"]
 length = 0.001
@@ -281,19 +280,19 @@ radius = 32.0
 
 [node name="Player" type="CharacterBody2D"]
 top_level = true
-collision_mask = 30
+collision_mask = 542
 script = ExtResource("1_utu5o")
 metadata/_edit_group_ = true
 
 [node name="PlayerHitbox" type="CollisionShape2D" parent="."]
-position = Vector2(-6.5, 17.5)
-scale = Vector2(3.04, 3.36)
+position = Vector2(0, 16)
+scale = Vector2(7.25976, 3.47054)
 shape = SubResource("CapsuleShape2D_krnca")
 
 [node name="WallChecker" type="RayCast2D" parent="."]
 position = Vector2(0, 16)
 rotation = -1.5708
-scale = Vector2(9.8, 1.28)
+scale = Vector2(17.44, 1.28)
 target_position = Vector2(-1.35899e-05, 28.125)
 collision_mask = 2
 
@@ -319,9 +318,6 @@ lifetime = 0.5
 speed_scale = 2.78
 fixed_fps = 60
 visibility_rect = Rect2(-50, -100, 100, 200)
-
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("4_fwjqj")
 
 [node name="LevelTransitionBackground" type="Sprite2D" parent="."]
 z_index = -2

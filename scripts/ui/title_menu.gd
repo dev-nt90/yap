@@ -1,7 +1,7 @@
-extends Node2D
+extends Control
 
 func _ready():
-    $TitleMenuUi/ReferenceRect/StartButton.grab_focus()
+    $TitleMenuUi/StartButton.grab_focus()
     
     #TODO: need to credit open art sources
     #https://opengameart.org/content/sirens-in-darkness

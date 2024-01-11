@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7ospmgpaaaai"]
+[gd_scene load_steps=8 format=3 uid="uid://c7ospmgpaaaai"]
 
 [ext_resource type="Script" path="res://scripts/infra/background_music.gd" id="1_g4vih"]
 [ext_resource type="AudioStream" uid="uid://dhlgh53bp1vgb" path="res://assets/audio/012_Sirens_in_Darkness.mp3" id="1_ou0ro"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bnfjfs2ejjn4h" path="res://assets/audio/ObservingTheStar.ogg" id="3_xug0a"]
 [ext_resource type="AudioStream" uid="uid://sykekn8h5cpb" path="res://assets/audio/arcticambienttheme.wav" id="4_fxxq8"]
 [ext_resource type="AudioStream" uid="uid://cmdnx2bfkar2g" path="res://assets/audio/the charm 68.wav" id="5_advhf"]
+[ext_resource type="AudioStream" uid="uid://cdo5qlb0xi382" path="res://assets/audio/music/forgotten.wav" id="7_u1iv0"]
 
 [node name="BackgroundMusic" type="Node"]
 script = ExtResource("1_g4vih")
@@ -20,9 +21,18 @@ bus = &"Music"
 
 [node name="ObservingTheStar" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_xug0a")
+bus = &"Music"
 
 [node name="AmbientArctic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_fxxq8")
+bus = &"Music"
 
 [node name="TheCharm68" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_advhf")
+bus = &"Music"
+
+[node name="Forgotten" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_u1iv0")
+bus = &"Music"
+
+[connection signal="finished" from="Forgotten" to="." method="_on_forgotten_finished"]

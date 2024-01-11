@@ -44,11 +44,17 @@ gravity = Vector3(-100, 45, 0)
 anim_speed_min = 20.0
 anim_speed_max = 20.0
 
-[node name="TitleMenu" type="Node2D"]
+[node name="TitleMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_03tm5")
 
 [node name="TitleMenuUi" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,60 +62,54 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="TitleMenuUi"]
-layout_mode = 0
-offset_right = 800.0
-offset_bottom = 640.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_y037s")
-
-[node name="ReferenceRect" type="ReferenceRect" parent="TitleMenuUi"]
-layout_mode = 0
-offset_right = 800.0
-offset_bottom = 640.0
-
-[node name="StartButton" type="Button" parent="TitleMenuUi/ReferenceRect"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 576.0
-offset_right = 192.0
-offset_bottom = 624.0
-text = "Start"
-
-[node name="ExitButton" type="Button" parent="TitleMenuUi/ReferenceRect"]
-layout_mode = 0
-offset_left = 608.0
-offset_top = 576.0
-offset_right = 736.0
-offset_bottom = 624.0
-text = "Exit"
-
-[node name="OptionsButton" type="Button" parent="TitleMenuUi/ReferenceRect"]
-layout_mode = 0
-offset_left = 320.0
-offset_top = 576.0
-offset_right = 448.0
-offset_bottom = 624.0
-text = "Options"
+expand_mode = 2
 
 [node name="Title" type="TextureRect" parent="TitleMenuUi"]
-layout_mode = 0
-offset_left = 216.0
-offset_top = 112.0
-offset_right = 616.0
-offset_bottom = 312.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 202.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_w0yp5")
 
 [node name="Tagline" type="TextureRect" parent="TitleMenuUi"]
-layout_mode = 0
-offset_left = 176.0
-offset_top = 304.0
-offset_right = 640.0
-offset_bottom = 456.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = -76.0
+offset_right = 232.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_qh30a")
 
 [node name="OptionsDialogue" parent="TitleMenuUi" instance=ExtResource("5_s5w1l")]
-position = Vector2(416, 320)
+layout_mode = 1
+offset_left = -216.0
+offset_top = -112.0
+offset_right = -216.0
+offset_bottom = -112.0
 
-[node name="LeftBirbParticles" type="GPUParticles2D" parent="."]
+[node name="LeftBirbParticles" type="GPUParticles2D" parent="TitleMenuUi"]
+visible = false
 material = SubResource("CanvasItemMaterial_sr3um")
 position = Vector2(-56, 272)
 amount = 3
@@ -118,7 +118,8 @@ texture = ExtResource("7_hakht")
 lifetime = 6.0
 randomness = 0.5
 
-[node name="RightBirbParticles" type="GPUParticles2D" parent="."]
+[node name="RightBirbParticles" type="GPUParticles2D" parent="TitleMenuUi"]
+visible = false
 material = SubResource("CanvasItemMaterial_upwp8")
 position = Vector2(1128, 272)
 scale = Vector2(1.58893, 2.56683)
@@ -127,11 +128,53 @@ process_material = SubResource("ParticleProcessMaterial_rho5v")
 texture = ExtResource("7_rdb0f")
 lifetime = 7.0
 
+[node name="StartButton" type="Button" parent="TitleMenuUi"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -64.0
+offset_right = 152.0
+offset_bottom = -16.0
+grow_vertical = 0
+text = "Start"
+
+[node name="ExitButton" type="Button" parent="TitleMenuUi"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -64.0
+offset_right = -24.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Exit"
+
+[node name="OptionsButton" type="Button" parent="TitleMenuUi"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Options"
+
 [node name="BackgroundMusic" parent="." instance=ExtResource("9_jjxa5")]
 
-[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/StartButton" to="." method="_on_start_button_gui_input"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/ExitButton" to="." method="_on_exit_button_gui_input"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="gui_input" from="TitleMenuUi/ReferenceRect/OptionsButton" to="." method="_on_options_button_gui_input"]
-[connection signal="pressed" from="TitleMenuUi/ReferenceRect/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="gui_input" from="TitleMenuUi/StartButton" to="." method="_on_start_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="gui_input" from="TitleMenuUi/ExitButton" to="." method="_on_exit_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="gui_input" from="TitleMenuUi/OptionsButton" to="." method="_on_options_button_gui_input"]
+[connection signal="pressed" from="TitleMenuUi/OptionsButton" to="." method="_on_options_button_pressed"]
