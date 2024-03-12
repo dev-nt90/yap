@@ -43,7 +43,9 @@ var light_projectile_ready = true
 var current_state = States.AIR
 var current_attack_state = AttackStates.NONE
 var current_health = max_health
-
+var lower_body_count = 0
+var mid_lower_body_count = 0
+var high_lower_body_count = 0
 var key_count = 0
 
 var direction
@@ -179,10 +181,9 @@ func handle_sprint():
         animation_player.speed_scale = 2.0
     elif Input.is_action_just_released("sprint"):
         disable_friction_smoke()
-    
 
 # TODO: do this on input instead of every frame
-func flip_sprites():
+func flip_player_character_components():
     if(direction < 0):
         $HeroWalkSprite.flip_h = true
         $LightMeleeSprite.flip_h = true
@@ -191,6 +192,9 @@ func flip_sprites():
         $PlayerHitbox.rotation_degrees = 180.0
         $LightMeleeHitboxArea.position.x = -40
         $WallChecker.rotation_degrees = 90
+        $LowerBodyChecker.rotation_degrees = 90
+        $MidLowerBodyChecker.rotation_degrees = 90
+        $HighLowerBodyChecker.rotation_degrees = 90
     elif(direction > 0):
         $HeroWalkSprite.flip_h = false
         $LightMeleeSprite.flip_h = false
@@ -199,13 +203,16 @@ func flip_sprites():
         $PlayerHitbox.rotation_degrees = 0.0
         $LightMeleeHitboxArea.position.x = 40
         $WallChecker.rotation_degrees = -90
+        $LowerBodyChecker.rotation_degrees = -90
+        $MidLowerBodyChecker.rotation_degrees = -90
+        $HighLowerBodyChecker.rotation_degrees = -90
 
 """
 This function handles any logic which can apply when the player is in any state.
 """
 func handle_state_agnostic():
     # apply horizontal flipping to our currently playing animation and wallchecker
-    flip_sprites()
+    flip_player_character_components()
     
     #assert_can_climb()
     move_and_slide()
@@ -234,11 +241,29 @@ func handle_floor_state():
             animation_player.speed_scale = 1.0
             animation_player.play("walk")
     
+    handle_near_lower_body_collision()
+    
     # apply jump from floor, transition to AIR
     if Input.is_action_just_pressed("jump"):
         velocity.y = JUMP_VELOCITY
         current_state = States.AIR
         sfx.get_node("jump1").play()
+        
+func handle_near_lower_body_collision():
+    if is_near_lower_body():
+        lower_body_count += 1
+        print('lower body hit detected %d' % lower_body_count)
+        position.y -= 10
+        
+    if is_near_mid_lower_body():
+        mid_lower_body_count += 1
+        print('mid lower body hit detected %d' % mid_lower_body_count)
+        position.y -=10
+        
+    if is_near_high_lower_body():
+        high_lower_body_count += 1
+        print('high lower body hit detected %d' % high_lower_body_count)
+        position.y -=10
         
 func handle_air_state(delta):
     # transition state
@@ -399,6 +424,15 @@ func get_direction_input():
 func is_near_wall():
     return $WallChecker.is_colliding()
             
+func is_near_lower_body():
+    return $LowerBodyChecker.is_colliding()
+    
+func is_near_mid_lower_body():
+    return $MidLowerBodyChecker.is_colliding()
+
+func is_near_high_lower_body():
+    return $HighLowerBodyChecker.is_colliding()
+    
 func enable_friction_smoke():
     $FrictionSmoke.emitting = true
     
@@ -507,7 +541,6 @@ func handle_death():
     velocity.y = 0
 
 func _on_light_melee_hitbox_area_body_entered(_body):
-    print("_on_light_melee_hitbox_area_body_entered")
     emit_signal("light_melee_hitbox_entered")
     
 func instantiate_light_range_projectile():

@@ -358,6 +358,19 @@ hframes = 10
 
 [node name="PlayerCamera" parent="." instance=ExtResource("10_yjfsy")]
 
+[node name="LowerBodyChecker" type="RayCast2D" parent="."]
+position = Vector2(-1.35525e-20, 64)
+rotation = -1.5708
+collision_mask = 2
+
+[node name="MidLowerBodyChecker" type="RayCast2D" parent="."]
+position = Vector2(0, 59)
+rotation = -1.5708
+
+[node name="HighLowerBodyChecker" type="RayCast2D" parent="."]
+position = Vector2(0, 51)
+rotation = -1.5708
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="body_entered" from="LightMeleeHitboxArea" to="." method="_on_light_melee_hitbox_area_body_entered"]

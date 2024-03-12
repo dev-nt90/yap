@@ -2,7 +2,7 @@
 	-player attacks: 
 		-light melee
 			-collision (done!)
-			-animation (done!)
+			-animation 
 				-anticipation, impact, and recovery
 				-cancellable from damage(?) or attack input
 				-vfx
@@ -50,7 +50,6 @@
 			-range
 				-mage?
 				-teleporting melee?
-		
 -levels
 	-Level components which could be glued together. In other words, instead of hand-drawing the tile maps, make component pieces which could be reused, and 
 	 potentially teach the player something new, or challenge them in their knowledge.
@@ -60,11 +59,11 @@
 	-moar textures
 -audio
 	-literally everything left to do; sfx and music
+	-spatial audio for enemies
 -collectibles
 	-more textures/animations
 	-anything other than gems?
 -infra
-	-need a real title
 	-save system!!
 	-stats object(s) for player actions
 	-credit open art sources, if any sources end up being used
@@ -80,30 +79,40 @@
 	-pause script would be good to integrate with hud or pause menu
 	-finish controller support
 	-update control scheme popup
-	
--each level currently has and (mostly) requires the following:
-	-SceneRoot (Node2D) as root of level, with a level par time and name
-		-expose time and name functions
-	-DebugStartPosition (marker)
-	-Instance of Player
-		-signal HUD for level exit requirements
-		-signal HUD for player death
-	-TileMap
-	-ParallaxBackground (optional)
-	-Instance of BackgroundMusic (Node)
-	-Instance of HUD
-	-Instance of FallZone; 
-		-size and position must be adjusted manually
-		-signal player body entered
-	-Instance of Pause
-	-Rubies collection (Node2D) ideally with at least 1 instance of a ruby
-		-each instance signal self on body entered
-		-each instance signal player on ruby area collected
-	-Emerald collection (Node2D) ideally with at least 1 instance of an emerald
-	-Instance of sfx (Node)
-	-Instance of CabinArea (this needs to change to a generic level end area)
-	-Environment Lights (optional)
-	-Instance of EndHintArea... should probably attach this to the generic level end area once ready
-		-each instance needs to be wired up for player collection
-	-Instance of LevelExitRequirements - with values set
-	-Enemies collection (Node) ideally with at least 1 instance of an enemy
+
+-bugs
+	-when "foot" collider activates, walking animation may stutter
+
+
+-make generic level scene	
+	-each level currently has and (mostly) requires the following:
+		-SceneRoot (Node2D) as root of level, with a level par time and name
+			-expose time and name functions
+		-DebugStartPosition (marker)
+		-Instance of Player
+			-signal HUD for level exit requirements
+			-signal HUD for player death
+		-TileMap
+		-ParallaxBackground (optional)
+		-Instance of BackgroundMusic (Node)
+		-Instance of HUD
+		-Instance of FallZone; 
+			-size and position must be adjusted manually
+			-signal player body entered
+		-Instance of Pause
+		-Rubies collection (Node2D) ideally with at least 1 instance of a ruby
+			-each instance signal self on body entered
+			-each instance signal player on ruby area collected
+		-Emerald collection (Node2D) ideally with at least 1 instance of an emerald
+		-Instance of sfx (Node)
+		-Instance of CabinArea (this needs to change to a generic level end area)
+		-Environment Lights (optional)
+		-Instance of EndHintArea... should probably attach this to the generic level end area once ready
+			-each instance needs to be wired up for player collection
+		-Instance of LevelExitRequirements - with values set
+		-Enemies collection (Node) ideally with at least 1 instance of an enemy
+		
+-offstream:
+	-tween research
+	-stream elements
+	-animation "juice"

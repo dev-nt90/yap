@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dsxlweajxdtdf" path="res://scenes/characters/player.tscn" id="2_u65lr"]
 [ext_resource type="TileSet" uid="uid://dped58vlmjayt" path="res://assets/world-tileset.tres" id="3_jdopy"]
 [ext_resource type="PackedScene" uid="uid://bdgmlurbq10bq" path="res://scenes/ui/hud.tscn" id="4_uopvd"]
-[ext_resource type="PackedScene" uid="uid://dvytp401bv32h" path="res://assets/Backgrounds/night-sky.aseprite" id="5_sga06"]
+[ext_resource type="PackedScene" uid="uid://c0pkyxyw2waa7" path="res://assets/Backgrounds/night-sky-v2.aseprite" id="5_cb5p8"]
 [ext_resource type="PackedScene" uid="uid://c7ospmgpaaaai" path="res://scenes/infra/background_music.tscn" id="6_bjili"]
 [ext_resource type="PackedScene" uid="uid://17yam4n7xpb6" path="res://scenes/infra/fall_zone.tscn" id="7_lp4bc"]
 [ext_resource type="PackedScene" uid="uid://lid3ymsmqsa1" path="res://scenes/ui/pause.tscn" id="7_mhdv0"]
@@ -37,9 +37,9 @@ scroll_ignore_camera_zoom = true
 
 [node name="SkyLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.7, 0.7)
-motion_mirroring = Vector2(799, 639)
+motion_mirroring = Vector2(1280, 720)
 
-[node name="night-sky" parent="ParallaxBackground/SkyLayer" instance=ExtResource("5_sga06")]
+[node name="night-sky-v2" parent="ParallaxBackground/SkyLayer" instance=ExtResource("5_cb5p8")]
 autoplay = "default"
 centered = false
 

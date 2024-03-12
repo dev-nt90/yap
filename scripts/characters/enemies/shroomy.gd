@@ -15,6 +15,9 @@ enum STATES {
 
 @export var firing_distance: int = 200
 @export var max_health: int = 10
+@onready var sfx = get_parent().get_parent().get_node("sfx")
+@onready var projectile_windup_sfx = sfx.get_node("shroomy-projectile-windup")
+@onready var death_sfx = sfx.get_node("shroomy-death")
 
 var projectile = preload("res://scenes/projectiles/shroomy_projectile.tscn")
 var current_health = max_health
@@ -71,12 +74,17 @@ func handle_player_in_range_state():
 
 func handle_firing_projectile():
     $AnimationPlayer.play("projectile_windup")
-    # TODO: sfx?
-    
+
 func _on_animation_player_animation_finished(anim_name):
     if anim_name == "projectile_windup":
         self.instantiate_projectile()
 
+func _on_animation_player_animation_started(anim_name):
+    if anim_name == "projectile_windup":
+        projectile_windup_sfx.play()
+    if anim_name == "death":
+        death_sfx.play()
+    
 func instantiate_projectile():
     var new_projectile = projectile.instantiate()
     var direction = Vector2.ZERO
@@ -118,15 +126,18 @@ func modify_health(modify_amount):
 
 # TODO: figure out a better way for nodes and their projectiles to communicate
 func _on_hitbox_area_area_entered(_area):
-    print("shroomy hitbox area area entered")
     modify_health(-5)
     $HealthBarContainer.set_current_value(self.current_health)
     if self.current_health <= 0:
         # BUG: why is this double counting?
         get_parent().get_parent().get_node("HUD").increment_enemy_defeated_count()
         # TODO: death animation
+        $AnimationPlayer.play("death")
+        
         emit_signal("enemy_defeated")
         
         queue_free()
     
+
+
 

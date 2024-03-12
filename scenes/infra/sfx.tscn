@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf2ud24sh5smk"]
+[gd_scene load_steps=11 format=3 uid="uid://bf2ud24sh5smk"]
 
 [ext_resource type="AudioStream" uid="uid://cg1qjrc0x7kgt" path="res://assets/audio/shimmer_1.wav" id="1_6dvgs"]
 [ext_resource type="Script" path="res://scenes/infra/sfx.gd" id="1_bp5ui"]
@@ -7,6 +7,9 @@
 [ext_resource type="AudioStream" uid="uid://bj3ju2lyhtde2" path="res://assets/audio/sfx/wall-slide.wav" id="5_iendv"]
 [ext_resource type="AudioStream" uid="uid://dyfpqvga2gc03" path="res://assets/audio/sfx/jump1.wav" id="6_gfq7a"]
 [ext_resource type="AudioStream" uid="uid://cb1o2vc2uahar" path="res://assets/audio/sfx/jump2.wav" id="7_xhs37"]
+[ext_resource type="AudioStream" uid="uid://dbidgcgjtdwcv" path="res://assets/audio/sfx/shroomy-projectile-pop-short.wav" id="8_301ff"]
+[ext_resource type="AudioStream" uid="uid://bgm6vjfqvvd5o" path="res://assets/audio/sfx/shroomy-projectile-windup.wav" id="9_li8ql"]
+[ext_resource type="AudioStream" uid="uid://xni0kjbi15o2" path="res://assets/audio/sfx/shroomy-death.wav" id="10_cvqtj"]
 
 [node name="sfx" type="Node"]
 script = ExtResource("1_bp5ui")
@@ -38,6 +41,15 @@ bus = &"sfx"
 [node name="jump2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_xhs37")
 bus = &"sfx"
+
+[node name="shroomy-projectile-pop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_301ff")
+
+[node name="shroomy-projectile-windup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_li8ql")
+
+[node name="shroomy-death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_cvqtj")
 
 [connection signal="finished" from="ruby" to="." method="_on_ruby_finished"]
 [connection signal="finished" from="wall-slide" to="." method="_on_wallslide_finished"]

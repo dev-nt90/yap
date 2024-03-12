@@ -5,6 +5,9 @@ extends Area2D
 var direction: Vector2 = Vector2.ZERO
 var distance_travelled: float = 0.0
 
+@onready var sfx = get_parent().get_parent().get_parent().get_parent().get_node("sfx")
+@onready var pop_sfx = sfx.get_node("shroomy-projectile-pop")
+
 var current_health = 1
 
 func _ready():
@@ -20,7 +23,6 @@ func _physics_process(delta):
         destroy()
 
 func destroy():
-    #todo: "pop" sound effect
     $AnimationPlayer.play("pop")
     
 func set_direction(new_direction: Vector2):
@@ -31,12 +33,10 @@ func set_direction(new_direction: Vector2):
         destroy()
 
 func _on_body_entered(body):
-    print("shroomy projectile body entered")
     body.modify_health(-10)
     self.destroy()
 
 func _on_area_entered(_area):
-    print("shroomy projectile area entered")
     self.destroy()
 
 func _on_animation_player_animation_finished(anim_name):
@@ -48,3 +48,7 @@ func modify_health(amount):
     
     if current_health <= 0:
         destroy()
+        
+func _on_animation_player_animation_started(anim_name):
+    if anim_name == "pop":
+        pop_sfx.play()
