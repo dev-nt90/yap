@@ -88,7 +88,7 @@ script = SubResource("GDScript_sciwa")
 level_par_time = "3:00.000"
 
 [node name="DebugStartPosition" type="Marker2D" parent="."]
-position = Vector2(-3171, -2501)
+position = Vector2(-1838, -1498)
 scale = Vector2(7.34, 7.34)
 
 [node name="LevelTimer" type="Timer" parent="."]
@@ -96,6 +96,7 @@ scale = Vector2(7.34, 7.34)
 [node name="Player" parent="." instance=ExtResource("3_f7ybm")]
 position = Vector2(-376, 56)
 collision_mask = 94
+debug = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("4_pkuej")

@@ -5,8 +5,9 @@ func _ready():
     $AnimationPlayer.play("idle")
     
 func _on_body_entered(_body):
-    # HACK: make this animation a tween
     call_deferred("disable_collision_deferred")
+    
+    # TODO: make this animation a tween
     $AnimationPlayer.play("collected")
     
     # play ruby collected sound effect
