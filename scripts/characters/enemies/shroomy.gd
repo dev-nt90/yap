@@ -15,9 +15,8 @@ enum STATES {
 
 @export var firing_distance: int = 200
 @export var max_health: int = 10
-@onready var sfx = get_parent().get_parent().get_node("sfx")
-@onready var projectile_windup_sfx = sfx.get_node("shroomy-projectile-windup")
-@onready var death_sfx = sfx.get_node("shroomy-death")
+@onready var projectile_windup_sfx = $sfx.get_node("shroomy-projectile-windup")
+@onready var death_sfx = $sfx.get_node("shroomy-death")
 
 var projectile = preload("res://scenes/projectiles/shroomy_projectile.tscn")
 var current_health = max_health
@@ -81,8 +80,10 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_animation_player_animation_started(anim_name):
     if anim_name == "projectile_windup":
+        projectile_windup_sfx.position = self.position
         projectile_windup_sfx.play()
     if anim_name == "death":
+        death_sfx.position = self.position
         death_sfx.play()
     
 func instantiate_projectile():

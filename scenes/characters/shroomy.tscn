@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnew5qhvo3y4"]
+[gd_scene load_steps=12 format=3 uid="uid://bnew5qhvo3y4"]
 
 [ext_resource type="Texture2D" uid="uid://caobphj614sgb" path="res://assets/characters/enemies/shroomy.png" id="1_3diqc"]
 [ext_resource type="Script" path="res://scripts/characters/enemies/shroomy.gd" id="1_8ec1i"]
 [ext_resource type="PackedScene" uid="uid://can6s85h1baj3" path="res://scenes/ui/health_bar_container.tscn" id="3_1cidn"]
+[ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="4_d5djf"]
 
 [sub_resource type="Animation" id="Animation_kcpdb"]
 length = 0.001
@@ -139,6 +140,8 @@ shape = SubResource("CapsuleShape2D_vn2ag")
 [node name="HitboxShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_vn2ag")
+
+[node name="sfx" parent="." instance=ExtResource("4_d5djf")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]

@@ -5,8 +5,7 @@ extends Area2D
 var direction: Vector2 = Vector2.ZERO
 var distance_travelled: float = 0.0
 
-@onready var sfx = get_parent().get_parent().get_parent().get_parent().get_node("sfx")
-@onready var pop_sfx = sfx.get_node("shroomy-projectile-pop")
+@onready var pop_sfx = $sfx.get_node("shroomy-projectile-pop")
 
 var current_health = 1
 
@@ -51,4 +50,5 @@ func modify_health(amount):
         
 func _on_animation_player_animation_started(anim_name):
     if anim_name == "pop":
+        pop_sfx.position = self.position
         pop_sfx.play()

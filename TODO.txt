@@ -113,6 +113,4 @@
 		-Enemies collection (Node) ideally with at least 1 instance of an enemy
 		
 -offstream:
-	-tween research
-	-stream elements
-	-animation "juice"
+	-light source culling/masking/layers/shadows; how can I show light _behind_ a tileset/map?

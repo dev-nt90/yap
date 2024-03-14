@@ -13,7 +13,7 @@ var emerald_total : int
 var enemy_total : int
 
 func _ready():
-    hide()    
+    hide()
     start_time_dict = get_current_time_dict_with_ms()
 
 # HACK: in Godot 4 they made it slightly more difficult to get milliseconds with the removal of the OS functions
@@ -179,14 +179,14 @@ func get_time_parts_from_ms(ms) -> Array[int]:
 func get_ms_from_str(time_str: String):
     var parts = time_str.split(":")
     if parts.size() != 2:
-        print("Invalid time string format") # TODO: make this check at onready for par time
+        print("Invalid time string format")
         return []
         
     var minutes = int(parts[0])
     var seconds_and_ms = parts[1].split(".")
     
     if seconds_and_ms.size() != 2:
-        print("Invalid seconds_and_ms string format") # TODO: make this check at onready
+        print("Invalid seconds_and_ms string format")
         return []
         
     return (minutes * 60000) + \
