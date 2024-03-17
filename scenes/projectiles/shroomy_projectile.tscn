@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cm40v7dsxq3ef"]
+[gd_scene load_steps=10 format=3 uid="uid://cm40v7dsxq3ef"]
 
 [ext_resource type="Script" path="res://scripts/projectiles/shroomy_projectile.gd" id="1_8fdfb"]
 [ext_resource type="Texture2D" uid="uid://cbc86f61breph" path="res://assets/projectiles/shroomy-projectile.png" id="2_d536e"]
 [ext_resource type="PackedScene" uid="uid://bf2ud24sh5smk" path="res://scenes/infra/sfx.tscn" id="3_lqfie"]
+[ext_resource type="PackedScene" uid="uid://c825nlf7pc8lv" path="res://scenes/projectiles/attack_metadata.tscn" id="4_ik043"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xjy56"]
 radius = 12.1212
@@ -89,7 +90,7 @@ _data = {
 [node name="ShroomyProjectile" type="Area2D"]
 scale = Vector2(0.75, 0.75)
 collision_layer = 256
-collision_mask = 129
+collision_mask = 385
 script = ExtResource("1_8fdfb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -107,6 +108,12 @@ libraries = {
 speed_scale = 1.996
 
 [node name="sfx" parent="." instance=ExtResource("3_lqfie")]
+
+[node name="attack_metadata" parent="." instance=ExtResource("4_ik043")]
+attack_name = "shroomy_projectile"
+attack_damage = 10.0
+attack_pushback_force = 50.0
+attack_pushback_time = 0.1
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

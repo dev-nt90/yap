@@ -1,6 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://qnne86e81x2c"]
+[gd_scene load_steps=10 format=3 uid="uid://qnne86e81x2c"]
 
+[ext_resource type="Script" path="res://scripts/characters/enemies/undead_fire_mage.gd" id="1_ekduh"]
 [ext_resource type="Texture2D" uid="uid://dtscm0muqfm05" path="res://assets/characters/enemies/undead-fire-mage-idle.png" id="1_s704d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0fpu"]
+radius = 7.79221
+height = 144.0
 
 [sub_resource type="Animation" id="Animation_g1rpi"]
 length = 0.001
@@ -100,7 +105,13 @@ states/idle/position = Vector2(481, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_amkpo")]
 graph_offset = Vector2(-237, -49)
 
-[node name="UndeadFireMage" type="Node2D"]
+[node name="UndeadFireMage" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_ekduh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(9.24, 1)
+shape = SubResource("CapsuleShape2D_h0fpu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -118,3 +129,41 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_6rhqh")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 69.18
+target_desired_distance = 100.0
+path_max_distance = 200.0
+path_postprocessing = 1
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.972549, 0, 0.333333, 1)
+
+[node name="DistanceToTargetLabel" type="Label" parent="."]
+offset_left = -88.0
+offset_top = -120.0
+offset_right = 90.0
+offset_bottom = -97.0
+text = "distance to target: %2d"
+
+[node name="TargetingInfoLabel" type="Label" parent="."]
+offset_left = -72.0
+offset_top = -176.0
+offset_right = 70.0
+offset_bottom = -127.0
+text = "Target reachable:    
+Target reached:     "
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[node name="CollisionArea" type="Area2D" parent="."]
+
+[node name="CollisionAreaShape" type="CollisionShape2D" parent="CollisionArea"]
+scale = Vector2(9.88168, 1.08)
+shape = SubResource("CapsuleShape2D_h0fpu")
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]

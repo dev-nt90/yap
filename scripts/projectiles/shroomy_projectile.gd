@@ -2,6 +2,7 @@ extends Area2D
 
 @export var speed: int = 50
 @export var max_distance: int = 500
+
 var direction: Vector2 = Vector2.ZERO
 var distance_travelled: float = 0.0
 
@@ -31,8 +32,7 @@ func set_direction(new_direction: Vector2):
     if direction == Vector2.ZERO || direction == Vector2.DOWN || direction == Vector2.UP:
         destroy()
 
-func _on_body_entered(body):
-    body.modify_health(-10)
+func _on_body_entered(_body):
     self.destroy()
 
 func _on_area_entered(_area):

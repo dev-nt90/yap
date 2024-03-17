@@ -11,6 +11,7 @@ enum States {
     AIR = 1,
     FLOOR,
     WALL,
+    ATTACK_TAKEN,
     CUTSCENE,
     DEATH
 }
@@ -49,6 +50,10 @@ var high_lower_body_count = 0
 var key_count = 0
 
 var direction
+
+var pushback_tween = null
+var enemy_attack_metadata_buffer: Array[Dictionary] = []
+var temp_invulnerability_enabled : bool = false
 
 @onready var animation_player = $AnimationPlayer
 @onready var hud_node = get_parent().get_node("HUD")
@@ -96,6 +101,10 @@ func set_hud_debug_labels():
         
 func handle_state(delta):
     direction = get_direction_input()
+    if debug and temp_invulnerability_enabled:
+        print("temp debug enabled")
+
+    #print("current_state %s" % States.find_key(current_state))
     match current_state:
         States.AIR:
             handle_air_state(delta)
@@ -103,6 +112,8 @@ func handle_state(delta):
             handle_floor_state()
         States.WALL:
             handle_wall_state(delta)
+        States.ATTACK_TAKEN:
+            handle_attack_taken_state()
 
 func handle_attack_state(_delta):
     # disallow attack while attached to a wall
@@ -160,7 +171,50 @@ func handle_light_melee():
     
 func handle_light_range():
     pass
+
+# two phases to this state:
+# 1) apply damage
+# 2) if not dead, apply pushback
+# 3) clear remaining attacks such that we are not taking damage multiple times/frame
+func handle_attack_taken_state():
+    # phase 1
+    # do this to guard against constant tween recreation
+    if pushback_tween != null:
+        return
+
+    var attack_metadata = enemy_attack_metadata_buffer.pop_front()
+    var attack_damage = attack_metadata["attack_damage"]
+    var attack_pushback_force = attack_metadata["attack_pushback_force"]
+    var attack_pushback_time = attack_metadata["attack_pushback_time"]
     
+    modify_health(attack_damage)
+
+    # phase 2
+    if current_state == States.DEATH:
+        return
+
+    var target_vector : Vector2
+    if $HeroWalkSprite.flip_h:
+        target_vector = Vector2.LEFT
+    else:
+        target_vector = Vector2.RIGHT
+
+    var target_position = global_position - (target_vector * attack_pushback_force)
+
+    # TODO: define easing and transitioning as metadata
+    pushback_tween = create_tween()
+    pushback_tween.tween_property(self, "position", target_position, attack_pushback_time) \
+        .set_ease(Tween.EASE_OUT) \
+        .set_trans(Tween.TRANS_BACK)
+    pushback_tween.tween_callback(_on_attack_taken_tween_completed)
+    
+    # phase 3
+    enemy_attack_metadata_buffer.clear()
+    
+func _on_attack_taken_tween_completed():
+    current_state = States.FLOOR
+    pushback_tween = null
+
 func handle_sprint():
     if current_state == States.AIR:
         disable_friction_smoke()
@@ -580,3 +634,19 @@ func _on_key_door_door_opened():
     key_count -= 1
     hud_node.set_key_count(key_count)
 
+func _on_player_hitbox_area_area_entered(area):
+    var attack_metadata = area.get_node("attack_metadata").get_attack_metadata()
+    if debug:
+        print("attack metadata added to buffer")
+        print(attack_metadata["projectile_name"])
+        print(attack_metadata["projectile_damage"])
+        print(attack_metadata["projectile_pushback_force"])
+    enemy_attack_metadata_buffer.push_back(attack_metadata)
+
+    # TODO: consider cancelling any active attack animations with an animation tree
+    current_state = States.ATTACK_TAKEN
+    current_attack_state = AttackStates.NONE
+    $TempInvulnerabilityTimer.start()
+
+func _on_temp_invulnerability_timer_timeout():
+    temp_invulnerability_enabled = false

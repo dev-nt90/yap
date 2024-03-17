@@ -58,18 +58,31 @@
 	-an overworld map would be fantastic; like 5 worlds with 3 levels each
 	-moar textures
 -audio
-	-literally everything left to do; sfx and music
 	-spatial audio for enemies
+		-kinda works, requires a specific AudioStream2D
+		-player sfx are way louder
+		
 -collectibles
 	-more textures/animations
 	-anything other than gems?
+	-health pickups?
 -infra
 	-save system!!
+	-checkpoint system
+	-life 
+		-collectibles?
 	-stats object(s) for player actions
 	-credit open art sources, if any sources end up being used
 	-player script is getting unwieldy, would be nice to break it up into functional components somehow
 	-object communication sucks or is nearly non-existent
 	-finalize control scheme
+-art
+	-undead mage
+		-tween to player for more elastic "feel"
+	-key door is ugly
+	-revisit existing animations to tween where possible
+	-main character animations need cleanup, particularly idle
+	-
 -ui
 	-on death, level restart button should be focused
 	-design needs improvement, currently generic, without style
@@ -80,8 +93,13 @@
 	-finish controller support
 	-update control scheme popup
 
+-ai
+	-undead mage
+		-bugging out at the edge of navigation region
+		-"incoming" indicator
 -bugs
 	-when "foot" collider activates, walking animation may stutter
+	-on inclines, player may get stuck
 
 
 -make generic level scene	

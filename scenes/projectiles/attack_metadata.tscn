@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c825nlf7pc8lv"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/attack_metadata.gd" id="1_e7mc6"]
+
+[node name="attack_metadata" type="Node2D"]
+script = ExtResource("1_e7mc6")
