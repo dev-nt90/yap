@@ -25,16 +25,11 @@ func set_direction(new_direction: Vector2):
     if direction == Vector2.ZERO || direction == Vector2.DOWN || direction == Vector2.UP:
         self.destroy()
 
-# TODO: figure out a better way for nodes and their projectiles to communicate
-# Today, if we push the notification to modify health, there's no guarantee there's a method to modify that property,
-# but if we pull, there's no way to know how much damage to reduce the hit object.
-# My instinct is that the pull route is correct, and my lack of godot knowledge is stopping me from figuring this out.
+# TODO: implement attack metadata for this projectile
 func _on_body_entered(_body):
-    #body.modify_health(-10) 
     self.destroy()
 
 func _on_area_entered(_area):
-    #area.modify_health(-10)
     self.destroy()
 
 func destroy():
